@@ -16,16 +16,11 @@ class Cashier:
             
             return ans
         
-        def getDiscount(total):
-            if self.nth % self.n == 0: 
-                self.nth = 1
-                return total*((100- self.discount)/100)
-            else: 
-                self.nth += 1
-                return total 
+        total = getTotal(product, amount)
             
-        return getDiscount(getTotal(product, amount))
-
-# Your Cashier object will be instantiated and called as such:
-# obj = Cashier(n, discount, products, prices)
-# param_1 = obj.getBill(product,amount)
+        if self.nth % self.n == 0: 
+            self.nth = 1
+            return total*((100- self.discount)/100)
+        else: 
+            self.nth += 1
+            return total 
