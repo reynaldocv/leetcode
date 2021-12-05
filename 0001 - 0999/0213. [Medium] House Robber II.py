@@ -17,5 +17,5 @@ class Solution:
         if n == 1:
             return nums[0]
         
-        return max(helper(1, n), helper(2, n), helper(0, n - 1), helper(0, n - 2))
+        return max(helper(1, n), helper(0, n - 1))
         
