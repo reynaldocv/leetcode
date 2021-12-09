@@ -22,7 +22,7 @@ class FindSumPairs:
             self.counter2.pop(num)
             
         self.counter2[num + val] += 1
-        self. number[index] = num + val
+        self.number[index] = num + val
 
     def count(self, tot: int) -> int:
         ans = 0 
