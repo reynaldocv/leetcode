@@ -7,11 +7,7 @@ class Solution:
             if common  != 1:
                 return helper(m//common, a//common, b//common)
             else:
-                ans = m//a
-                ans += m//b
-                ans -= m//(a*b)
-            
-                return ans
+                return m//a + m//b - m//(a*b)
             
         MOD = 10**9 + 7
         start = 1
