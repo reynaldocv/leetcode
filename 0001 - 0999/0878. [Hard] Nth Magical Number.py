@@ -15,7 +15,7 @@ class Solution:
             
         MOD = 10**9 + 7
         start = 1
-        end = max(a, b)*n
+        end = min(a, b)*n
         
         while end - start > 1: 
             m = (end + start)//2
