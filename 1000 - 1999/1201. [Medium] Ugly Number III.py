@@ -2,14 +2,9 @@
 
 class Solution:
     def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
-        def mcd(a, b):
-            if b == 0: 
-                return a
-            else: 
-                return mcd(b, a % b)
-        
+        @cache
         def mcm(a, b):
-            return a*b//mcd(a, b)
+            return a*b//gcd(a, b)
         
         def numberofmultiples(n, a, b, c):
             return n//a + n//b + n//c - n//mcm(a,b) - n//mcm(b, c) - n//mcm(a, c) + n//mcm(mcm(a,b), c)       
@@ -25,5 +20,6 @@ class Solution:
                 end = m 
     
         return end
+        
         
         
