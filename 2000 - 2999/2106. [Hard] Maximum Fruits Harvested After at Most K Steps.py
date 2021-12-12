@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/sum-of-subarray-ranges/
+# https://leetcode.com/problems/maximum-fruits-harvested-after-at-most-k-steps/
 
 class Solution:
     def maxTotalFruits(self, fruits: List[List[int]], startPos: int, k: int) -> int:
