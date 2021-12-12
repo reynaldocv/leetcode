@@ -6,6 +6,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def smallestFromLeaf(self, root: Optional[TreeNode]) -> str:
         def helper(root, aux):
