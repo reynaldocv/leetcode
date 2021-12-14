@@ -1,12 +1,14 @@
 # https://leetcode.com/problems/get-biggest-three-rhombus-sums-in-a-grid/
-
 class Solution:
     def getBiggestThree(self, grid: List[List[int]]) -> List[int]:
         n, m = len(grid), len(grid[0])
         sumD1 = [[grid[i][j] for j in range(m)] for i in range(n)]
         sumD2 = [[grid[i][j] for j in range(m)] for i in range(n)]
         
-        arr = set([grid[i][j] for i in range(n) for j in range(m)])
+        ans = set([grid[i][j] for i in range(n) for j in range(m)])
+        ans = list(ans)
+        ans.sort(reverse = True)
+        ans = ans[:3]
         
         for i in range(1, n):
             for j in range(1, m):
@@ -30,11 +32,13 @@ class Solution:
                     
                     BR = sumD2[i + d - 1][j + 1] - sumD2[i][j + d]
                     
-                    arr.add(TR + BL + TL + BR)                    
+                    perimeter = TR + BL + TL + BR
+                    
+                    if perimeter not in ans: 
+                        ans.append(perimeter)
+                        ans.sort(reverse = True)
+                        ans = ans[:3]
                     d += 1
                
-        ans = list(arr)
-        ans.sort(reverse = True)
-        
-        return ans[:3]
+        return ans
                     
