@@ -21,14 +21,13 @@ class Solution:
             end = peak + 1
 
             while end - start > 1: 
-                m = (start + end)//2
-                values[m] = mountain_arr.get(m)
-                if values[m] < target: 
+                m = (start + end)//2                
+                if mountain_arr.get(m) < target: 
                     start = m 
                 else: 
                     end = m 
             
-            return end if target == values[end] else -1
+            return end if target == mountain_arr.get(end) else -1
         
         def helper2():
             if target < mountain_arr.get(n - 1):
@@ -38,47 +37,34 @@ class Solution:
             end = n + 1
 
             while end - start > 1: 
-                m = (start + end)//2
-                values[m] = mountain_arr.get(m)
-                if values[m] > target: 
+                m = (start + end)//2        
+                if mountain_arr.get(m) > target: 
                     start = m 
                 else: 
                     end = m 
 
-            return end if values[end] == target else -1
+            return end if mountain_arr.get(end) == target else -1
                 
         n = mountain_arr.length()
         start = 0 
         end = n
-        values = {}
         while end - start > 1: 
             m = (start + end)//2
-            values[m] = mountain_arr.get(m)
-            values[m + 1] = mountain_arr.get(m + 1)
-            
-            if values[m] < values[m + 1]:
+            if mountain_arr.get(m) < mountain_arr.get(m + 1):
                 start = m 
             else: 
                 end = m
                 
         peak = end
                 
-        if target > values[peak]:
+        if target > mountain_arr.get(peak):
             return -1
         
-        if target == values[peak]:        
+        if target == mountain_arr.get(peak):        
             return end
         
         idx = helper()
         
         return idx if idx != -1 else helper2()
         
-        
-        
-        
-        
-                
-        
-            
-        
-        
+ 
