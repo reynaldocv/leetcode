@@ -26,4 +26,23 @@ class Solution:
     
         return ans
             
+class Solution2:
+    def minFlipsMonoIncr(self, s: str) -> int:
+        n = len(s)
+        zeros = 0
         
+        for char in s: 
+            if char == "0":
+                zeros += 1
+                
+        ans = zeros 
+        ones = 0 
+        for char in s:
+            if char == "1":
+                ones += 1
+            else: 
+                zeros -= 1
+            
+            ans = min(ans, ones + zeros)
+            
+        return ans        
