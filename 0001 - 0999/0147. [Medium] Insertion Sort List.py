@@ -7,53 +7,20 @@
 #         self.next = next
 class Solution:
     def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        ans = ListNode(-inf)
-        ans.next = ListNode(head.val)
-        
-        node = head.next
-        while node: 
-            prev = ans
-            cur = ans.next
-            insert = True
-            while cur: 
-                if prev.val <= node.val <= cur.val:
-                    insert = False
-                    prev.next = ListNode(node.val)
-                    prev.next.next = cur
-                    break
-                else:            
-                    prev = prev.next            
-                    cur = cur.next
-            if insert: 
-                prev.next = ListNode(node.val)
-                prev.next.next = None
-            node = node.next    
-        return ans.next
-    
-    
-class Solution2:
-    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         nodes = []
         arr = []
-        idx = 0
+        n = 0 
         while head:
-            nodes.append(head)
-            arr.append((head.val, idx))
-            idx += 1 
+            idx = bisect_left(arr, head.val)
+            arr.insert(idx, head.val)
+            nodes.insert(idx, head)
             head = head.next
+            n += 1
             
-        n = idx
-        
-        arr.sort()
-        
-        for i in range(n - 1):
-            nodes[arr[i][1]].next = nodes[arr[i + 1][1]]
+        for i in range(1, n):
+            nodes[i - 1].next = nodes[i]
             
-        nodes[arr[n - 1][1]].next = None
+        nodes[-1].next = None
         
-        return nodes[arr[0][1]]
+        return nodes[0]
             
-                    
-        
-        
-        
