@@ -6,29 +6,21 @@ class Solution:
         strN = str(n)
         k = len(strN)
         
-        arr = []
+        dp = [0 for _ in range(k)] + [1]
         
-        for char in strN: 
-            if char in digits: 
-                arr.append(digits.index(char) + 1)
+        for i in range(k - 1, -1, -1):
+            for digit in digits: 
+                if digit < strN[i]:
+                    dp[i] += m**(k - i - 1)
                 
-            else:
-                idx = bisect_left(digits, char)
-                arr.append(idx)
-                
-                if idx == 0: 
-                    for j in range(len(arr) - 1, 0, -1):
-                        if arr[j]:
-                            break
-                        arr[j] += m
-                        arr[j - 1] -= 1
-                
-                arr.extend([m]*(k - len(arr)))
-                break
-                
+                elif digit == strN[i]:
+                    dp[i] += dp[i + 1]
+                    
         ans = 0 
-        
-        for elem in arr: 
-            ans = ans * m  + elem
+        for i in range(1, k):
+            ans += m**i
             
-        return ans
+        return ans + dp[0]
+                
+        
+        
