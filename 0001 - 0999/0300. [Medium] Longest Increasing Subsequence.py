@@ -2,19 +2,16 @@
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        arr = []
-        
+        arr = []        
         for num in nums: 
             if len(arr) == 0 or arr[-1] < num: 
                 arr.append(num)
             else: 
                 idx = bisect_left(arr, num)
-                
-                if idx != len(arr) and arr[idx] != num:
-                    arr[idx] = num
+                arr[idx] = num
              
         return len(arr)
-
+        
 class Solution2:
     def lengthOfLIS(self, nums: List[int]) -> int:
         n = len(nums)
