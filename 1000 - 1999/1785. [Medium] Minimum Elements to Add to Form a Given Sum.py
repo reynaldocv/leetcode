@@ -10,4 +10,11 @@ class Solution:
         else: 
             return aux//limit + 1
         
+class Solution2:
+    def minElements(self, nums: List[int], limit: int, goal: int) -> int:
+        aSum = sum(nums)
+        aux = abs(goal - aSum)
+        
+        return ceil(aux/limit)
+        
         
