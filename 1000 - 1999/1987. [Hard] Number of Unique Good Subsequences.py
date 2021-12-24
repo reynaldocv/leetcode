@@ -17,3 +17,4 @@ class Solution:
             dp.append(aux)
             
         return (dp[-1] - 1 + ("0" in binary)) % MOD
+    
