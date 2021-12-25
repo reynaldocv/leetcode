@@ -11,11 +11,9 @@ class Solution:
         
         for i in range(n):
             if locked[i] == "0":
-                noLocked += 1
-                
+                noLocked += 1                
             elif s[i] == "(":
                 cnt -= 1
-                
             elif s[i] == ")":
                 cnt += 1
             
@@ -27,10 +25,8 @@ class Solution:
         for i in range(n - 1, -1, -1):
             if locked[i] == "0":
                 noLocked += 1
-                
             elif s[i] == "(":
                 cnt += 1
-                
             elif s[i] == ")":
                 cnt -= 1
             
