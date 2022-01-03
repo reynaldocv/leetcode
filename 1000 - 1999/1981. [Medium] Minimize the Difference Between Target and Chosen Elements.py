@@ -5,8 +5,15 @@ class Solution:
         nums = {0}
         n = len(mat)
         for i in range(n):
-            nums = {num + val for num in nums for val in mat[i]}        
+            aux = set()
+            for num in nums: 
+                for val in mat[i]:
+                    aux.add(num + val)
+            
+            nums = aux
+            
         ans = min([abs(num - target) for num in nums])
         
         return ans
+        
         
