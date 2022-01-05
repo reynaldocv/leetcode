@@ -2,27 +2,24 @@
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        def isPalindrome(word, dic):
-            if word in dic:
-                return dic[word] 
+        @cache
+        def isPalindromic(string):
+            return string == string[::-1]
+            
+        def helper(start, arr):
+            if start >= n: 
+                ans.append(arr[:])
             else: 
-                ans = word == word[::-1]
-                dic[word] = ans
-                return ans
-        
-        def recursive(arr, s, dic):
-            if s == "": 
-                self.ans.append(list(arr))
-            else: 
-                for i in range(1, len(s) + 1):
-                    word = s[:i]
-                    if isPalindrome(word, dic):
-                        arr.append(word)
-                        recursive(arr, s[i:], dic)
+                for i in range(start + 1, n + 1):
+                    prefix = s[start: i]    
+                    if isPalindromic(prefix):
+                        arr.append(prefix)
+                        helper(i, arr)
                         arr.pop()
+                
+        ans = []
+        n = len(s)
         
-        dic = {}
-        self.ans = []
-        recursive([], s, dic)
-
-        return self.ans
+        helper(0, [])
+        
+        return ans
