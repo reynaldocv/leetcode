@@ -5,22 +5,20 @@ class Solution:
         def times(string):
             return 60*int(string[:2]) + int(string[3:])
         
-        n = len(keyName) 
-        cardPass = defaultdict(lambda: [])
+        n = len(keyName)         
+        arr = [(keyName[i], times(keyTime[i])) for i in range(n)]
         
-        for i in range(n):
-            cardPass[keyName[i]].append(times(keyTime[i]))
-            
-        ans = []
+        arr.sort()
+        ans = set()
         
-        for key in cardPass: 
-            arr = sorted(cardPass[key])
-            for i in range(len(arr) - 2):
-                if arr[i + 2] - arr[i] <= 60: 
-                    ans.append(key)
-                    break
-        
+        for i in range(len(arr) - 2):
+            if arr[i][0] not in ans: 
+                if arr[i + 2][0] == arr[i][0]:
+                    if arr[i + 2][1] - arr[i][1] <= 60:
+                        ans.add(arr[i + 2][0])
+
         return sorted(ans)
+                    
                     
         
         
