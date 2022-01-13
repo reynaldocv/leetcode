@@ -6,14 +6,14 @@ class Solution:
             k = tuple(t.items())
             
             if k not in memo:
+                ans = inf                 
                 if not t: 
-                    return 0
-                
-                ans = inf 
-                for s in stk: 
-                    if t & s: 
-                        ans = min(ans, 1 + helper(t - s))
-                
+                    ans = 0
+                else:                 
+                    for s in stk: 
+                        if t & s: 
+                            ans = min(ans, 1 + helper(t - s))
+
                 memo[k] = ans
             
             return memo[k]
