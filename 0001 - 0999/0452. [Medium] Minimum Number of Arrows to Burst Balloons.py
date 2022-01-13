@@ -2,6 +2,19 @@
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
+        points.sort(key = lambda item: item[1])
+        ans = 0 
+        prev = -inf
+        
+        for (x, y) in points: 
+            if prev < x: 
+                prev = y
+                ans += 1
+                
+        return ans
+    
+class Solution2:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
         points.sort()
         arr = [tuple(points[0])]
         
