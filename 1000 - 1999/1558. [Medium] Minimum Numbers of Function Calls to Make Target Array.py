@@ -14,10 +14,9 @@ class Solution:
                     
             if aSum != 0:
                 for i in range(n):
-                    if nums[i] != 0:
-                        nums[i] //= 2
-                        aSum -= nums[i]
-                        
+                    nums[i] //= 2
+                    aSum -= nums[i]
+
                 ans += 1
                 
         return ans
