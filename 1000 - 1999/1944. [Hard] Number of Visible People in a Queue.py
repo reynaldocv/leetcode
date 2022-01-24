@@ -7,8 +7,8 @@ class Solution:
         ans = [0 for _ in range(n)]
         popCount = 0 
         
-        stack = [heights[-1]]
-        for i in range(n - 2, -1, -1):
+        stack = []
+        for i in range(n - 1, -1, -1):
             while stack and stack[-1] < heights[i]:
                 stack.pop()
                 popCount += 1 
@@ -20,4 +20,5 @@ class Solution:
             popCount = 0
             
         return ans
+        
         
