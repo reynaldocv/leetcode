@@ -13,22 +13,21 @@ class Solution:
         for (a, b) in pairs: 
             partner[a], partner[b] = b, a
             
-        unhappy = 0
+        ans = 0
         for (x, y) in partner.items():
             if rank[x][y] == 1:
                 continue
                 
-            chosen = y
-			
+            go = True			
             end = preferences[x].index(y)
+		
             for u in preferences[x][:end]:
                 if rank[u][x] < rank[u][partner[u]]:
-                    chosen = u
+                    go = False
                     break
                     
-            if chosen != y:
-                unhappy += 1
+            ans += 1 if not go else 0 
                 
-        return unhappy
+        return ans
                 
         
