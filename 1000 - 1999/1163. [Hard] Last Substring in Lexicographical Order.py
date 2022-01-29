@@ -1,0 +1,20 @@
+# https://leetcode.com/problems/last-substring-in-lexicographical-order/
+
+class Solution:
+    def lastSubstring(self, s: str) -> str:        
+        ii = k = 0
+        i = 1
+        
+        while i + k < len(s):
+            if s[ii + k] == s[i + k]: 
+                k += 1
+            else: 
+                if s[ii + k] > s[i + k]: 
+                    i += k + 1
+                else: 
+                    ii = max(ii + k + 1, i)
+                    i = ii + 1
+                
+                k = 0
+                
+        return s[ii:]
