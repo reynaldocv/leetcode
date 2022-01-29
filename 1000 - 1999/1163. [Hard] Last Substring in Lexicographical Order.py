@@ -18,3 +18,14 @@ class Solution:
                 k = 0
                 
         return s[ii:]
+    
+class Solution2:
+    def lastSubstring(self, s: str) -> str:        
+        ans = chr(ord("a") - 1)
+        prefix = ""
+        for char in s[::-1]:
+            prefix = char + prefix
+            ans = max(ans, prefix)
+            
+        return ans
+            
