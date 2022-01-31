@@ -2,9 +2,10 @@
 
 class Solution:
     def maximumWealth(self, accounts: List[List[int]]) -> int:
-        aux = []
-        for i in range(len(accounts)):
-            aux.append(sum(accounts[i]))
-        return max(aux)
+        ans = 0 
+        for row in accounts: 
+            ans = max(ans, sum(row))
             
+        return ans
+        
         
