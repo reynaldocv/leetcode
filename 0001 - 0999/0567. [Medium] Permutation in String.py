@@ -2,30 +2,34 @@
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        def diff(arr, arr2, arr3):
-            aux = arr.copy()
-            n = len(arr)
-            for i in range(n):
-                aux[i] = arr[i] - arr2[i]
-            return aux == arr3
+        def helper(cnt1, cnt2):
+            for key in cnt1: 
+                if cnt1[key] != cnt2[key]:
+                    return False
             
-        idx = {val: i for (i, val) in enumerate(set(sorted(s1)))}
-        values = {i: val for (i, val) in enumerate(set(sorted(s1)))}
+            return True 
         
-        count = [s1.count(values[i]) for i in range(len(idx))]
+        counter = defaultdict(lambda: 0)        
+        cnt = defaultdict(lambda: 0)
         
-        n = len(s2)
-        m = len(s1)
-        counter = {-1: [0 for _ in idx]}
+        n, m = len(s1), len(s2)
         
-        for (i, val) in enumerate(s2):
-            counter[i] = counter[i - 1].copy()
-            if val in idx: 
-                counter[i][idx[val]] += 1
-                if i - m in counter: 
-                    if diff(counter[i], counter[i - m], count):
-                        return True
+        if m < n:
+            return False 
         
+        for (i, char) in enumerate(s1): 
+            counter[char] += 1 
+            cnt[s2[i]] += 1 
+            
+        for (i, char) in enumerate(s2[n:] + "+"):
+            if helper(cnt, counter):
+                return True
+            
+            cnt[char] += 1 
+            cnt[s2[i]] -= 1
+            if cnt[s2[i]] == 0: 
+                cnt.pop(s2[i])
+                
         return False
                     
                 
