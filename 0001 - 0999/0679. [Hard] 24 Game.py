@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/cut-off-trees-for-golf-event/
+# https://leetcode.com/problems/24-game/
 
 class Solution:
     def judgePoint24(self, cards: List[int]) -> bool:
