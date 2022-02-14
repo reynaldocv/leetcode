@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/maximum-and-sum-of-array/
+# https://leetcode.com/problems/minimum-operations-to-make-the-array-alternating/
 
 class Solution:
     def minimumOperations(self, nums: List[int]) -> int:
@@ -23,8 +23,7 @@ class Solution:
         if maxOdd[1] != maxEven[1]:
             ans = n - maxEven[0] - maxOdd[0]
         else: 
-            cntEven[inf] = 0 
-            
+            cntEven[inf] = 0             
             for key in cntEven: 
                 if key != maxEven[1]:
                     ans = min(ans, n - cntEven[key] - maxOdd[0])
