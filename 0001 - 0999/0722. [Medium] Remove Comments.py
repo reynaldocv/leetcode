@@ -5,26 +5,26 @@ class Solution:
         ans = []
         comment = False 
         
-        for (i, line) in enumerate(source):
+        for line in source:
             if not comment: 
                 tmp = ""
-            j = 0 
+            i = 0 
         
-            while j < len(line):
+            while i < len(line):
                 if comment: 
-                    if line[j: j + 2] == "*/":
+                    if line[i: i + 2] == "*/":
                         comment = False
-                        j += 1 
+                        i += 1 
                 else: 
-                    if line[j: j + 2] == "//":
+                    if line[i: i + 2] == "//":
                         break
-                    elif line[j: j + 2] == "/*":
+                    elif line[i: i + 2] == "/*":
                         comment = True
-                        j += 1 
+                        i += 1 
                     else: 
-                        tmp += line[j]
+                        tmp += line[i]
                 
-                j += 1 
+                i += 1 
                 
             if tmp and not comment: 
                 ans.append(tmp)
