@@ -1,6 +1,6 @@
 # https://leetcode.com/problems/network-delay-time/
 
-# Bellman-Ford algorithm (1804ms, 5.02%):
+# Bellman-Ford algorithm
 # Time complexity O(VE)
 # Space complexity O(V)
 class Solution:
@@ -16,7 +16,7 @@ class Solution:
         
         return ans if ans < inf else -1
 
-# Floyd-Warshall algorithm (1980ms, 5.02%):
+# Floyd-Warshall algorithm
 # Time complexity O(V^3)
 # Space complexity O(V^2)
 class Solution:
@@ -89,7 +89,7 @@ class Solution:
         
         return ans if ans < inf else -1
       
-# BFS (1128ms, 7.52%):
+# BFS
 # Time complexity O(V^V + ElogE)
 # Space complexity O(V)            
 class Solution:
