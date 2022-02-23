@@ -1,24 +1,33 @@
 # https://leetcode.com/problems/clone-graph/
 
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        def helper(node, node_dict):
-            if node.val in node_dict:
-                return node_dict[node.val]
+        def helper(node):
+            if node.val in ans:
+                return ans[node.val]
             
-            cloned_node = Node(node.val, [])            
-            node_dict[node.val] = cloned_node
+            clonedNode = Node(node.val, [])            
+            ans[node.val] = clonedNode
+            
             for neighbor in node.neighbors:
-                cloned_node.neighbors.append(helper(neighbor, node_dict))
+                clonedNode.neighbors.append(helper(neighbor))
             
-            return cloned_node
+            return clonedNode
             
         if not node:
             return None
         
-        node_dict = {}
-        helper(node, node_dict)
+        ans = {}
+        helper(node)
         
-        return node_dict[node.val]
+        return ans[node.val]
     
     
