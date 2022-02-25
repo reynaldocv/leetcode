@@ -19,13 +19,13 @@ class Solution:
         seen = {num: i for (i, num) in enumerate(row)}
         
         for (i, num) in enumerate(row):
-            num += -1 if num & 1 else 1 
-            collaborator(i//2, seen[num]//2)
+            partner = num - 1 if num % 2 == 1 else num + 1
+            collaborator(i//2, seen[partner]//2)
             
-        freq = defaultdict(lambda: 0)
-        for num in range(n//2):
-            father = helper(num)
-            freq[father] += 1 
+        counter = defaultdict(lambda: 0)
         
-        return sum(freq.values()) - len(freq)
+        for i in range(n//2):
+            father = helper(i)
+            counter[father] += 1
         
+        return sum(counter.values()) - len(counter)
