@@ -15,10 +15,7 @@ class Solution:
             prefix = term = f
             for i in range(20):
                 arr[i] = min(arr[i], prefix)
-                term *= r 
-                if term >= f + changeTime:
-                    break
-                
+                term *= r                 
                 prefix += term
         
         return helper(numLaps)
