@@ -5,22 +5,21 @@ class Solution:
         if poured == 0: 
             return 0 
         
-        arr = [0]*(query_row + 1)
-        arr[0] = poured
+        arr = [poured]
         
         for i in range(1, query_row + 1):
-            arr2 = [0]*(query_row + 1)
-            for j in range(i + 1):
-                if j == 0:
-                    arr2[j] += (arr[j] - 1)/2 if (arr[j] > 1) else 0
-                elif j == i:
-                    arr2[j] += (arr[j - 1] - 1)/2 if (arr[j - 1] > 1) else 0
-                else: 
-                    arr2[j] += (arr[j] - 1)/2 if (arr[j] > 1) else 0
-                    arr2[j] += (arr[j - 1] - 1)/2 if (arr[j - 1] > 1) else 0
-            arr = arr2         
-        
-        return 1 if (arr[query_glass] >= 1) else arr[query_glass]
+            arr2 = [0 for _ in range(i + 1)]
+            for j in range(i):
+                liquid = (arr[j] - 1)/2
+                if liquid > 0:
+                    arr2[j] += liquid
+                    arr2[j + 1] += liquid
+                
+            arr = arr2
+            
+        return 1 if arr[query_glass] > 1 else arr[query_glass]
+                
                     
+                
         
         
