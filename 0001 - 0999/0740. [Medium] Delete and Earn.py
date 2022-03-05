@@ -2,20 +2,23 @@
 
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        n = 2*10**4
-        dp = [0]*n
+        maxElem = max(nums)
+        arr = [0 for i in range(maxElem + 1)]
         
+        counter = defaultdict(lambda: 0)
         for num in nums: 
-            dp[num] += num
+            counter[num] += 1 
         
-        ans = max(dp[0], dp[1])
-        for i in range(2, n):
-            val1 = dp[i - 2] if i - 2>= 0 else 0
-            val2 = dp[i - 3] if i - 3>= 0 else 0
-            dp[i] += max(val1, val2)
-            ans = max(ans, dp[i])    
+        for num in range(1, maxElem + 1):
+            arr[num] = max(arr[num - 1], arr[num - 2] + counter[num]*num)
+            
+        return arr[-1]
+            
+            
         
-        return ans
+        
+        
+
         
             
         
