@@ -12,3 +12,24 @@ class Solution:
             ans %= MOD
             
         return ans 
+    
+class Solution2:
+    def countOrders(self, n: int) -> int:
+        @cache
+        def helper(unpicked, undelivered):
+            if not unpicked and not undelivered: 
+                return 1 
+            
+            if (unpicked < 0 or undelivered < 0 or undelivered < unpicked):
+                return 0 
+            
+            ans = unpicked*helper(unpicked - 1, undelivered)
+            ans %= MOD
+            
+            ans += (undelivered - unpicked)*helper(unpicked, undelivered - 1)
+            ans %= MOD
+            
+            return ans 
+        
+        MOD = 10**9 + 7
+        return helper(n, n)
