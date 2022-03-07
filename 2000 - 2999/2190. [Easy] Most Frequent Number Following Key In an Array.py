@@ -8,8 +8,8 @@ class Solution:
         counter = defaultdict(lambda: 0)
         
         for i in range(1, n):
-            counter[nums[i]] += 1 
             if nums[i - 1] == key:
+                counter[nums[i]] += 1             
                 ans = max(ans, (counter[nums[i]], nums[i]))
                 
         return ans[1]  
