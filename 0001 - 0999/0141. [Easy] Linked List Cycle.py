@@ -7,13 +7,14 @@
 #         self.next = None
 
 class Solution:
-    def hasCycle(self, head: ListNode) -> bool:
-        dic = {}
-        while head != None and head not in dic : 
-            dic[head] = True
-            head = head.next
-        if head in dic: 
-            return True
-        else: 
-            return False
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast: 
+                return True
+            
+        return False
         
