@@ -2,21 +2,24 @@
 
 class Solution:
     def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        m, n = len(image), len(image[0])
+        
         color = image[sr][sc]
-        n, m = len(image), len(image[0])
-        arr = [(sr, sc)]
-        visited = {(sr, sc): False}
-        while len(arr) > 0: 
-            (i, j) = arr.pop()
-            if visited[(i, j)] == False:
-                visited[(i, j)] = True
-                image[i][j] = newColor
-                for (a, b) in [[1, 0], [-1, 0], [0, 1], [0, -1]]:
-                    x, y = i + a, j + b
-                    if 0 <= x < n and 0<= y < m:
-                        if image[x][y] == color and (x, y) not in visited : 
-                            visited[(x, y)] = False
-                            arr.append((x, y))
+        stack = [(sr, sc)]
+        seen = {(sr, sc): True}
+        
+        image[sr][sc] = newColor
+        
+        while stack: 
+            (x, y) = stack.pop()
+            for (r, s) in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                p, q = x + r, y + s
+                if 0 <= p < m and 0 <= q < n: 
+                    if (p, q) not in seen and image[p][q] == color: 
+                        seen[(p, q)] = True
+                        image[p][q] = newColor
+                        stack.append((p, q))
+                        
         return image
                     
                 
