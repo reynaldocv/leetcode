@@ -2,19 +2,21 @@
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        def firstMax(array, val):
-            ans = -1
-            for i in range(len(array)):
-                if array[i] > val:
-                    ans = array[i]
-                    break
-            return ans
+        seen = {}
+        stack = [nums2[0]]
+        
+        for num in nums2[1:]:
+            while stack and stack[-1] < num: 
+                seen[stack.pop()] = num
+            
+            stack.append(num)
+        
+        for num in stack: 
+            seen[num] = -1
         
         ans = []
-        n = len(nums1)
-        for i in range(n):
-            ind = nums2.index(nums1[i])
-            ans.append(firstMax(nums2[ind + 1:], nums1[i]))
-        
+        for num in nums1:
+            ans.append(seen[num])
+            
         return ans
         
