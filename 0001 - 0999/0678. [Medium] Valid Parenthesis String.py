@@ -1,33 +1,39 @@
-# https://leetcode.com/problems/implement-magic-dictionary/
+# https://leetcode.com/problems/valid-parenthesis-string/
 
-class MagicDictionary:
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        stack = []
+        for c in s:
+            if c in '(*':
+                stack.append(c)
+            elif c == ')':
+                if stack and stack[-1] == '(':
+                    stack.pop()
+                else:
+                    stack.append(c)
 
-    def __init__(self):
-        self.words = defaultdict(lambda: [])
+        stars = []
+        parens = []
 
-    def buildDict(self, dictionary: List[str]) -> None:
-        for word in dictionary: 
-            self.words[len(word)].append(word)
-        
-    def search(self, searchWord: str) -> bool:
-        def helper(word1, word2):
-            cnt = 0
-            for (i, char) in enumerate(word1):
-                if char != word2[i]:
-                    cnt += 1
-                    if cnt > 1: 
-                        return False
-            
-            return cnt == 1
-        
-        for word in self.words[len(searchWord)]:
-            if helper(searchWord, word):
-                return True
-            
-        return False
-        
-       
-# Your MagicDictionary object will be instantiated and called as such:
-# obj = MagicDictionary()
-# obj.buildDict(dictionary)
-# param_2 = obj.search(searchWord)
+        for (i, c) in enumerate(stack):
+            if c == "*":
+                stars.append((i, c))
+            elif c == '(':
+                parens.append((i, c))
+            else: 
+                if parens:
+                    parens.pop()
+                elif stars:
+                    stars.pop()
+                else:
+                    return False
+
+        while parens:
+            (i, c) = parens.pop()
+            if not stars:
+                return False
+            if stars[-1][0] < i:
+                return False
+            stars.pop()        
+
+        return True
