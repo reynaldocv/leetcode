@@ -4,7 +4,7 @@ class Solution:
     def countRestrictedPaths(self, n: int, edges: List[List[int]]) -> int:
         @cache
         def helper(u): 
-            if u == n-1: 
+            if u == n - 1: 
                 return 1 
             
             ans = 0
