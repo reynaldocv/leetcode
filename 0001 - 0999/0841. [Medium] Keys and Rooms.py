@@ -2,14 +2,18 @@
 
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        keys = rooms[0]
-        visited = {0: True}
+        n = len(rooms)
+        seen = {0: True}
         
-        while len(keys) > 0: 
-            key = keys.pop()
-            if key not in visited: 
-                keys.extend(rooms[key])
-                visited[key] = True
+        stack = [0]
         
-        return len(visited) == len(rooms)
+        while stack: 
+            u = stack.pop()
+            for key in rooms[u]:
+                if key not in seen: 
+                    seen[key] = True 
+                    stack.append(key)
+                    
+        return len(seen) == n
+        
         
