@@ -3,15 +3,11 @@
 class Solution:
     def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
         n = len(mat)
-        aux = []
-        for i in range(n):
-            s = sum(mat[i])
-            aux.append((s, i))
-        aux.sort()
-        ans = []
-        for (a, b) in aux:
-            ans.append(b)
+        arr = [i for i in range(n)]
         
-            
-        return ans[0:k]
+        arr.sort(key = lambda item: (sum(mat[item]), item))
+        
+        return arr[: k]
+        
+        
         
