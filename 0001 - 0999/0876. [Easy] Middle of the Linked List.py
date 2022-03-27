@@ -6,11 +6,14 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def middleNode(self, head: ListNode) -> ListNode:
-        pointers = []
-        while (head):
-            pointers.append(head)
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        n = 0 
+        arr = []
+        
+        while head: 
+            arr.append(head)
             head = head.next
+            n += 1 
             
-        return pointers[len(pointers)//2]
+        return arr[n//2]
         
