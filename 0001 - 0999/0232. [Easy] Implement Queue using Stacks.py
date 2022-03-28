@@ -3,44 +3,22 @@
 class MyQueue:
 
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.arr = []
-        self.n = 0
-        
+        self.stack = []        
 
     def push(self, x: int) -> None:
-        """
-        Push element x to the back of queue.
-        """
-        self.arr.insert(0, x)
-        self.n += 1
+        self.stack.append(x)
         
-
     def pop(self) -> int:
-        """
-        Removes the element from in front of queue and returns that element.
-        """
-        ans = self.arr.pop()
-        self.n -= 1
-        return ans
-
+        if self.stack: 
+            return self.stack.pop(0)
+        
     def peek(self) -> int:
-        """
-        Get the front element.
-        """
-        return self.arr[self.n - 1]
+        if self.stack: 
+            return self.stack[0]
         
-
     def empty(self) -> bool:
-        """
-        Returns whether the queue is empty.
-        """
-        return self.n == 0
-        
-
-
+        return len(self.stack) == 0
+    
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()
 # obj.push(x)
