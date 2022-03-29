@@ -2,19 +2,20 @@
 
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
+        slow = fast = nums[0]
         
-        tortoise = hare = nums[0]
-        while True:
-            tortoise = nums[tortoise]
-            hare = nums[nums[hare]]
-            if tortoise == hare:
-                break
-        
-        tortoise = nums[0]
-        while tortoise != hare:
-            tortoise = nums[tortoise]
-            hare = nums[hare]
-        
-        return hare 
+        while True: 
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            
+            if slow == fast: 
+                break 
+              
+        slow = nums[0]
+        while slow != fast: 
+            slow = nums[slow]
+            fast = nums[fast]
+            
+        return fast     
     
         
