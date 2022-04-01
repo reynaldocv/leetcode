@@ -5,7 +5,6 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        j = len(s) - 1
-        for i in range(j//2 + 1):
-            s[i], s[j] = s[j], s[i]
-            j -= 1
+        n = len(s)
+        for i in range(n//2):
+            s[i], s[n - i - 1] = s[n - i - 1], s[i]
