@@ -27,6 +27,5 @@ class Solution:
         
         t = "".join([str(1 - int(char)) for char in s])
         
-        ans = collaborator(s) + collaborator(t)
+        return collaborator(s) + collaborator(t)
         
-        return ans 
