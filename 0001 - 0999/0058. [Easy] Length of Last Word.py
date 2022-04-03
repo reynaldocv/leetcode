@@ -3,15 +3,14 @@
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
         n = len(s)
-        aux, aux2= "", ""
-        for i in range(n):
-            if s[i] == " ":
-                if aux != "":
-                    aux2 = aux 
-                aux = ""
-            else:
-                aux += s[i]
-        if aux != "":
-            aux2 = aux
+        end = n - 1
         
-        return len(aux2)
+        while end >= 0 and s[end] == " ":
+            end -= 1
+            
+        start = end
+        
+        while start >= 0 and s[start] != " ":
+            start -= 1 
+            
+        return end - start 
