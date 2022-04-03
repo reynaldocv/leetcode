@@ -5,22 +5,32 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        def swap(i, j):
+            nums[i], nums[j] = nums[j], nums[i]
+            
+        def reverse(i):
+            start = i
+            end = n - 1
+            while start < end: 
+                swap(start, end)
+                start += 1 
+                end -= 1 
+                
         n = len(nums)
-        idx = -1
-        for i in range(n - 1, 0, -1):
-            if nums[i - 1] < nums[i]:
-                idx = i - 1
-                break        
-        if idx == -1: 
-            nums[:] = nums[::-1]    
         
-        min_ = (nums[idx + 1] - nums[idx], idx + 1)        
-        for j in range(idx + 2, n):
-            if nums[j] - nums[idx] > 0:
-                min_ = min(min_, (nums[j] - nums[idx], j))
-        nums[min_[1]] ,nums[idx] = nums[idx], nums[min_[1]]
+        i = n - 2
         
-        nums[idx + 1:] = sorted(nums[idx + 1:])
+        while i >= 0 and nums[i + 1] <= nums[i]:
+            i -= 1 
+        
+        if i >= 0: 
+            j = n - 1
+            while nums[j] <= nums[i]:
+                j -= 1 
+                
+            swap(i, j)
+        
+        reverse(i + 1)
         
         
         
