@@ -2,22 +2,19 @@
 
 class Solution:
     def findRotation(self, mat: List[List[int]], target: List[List[int]]) -> bool:
-        def isSame(matrixA, matrixB, n):                        
+        def helper(mat):
             for i in range(n):
-                for j in range(n):
-                    if matrixA != matrixB:
-                        return False
-            return True
-        def rotate(matrixA, n):
-            return [[matrixA[x][n - 1 - y] for x in range(n)] for y in range(n)]
-        
+                for j in range(i + 1, n):
+                    mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+                    
+            for i in range(n):
+                for j in range(n//2):
+                    mat[i][j], mat[i][n - 1 - j] = mat[i][n - 1 - j], mat[i][j]
+            
         n = len(mat)
-        aux, t = mat, target
         for i in range(4):
-            aux = rotate(aux, n)
-            if isSame(aux, t, n):
-                return True
-        return False
-        
-        return isSame(mat, t, n) or isSame(A, t, n) or isSame(B, t, n) or isSame(C, t, n)
-        
+            helper(mat)
+            if mat == target: 
+                return True 
+            
+        return False 
