@@ -3,29 +3,30 @@
 
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        n = len(nums)
-        if n == 0: return [-1, -1]
-        start = -1
-        end = n - 1
-        ans = [-1, -1]        
-        while end - start > 1:
-            m = (end + start)//2
-            if nums[m] < target:
-                start = m 
-            else: 
-                end = m        
-       
-        if nums[end] != target: 
-            return ans
-        else: 
-            ans[0] = end
-            start = end
+        def helper(val):
+            start = -1 
             end = n
-            while end  - start > 1: 
-                m = (end + start)//2
-                if nums[m] <= target:
-                    start = m 
+            
+            while end - start > 1: 
+                mid = (end + start)//2
+                if nums[mid] < val: 
+                    start = mid
                 else: 
-                    end = m     
-            ans[1] = start
-            return ans
+                    end = mid
+            
+            return end 
+        
+        n = len(nums)
+        if n == 0: 
+            return [-1, -1]
+        
+        if target < nums[0] or nums[-1] < target: 
+            return [-1, -1]
+        
+        idx = helper(target)
+        if nums[idx] == target: 
+            idx2 = helper(target + 1)
+            return [idx, idx2 - 1]
+        else: 
+            return [-1, -1]
+        
