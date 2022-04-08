@@ -2,13 +2,27 @@
 
 class Solution:
     def countNegatives(self, grid: List[List[int]]) -> int:
-        row = len(grid)
-        col = len(grid[0])
-        ans = 0
-        for r in range(row): 
-            for c in range(col):
-                if grid[r][c] < 0:
-                    ans += col - c
-                    break
-        return ans
+        def helper(arr):            
+            if arr[0] < 0: 
+                return n
+            
+            start = 0     
+            end = n 
+            
+            while end - start > 1: 
+                mid = (end + start)//2
+                if arr[mid] < 0: 
+                    end = mid
+                else: 
+                    start = mid
+                    
+            return n - 1 - start
+            
+        m, n = len(grid), len(grid[0])
+        
+        ans = 0 
+        for i in range(m):
+            ans += helper(grid[i])
+            
+        return ans 
         
