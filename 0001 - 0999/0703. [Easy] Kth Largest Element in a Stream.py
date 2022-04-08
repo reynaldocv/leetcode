@@ -3,16 +3,16 @@
 class KthLargest:
 
     def __init__(self, k: int, nums: List[int]):
-        self.k = k
-        nums.sort(reverse = True)
-        self.arr = nums[:self.k]        
-
+        self.k = k 
+        self.arr = []
+        
+        for num in nums: 
+            insort(self.arr, num)
+        
     def add(self, val: int) -> int:
-        self.arr.append(val)
-        self.arr.sort(reverse = True)
-        self.arr = self.arr[:self.k]
-        return self.arr[len(self.arr) - 1]
-
+        insort(self.arr, val)
+        
+        return self.arr[len(self.arr) - self.k]
 
 # Your KthLargest object will be instantiated and called as such:
 # obj = KthLargest(k, nums)
