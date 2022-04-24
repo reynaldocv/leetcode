@@ -4,21 +4,22 @@ class Solution:
     def countRectangles(self, rectangles: List[List[int]], points: List[List[int]]) -> List[int]:
         n = len(points)
         
-        ans = [0 for _ in range(n)]
-        
         rects = [[] for i in range(101)]
         
         for (x, y) in rectangles:
             insort(rects[y], x)
         
-        for (i, (x, y)) in enumerate(points):
+        ans = []
+        
+        for (x, y) in points:
             cnt = 0
             
-            for j in range(y, 101):
-                if rects[j]:
-                    idx = bisect_left(rects[j], x)
-                    cnt += len(rects[j]) - idx 
+            for i in range(y, 101):
+                if rects[i]:
+                    idx = bisect_left(rects[i], x)
+                    cnt += len(rects[i]) - idx 
                     
-            ans[i] = cnt
+            ans.append(cnt)
             
         return ans
+            
