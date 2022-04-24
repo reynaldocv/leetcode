@@ -11,4 +11,15 @@ class Solution:
         
         return f[n - 1]
         
+class Solution2:
+    def climbStairs(self, n: int) -> int:
+        @cache
+        def helper(i):
+            if i <= 2: 
+                return i 
+            else: 
+                return helper(i - 1) + helper(i - 2)
+            
+        return helper(n)
+        
         
