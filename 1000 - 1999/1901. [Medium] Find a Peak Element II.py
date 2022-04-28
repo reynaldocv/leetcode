@@ -2,19 +2,18 @@
 
 class Solution:
     def findPeakGrid(self, mat: List[List[int]]) -> List[int]:
-        ans = (-inf, -inf, -inf)
-        m, n = len(mat), len(mat[0])
+        m = len(mat)
         
-        for i in range(m):
-            for j in range(n):
-                tmp = -inf if i == 0 else mat[i - 1][j]
-                tmp = max(tmp, -inf if j == 0 else mat[i][j - 1])
-                tmp = max(tmp, -inf if j == n - 1 else mat[i][j + 1])
-                tmp = max(tmp, -inf if i == m - 1 else mat[i + 1][j])
+        low = -1
+        high = m - 1 
+        
+        while high - low > 1:            
+            mid = (high + low)//2
+            if max(mat[mid]) >= max(mat[mid + 1]):
+                high = mid
+            else:
+                low = mid
                 
-                if tmp < mat[i][j]:
-                    ans = max(ans, (mat[i][j], i, j))
-                    
-        return (ans[1], ans[2])
+        return [high, mat[high].index(max(mat[high]))]
                 
         
