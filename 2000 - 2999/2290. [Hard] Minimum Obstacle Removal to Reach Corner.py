@@ -2,6 +2,30 @@
 
 class Solution:
     def minimumObstacles(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        
+        heap = [(0, 0, 0)]
+        distance = defaultdict(lambda: inf)
+        distance[(0, 0, 0)] = 0 
+        
+        while heap: 
+            (time, x, y) = heappop(heap)
+            if x == m - 1 and y == n - 1: 
+                return time
+            
+            for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                p, q = x + r, y + s 
+                
+                if 0 <= p < m and 0 <= q < n: 
+                    if time + grid[p][q] < distance[(p, q)]: 
+                        distance[(p, q)] = time + grid[p][q]
+                        heappush(heap, (time + grid[p][q], p, q))
+        
+        return distance[(m - 1, n - 1)]
+                
+
+class Solution2:
+    def minimumObstacles(self, grid: List[List[int]]) -> int:
         def helper(x, y):
             ans = [(x, y)]
             
