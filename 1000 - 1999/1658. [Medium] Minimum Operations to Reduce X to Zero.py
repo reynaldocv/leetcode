@@ -2,30 +2,27 @@
 
 class Solution:
     def minOperations(self, nums: List[int], x: int) -> int:
-        n = len(nums)
-        sumLeft, sumRight = 0, 0
-        left, right = {0: 0}, {0: 0}
-        for i in range(n): 
-            sumLeft += nums[i]
-            left[sumLeft] = left.get(sumLeft, i + 1)
-            
-            sumRight += nums[~i]
-            right[sumRight] = right.get(sumRight, i + 1)
-            
-        ans = inf
-        sumL = 0 
-        sumR = sum(nums)
-        if sumR == x: 
-            return n
+        n = len(nums) 
         
-        for num in nums:
-            sumL += num
-            sumR -= num
-            if sumL <= x: 
-                if left[sumL] + right.get(x - sumL, inf) < n: 
-                    ans = min(ans, left[sumL] + right.get(x - sumL, inf))
-            if sumR <= x: 
-                if left.get(x - sumR, inf) + right[sumR] < n: 
-                    ans = min(ans, left.get(x - sumR, inf) + right[sumR])
+        suffix = defaultdict(lambda: inf)
+        
+        tmp = 0 
+        for (i, num) in enumerate([0] + nums[::-1]):
+            tmp += num
+            suffix[tmp] = i
             
-        return ans if ans != inf else -1
+        prefix = 0 
+        
+        ans = inf 
+        
+        for (i, num) in enumerate([0] + nums):
+            prefix += num 
+            tmp = x - prefix 
+            
+            if suffix[tmp] + i <= n: 
+                ans = min(ans, i + suffix[tmp])
+                
+        return -1 if ans == inf else ans 
+            
+            
+            
