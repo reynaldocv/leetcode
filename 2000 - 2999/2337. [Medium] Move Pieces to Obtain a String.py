@@ -2,6 +2,45 @@
 
 class Solution:
     def canChange(self, start: str, target: str) -> bool:        
+        i = 0 
+        j = 0 
+        
+        n = len(start)
+        begin = -1
+        
+        while i < n or j < n: 
+            while i < n and start[i] == "_":
+                i += 1 
+                
+            char1 = start[i] if i < n else "_"
+                
+            while j < n and target[j] == "_":
+                j += 1 
+                
+            char2 = target[j] if j < n else "_"
+                
+            if char1 != char2: 
+                return False 
+            
+            else: 
+                if char1 == "L":
+                    if begin < j and j <= i: 
+                        begin = j
+                    else: 
+                        return False 
+                else: 
+                    if begin < j and i <= j: 
+                        begin = j 
+                    else: 
+                        return False 
+            
+            i += 1 
+            j += 1 
+                    
+        return True 
+
+class Solution2:
+    def canChange(self, start: str, target: str) -> bool:        
         arr1 = []
         for (i, char) in enumerate(start):
             if char != "_":
