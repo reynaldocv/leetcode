@@ -53,7 +53,6 @@ class Solution2:
             if char1 != char2: 
                 return False             
             else:
-                print(char1, begin, start1, start2)
                 if char1 == "L":
                     if begin < start2 and start2 <= start1: 
                         begin = start2
