@@ -2,8 +2,7 @@
 
 class Solution:
     def canChange(self, start: str, target: str) -> bool:        
-        i = 0 
-        j = 0 
+        i, j = 0, 0
         
         n = len(start)
         begin = -1
@@ -41,15 +40,8 @@ class Solution:
 
 class Solution2:
     def canChange(self, start: str, target: str) -> bool:        
-        arr1 = []
-        for (i, char) in enumerate(start):
-            if char != "_":
-                arr1.append((i, char))
-                
-        arr2 = []        
-        for (i, char) in enumerate(target):
-            if char != "_":
-                arr2.append((i, char))
+        arr1 = [(i, char) for (i, char) in enumerate(start)]
+        arr2 = [(i, char) for (i, char) in enumerate(target)]
         
         if len(arr1) != len(arr2):
             return False
