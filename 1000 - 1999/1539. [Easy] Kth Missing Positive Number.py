@@ -3,37 +3,28 @@
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
         def helper(value):
-            start = -1         
-            end = n 
+            idx = bisect_left(arr, value)            
+            ans = value - idx
             
-            while end - start > 1: 
-                mid = (end + start)//2 
-                if arr[mid] < value: 
-                    start = mid
-                else: 
-                    end = mid
-                    
-            if end == n:
-                return value - end + 1
-            elif arr[end] == value: 
-                return value - end 
-            else: 
-                return value - end + 1
+            if idx < n and arr[idx] == value: 
+                ans -= 1 
+                
+            return ans 
             
-        arr.insert(0, 0)          
         n = len(arr)
         
         start = 0 
-        end = 2000
+        end = arr[-1] + k 
         
         while end - start > 1: 
             mid = (end + start)//2
+            
             if helper(mid) < k: 
-                start = mid
+                start = mid 
             else: 
-                end = mid
+                end = mid 
                 
-        return end
+        return end             
 
 class Solution2:
     def findKthPositive(self, arr: List[int], k: int) -> int:
