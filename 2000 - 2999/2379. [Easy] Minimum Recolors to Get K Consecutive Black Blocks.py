@@ -9,8 +9,8 @@ class Solution:
         
         for (i, char) in enumerate(blocks):
             counter += 1 if char == "B" else 0             
-            if i >= k:
-                ans = min(ans, k - (counter - seen[i -  k]))            
+            ans = min(ans, k - (counter - seen[i -  k]))            
             seen[i] = counter
             
         return ans 
+        
