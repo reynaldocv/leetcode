@@ -6,12 +6,11 @@ class Solution:
         m, n = len(nums1), len(nums2)
             
         index = defaultdict(lambda: [])
-        
-        dp = [[0 for i in range(n + 1)] for _ in range(m + 1)]
-        
         for (i, num) in enumerate(nums1):
             index[num].append(i)
-            
+        
+        dp = [[0 for i in range(n + 1)] for _ in range(m + 1)]
+    
         ans = 0 
         
         for (j, num) in enumerate(nums2):
