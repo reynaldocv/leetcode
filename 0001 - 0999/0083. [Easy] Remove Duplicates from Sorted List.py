@@ -6,16 +6,20 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def deleteDuplicates(self, head: ListNode) -> ListNode:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = -inf 
         
         ans = cur = ListNode(0)
-        value = inf
+        
         while head: 
-            if head.val != value:                 
-                value = head.val 
+            if head.val != prev: 
                 cur.next = ListNode(head.val)
                 cur = cur.next
-            head = head.next
+                
+            prev = head.val 
+                
+            head = head.next 
+            
         return ans.next
                 
             
