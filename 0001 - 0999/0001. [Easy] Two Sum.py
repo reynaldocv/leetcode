@@ -2,15 +2,15 @@
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        dic = {}
-        dic[nums[0]] = 0
+        seen = {}
         
-        for i in range(1, len(nums)):
-            aux = target - nums[i]
-            if aux in dic:
-                return (dic[aux], i)
-            else:
-                dic[nums[i]] = i
+        for (i, num) in enumerate(nums):
+            tmp = target - num 
+            
+            if tmp in seen: 
+                return [seen[tmp], i]
+            
+            seen[num] = i 
             
         
         
