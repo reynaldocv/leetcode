@@ -5,27 +5,22 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        if m == 0 or n == 0:
-            for i in range(n):
-                nums1[i] = nums2[i] 
-        else:
-            aux = [0]*(n + m)
-            for i in range(m):
-                aux[n + i] = nums1[i]
-            for i in range(m + n):
-                nums1[i] = aux[i]
-            print(nums1)
-            idx, i, j = 0, n, 0
-            while i < m + n and j < n:
-                if nums1[i] > nums2[j]:
-                    nums1[idx] = nums2[j]
-                    j += 1
-                else:
-                    nums1[idx] = nums1[i]
-                    i += 1
-                idx += 1
-
-            if j < n:
-                for i in range(j, n):
-                    nums1[idx] = nums2[i]
-                    idx += 1
+        for i in range(m + n - 1, n - 1, -1):
+            nums1[i] = nums1[i - n]
+            
+        i, j = n, 0 
+        
+        idx = 0 
+        
+        while i < m + n or j < n:
+            val1 = nums1[i] if i < m + n else inf 
+            val2 = nums2[j] if j < n else inf 
+            
+            if val1 < val2: 
+                nums1[idx] = val1
+                i += 1 
+            else: 
+                nums1[idx] = val2
+                j += 1 
+                
+            idx += 1 
