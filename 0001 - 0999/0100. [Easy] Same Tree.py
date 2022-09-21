@@ -7,20 +7,25 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        def sameTree(p, q):
-            if p == None and q == None: 
-                return True
-            elif p == None or q == None:
-                return False
-            else: 
-                if p.val != q.val:
-                    return False
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        def helper(node1, node2):
+            if node1 and node2: 
+                if node1.val == node2.val: 
+                    left = helper(node1.left, node2.left)
+                    right = helper(node1.right, node2.right)
+                    
+                    return left and right
+                
                 else: 
-                    l = sameTree(p.left, q.left)
-                    r = sameTree(p.right, q.right)
-                    return (l and r)
+                    return False 
+                
+            elif not node1 and not node2: 
+                return True 
+            
+            else: 
+                return False 
+            
+        return helper(p, q)
         
-        return sameTree(p, q)
                     
         
