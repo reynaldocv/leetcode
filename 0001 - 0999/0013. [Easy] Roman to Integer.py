@@ -3,16 +3,19 @@
 class Solution:
     def romanToInt(self, s: str) -> int:
         values = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-        val = 0
-        n = len(s)
-        ans = 0
-        for i in range(n - 1, -1, -1):
-            if values[s[i]] >= val: 
-                ans += values[s[i]]
-                val = values[s[i]]
+        
+        ans = 0 
+        tmp = 0 
+        
+        for char in s[:: -1]:
+            if values[char] < tmp: 
+                ans -= values[char]
+                
             else: 
-                ans -= values[s[i]]
-        return ans
+                ans += values[char]
+                tmp = values[char]
+                
+        return ans 
             
         
         
