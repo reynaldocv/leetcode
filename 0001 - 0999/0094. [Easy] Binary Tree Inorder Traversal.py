@@ -7,13 +7,18 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def inorderTraversal(self, root: TreeNode) -> List[int]:
-        def inorder(root):
-            if root: 
-                inorder(root.left)
-                self.ans.append(root.val)
-                inorder(root.right)
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def helper(node):
+            if node: 
+                helper(node.left)
+                
+                ans.append(node.val)
+                
+                helper(node.right)
+                
+        ans = []
         
-        self.ans = []
-        inorder(root)
-        return self.ans
+        helper(root)
+        
+        return ans 
+        
