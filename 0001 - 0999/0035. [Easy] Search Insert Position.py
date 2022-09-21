@@ -10,10 +10,10 @@ class Solution:
         while end - start > 1: 
             mid = (end + start)//2
             
-            if nums[mid] >= target: 
-                end = mid 
-            else: 
+            if nums[mid] < target: 
                 start = mid 
+            else: 
+                end = mid 
                 
         return end 
         
