@@ -7,18 +7,23 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSymmetric(self, root: TreeNode) -> bool:
-        def mirror(root1, root2):
-            if root1 == None and root2 == None: 
-                return True
-            if root1 and root2: 
-                if root1.val != root2.val: 
-                    return False
-                else:                     
-                    l = mirror(root1.left, root2.right)
-                    r = mirror (root1.right, root2.left)
-                    return (l and r)
-            return False
-        
-        return mirror(root.left, root.right)
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        def helper(node1, node2):
+            if node1 and node2: 
+                if node1.val == node2.val: 
+                    left = helper(node1.left, node2.right)
+                    right = helper(node1.right, node2.left)
+                    
+                    return left and right 
+                
+                else: 
+                    return False 
+            
+            elif not node1 and not node2: 
+                return True 
+            
+            else:                 
+                return False 
+            
+        return helper(root.left, root.right)
         
