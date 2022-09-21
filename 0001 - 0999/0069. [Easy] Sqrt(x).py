@@ -3,17 +3,16 @@
 class Solution:
     def mySqrt(self, x: int) -> int:
         start = 0
-        end = x
+        end = x + 1
+        
         while end - start > 1: 
-            m = (start + end)//2
-            if m*m == x:
-                return m 
-            if m*m >= x:
-                end = m
-            else:
-                start = m
-        if end*end == x:            
-            return end
+            mid = (end + start)//2
+            
+            if mid**2 <= x: 
+                start = mid
+            else: 
+                end = mid
+                
         return start
             
         
