@@ -2,10 +2,15 @@
 
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        dic = {}
+        n = len(nums)
+        
+        counter = defaultdict(lambda: 0)
+        
         for num in nums: 
-            dic[num] = dic.get(num, 0) + 1
-            if (dic[num] >= 2):
+            if num in counter: 
                 return True
+            
+            counter[num] += 1 
+        
         return False
         
