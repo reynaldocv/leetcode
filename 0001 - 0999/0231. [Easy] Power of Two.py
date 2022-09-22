@@ -5,7 +5,6 @@ class Solution:
         if n <= 0: 
             return False 
         
-        
         while n % 2 == 0: 
             n //= 2 
                 
