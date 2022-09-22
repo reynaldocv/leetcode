@@ -7,19 +7,23 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isBalanced(self, root: TreeNode) -> bool:
-        def  balanced(root):
-            if not root:
-                return 0, True 
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def helper(node):
+            if node: 
+                (left, leftBool) = helper(node.left)
+                (right, rightBool) = helper(node.right)
+                
+                if leftBool and rightBool: 
+                    if abs(left - right) <= 1: 
+                        return (1 + max(left, right), True)
+                    else: 
+                        return (0, False)
+                else: 
+                    return (0, False)                 
             else: 
-                h1, b1 = balanced(root.left) 
-                h2, b2 = balanced(root.right)
-                h1 += 1
-                h2 += 1
-                b3 = True if abs(h1 - h2) <= 1 else False 
-                return max(h1, h2), b1 and b2 and b3
-        
-        return balanced(root)[1]
+                return (0, True)
+                
+        return helper(root)[1]
        
                 
                 
