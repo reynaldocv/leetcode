@@ -8,20 +8,24 @@ class Solution:
         for num in nums:
             if count == 0:
                 candidate = num
-            count += (1 if num == candidate else -1)
+                
+            if num == candidate: 
+                count += 1 
+                
+            else:
+                count -= 1 
 
         return candidate
     
-class Solution2:
+class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        dic, n = {}, len(nums)
+        counter = defaultdict(lambda: 0)
         
-        for num in nums:
-            dic[num] = dic.get(num, 0) + 1
+        ans = (0, 0)
         
-        ans = -1
-        for num in dic: 
-            if dic[num] > n//2:
-                ans = num
-        return ans
-        
+        for num in nums: 
+            counter[num] += 1 
+            
+            ans = max(ans, (counter[num], num))
+            
+        return ans[1]
