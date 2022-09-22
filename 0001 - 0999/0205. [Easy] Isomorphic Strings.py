@@ -2,23 +2,17 @@
 
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        if len(s) != len(t): return False
-        dicS, dicT = {}, {}
-        idx = 0
-        for i in s: 
-            if i not in dicS:
-                dicS[i] = str(idx)
-                idx += 1
-        idx = 0
-        for i in t: 
-            if i not in dicT:
-                dicT[i] = str(idx)
-                idx += 1
+        def helper(word1, word2):
+            seen = {}
+            
+            for (i, char1) in enumerate(word1):
+                char2 = word2[i]
                 
-        for i in dicS: 
-            s = s.replace(i, dicS[i])
-        for i in dicT: 
-            t = t.replace(i, dicT[i])
+                if char1 not in seen: 
+                    seen[char1] = char2
+                elif seen[char1] != char2:
+                    return False 
+                    
+            return True 
         
-        return s == t
-        
+        return helper(s, t) and helper(t, s)
