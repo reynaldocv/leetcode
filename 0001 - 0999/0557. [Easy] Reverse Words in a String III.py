@@ -2,13 +2,17 @@
 
 class Solution:
     def reverseWords(self, s: str) -> str:
-        arr = s.split(" ")
         ans = ""
-        l = len(arr)
-        for i in range(l - 1):
-            ans += arr[i][::-1] + " "
-        ans += arr[l - 1][::-1]
-        return ans
+        prev = ""
+        
+        for char in s + " ": 
+            if char == " ":
+                ans = ans + prev[::-1] + " "
+                prev = ""
+            else: 
+                prev += char 
+                
+        return ans[: -1] 
         
             
         
