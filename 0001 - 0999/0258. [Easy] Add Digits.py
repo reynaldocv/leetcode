@@ -1,13 +1,21 @@
 # https://leetcode.com/problems/add-digits/
 
 class Solution:
-    def addDigits(self, num: int) -> int:        
+    def addDigits(self, num: int) -> int:
+        @cache
+        def helper(x):
+            ans = 0 
+            
+            while x: 
+                ans += (x % 10)
+                x //= 10 
+                
+            return ans 
+        
         while num >= 10:
-            aux = 0
-            while num > 0:
-                aux += (num % 10)
-                num = (num // 10)
-            num = aux
-        return num
+            num = helper(num)
+            
+        return num 
+            
             
         
