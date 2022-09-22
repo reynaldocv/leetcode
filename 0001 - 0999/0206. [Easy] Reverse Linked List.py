@@ -6,11 +6,13 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
-        ans = None
-        while (head):
-            ans = ListNode(head.val, ans)
-            head = head.next
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        ans = None 
         
-        return ans
+        while head: 
+            ans = ListNode(head.val, ans)
+            
+            head = head.next 
+            
+        return ans 
         
