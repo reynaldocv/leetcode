@@ -2,27 +2,28 @@
 
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
-        dic = {i: chr(i + ord("a")) for i in range(26)}
-        dicS, dicP = {}, {}
-        arrS = s.split(" ")
-        aux, aux2 = "", ""
+        def helper(arr1, arr2):
+            seen = {}
         
-        idx = 0
-        for elem in arrS: 
-            if elem not in dicS: 
-                dicS[elem] = dic[idx]
-                idx += 1
-        for elem in arrS: 
-            aux += dicS[elem]
-        
-        idx = 0        
-        for elem in pattern: 
-            if elem not in dicP: 
-                dicP[elem] = dic[idx]
-                idx += 1
-        for elem in pattern: 
-            aux2 += dicP[elem]
-        
-        
-        return aux == aux2
+            for (i, word1) in enumerate(arr1): 
+                word2 = arr2[i]
+                if word1 not in seen: 
+                    seen[word1] = word2
                 
+                elif seen[word1] != word2:
+                    return False 
+            
+            return True 
+            
+        arrS = s.split(" ")
+        arrPattern = [char for char in pattern]
+        
+        m, n = len(pattern), len(arrS)
+        
+        if m != n: 
+            return False
+        
+        return helper(arrS, arrPattern) and helper(arrPattern, arrS) 
+        
+                
+        
