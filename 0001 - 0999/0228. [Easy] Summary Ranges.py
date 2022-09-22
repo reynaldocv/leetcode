@@ -2,22 +2,24 @@
 
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
-        if not nums: 
-            return []
-        
-        start = prev = nums[0]        
+        prev = -inf
+        start = -inf 
         ans = []
         
-        for num in nums[1: ] + [inf]:
-            if prev + 1 == num: 
-                prev += 1 
-            else: 
-                if start == prev: 
-                    ans.append(str(start))
-                else:
-                    ans.append(str(start) + "->" + str(prev))
-                    
-                prev = start = num
+        for num in nums + [inf]: 
+            if prev + 1 != num: 
+                if prev != -inf:
+                    if start != prev: 
+                        ans.append(str(start) + "->" + str(prev))
+                    else:
+                        ans.append(str(start))
                 
-        return ans
+                start = num 
+                prev = num 
+            
+            else: 
+                prev = num 
+                
+        return ans 
+                
 
