@@ -2,19 +2,17 @@
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        dic = {}
-        for i in range(26):
-            dic[chr(i + ord("a"))] = True
+        seen = {chr(ord("a") + i) for i in range(26)}
+    
         for i in range(10):
-            dic[str(i)] = True
-        print(dic)
-            
-        s = s.lower()
-        n = len(s)
-        ans = ""
-        for i in range(n):
-            if s[i] in dic: 
-                ans += s[i]
+            seen.add(str(i))
         
-        return ans == ans[::-1]
+        ans = ""
+        
+        for char in s: 
+            letter = char.lower()
+            if letter in seen: 
+                ans += letter
+                
+        return ans == ans[:: -1]
             
