@@ -7,22 +7,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def minDepth(self, root: TreeNode) -> int:
-        def heightLeaf(root):
-            if root:
-                if root.left != None and root.right != None: 
-                    h1 = 1 + heightLeaf(root.left)
-                    h2 = 1 + heightLeaf(root.right)
-                    print(h1,h2)
-                    return min(h1, h2)
-                elif root.left == None and root.right == None:
-                    return 1
-                elif root.left: 
-                    return 1 + heightLeaf(root.left)
-                else:
-                    return  1 + heightLeaf(root.right)
-                    
-            else:
-                return 0
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        def helper(node, lvl):
+            if node: 
+                if not node.left and not node.right: 
+                    return lvl + 1
+                
+                left = helper(node.left, lvl + 1)
+                right = helper(node.right, lvl + 1)
+                
+                return min(left, right)
+            
+            else: 
+                return inf
+            
+        ans = helper(root, 0)
         
-        return heightLeaf(root)
+        return 0 if ans == inf else ans 
