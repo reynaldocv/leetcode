@@ -2,14 +2,17 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        maxP = prices.copy()
-        ans, n = 0, len(prices)
-        if n <= 1: return 0
+        n = len(prices)
+        
+        suffix = [price for price in prices]
+        
         for i in range(n - 2, -1, -1):
-            maxP[i] = max(maxP[i], maxP[i + 1])
+            suffix[i] = max(suffix[i], suffix[i + 1])
+            
+        ans = 0 
         
         for i in range(n - 1):
-            ans = max(ans, maxP[i + 1] - prices[i])
-        
-        return ans
+            ans = max(ans, suffix[i + 1] - prices[i])
+            
+        return ans 
         
