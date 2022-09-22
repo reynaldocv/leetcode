@@ -2,19 +2,24 @@
 
 class Solution:
     def isHappy(self, n: int) -> bool:
-        def sumOfSquareDigits(n):
-            if n <= 1: return 1
-            ans = 0
-            while n > 0:
-                ans += (n % 10)**2
-                n = n // 10
-            return ans
+        @cache
+        def helper(x):
+            ans = 0 
+            
+            while x:
+                ans += (x % 10)**2
+                
+                x //= 10
+                
+            return ans 
+                
+        seen = {1}
         
-        dic = {}        
-        while n != 1 and n not in dic:
-            dic[n] = True
-            n = sumOfSquareDigits(n)
-        
-        return True if n == 1 else False
+        while n not in seen: 
+            seen.add(n)
+            
+            n = helper(n)
+            
+        return n == 1
         
         
