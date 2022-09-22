@@ -7,16 +7,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def binaryTreePaths(self, root: TreeNode) -> List[str]:
-        def route(root, ans):
-            if root: 
-                if root.left == None and root.right == None: 
-                    self.ans.append(ans + "->" + str(root.val))
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        def helper(node, path):
+            if node: 
+                if path == "":
+                    path += str(node.val)
                 else: 
-                    route(root.left, ans + "->" + str(root.val))
-                    route(root.right, ans + "->" + str(root.val))
-        ans = self.ans = []
-        route(root, "")
-        for i in range(len(ans)):
-            ans[i] = ans[i][2:]
-        return ans
+                    path += "->" + str(node.val)
+                    
+                if not node.left and not node.right: 
+                    ans.append(path)
+                    
+                helper(node.left, path)
+                helper(node.right, path)
+                
+        ans = []
+        
+        helper(root, "")
+        
+        return ans 
