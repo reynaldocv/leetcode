@@ -7,14 +7,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def invertTree(self, root: TreeNode) -> TreeNode:
-        def invert(root):
-            if root:
-                aux = root.left
-                root.left = root.right
-                root.right = aux
-                invert(root.left)
-                invert(root.right)
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def helper(node):
+            if node: 
+                return TreeNode(node.val, helper(node.right), helper(node.left))
+                
+            else: 
+                return None
+            
+        return helper(root)    
         
-        invert(root)
-        return root
+        
