@@ -5,13 +5,15 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        j, n = 0, len(nums)
-        for i in range(n):
-            if nums[i] != 0:
-                nums[j] = nums[i]
-                j += 1
-        for i in range(j, n):
-            nums[i] = 0
+        n = len(nums)
         
-        return nums
+        idx = 0 
+        
+        for num in nums: 
+            if num != 0: 
+                nums[idx] = num 
+                idx += 1 
+                
+        for i in range(idx, n):
+            nums[i] = 0
         
