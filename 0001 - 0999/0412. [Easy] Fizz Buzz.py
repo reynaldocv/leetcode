@@ -2,17 +2,20 @@
 
 class Solution:
     def fizzBuzz(self, n: int) -> List[str]:
-        text = ["Fizz", "Buzz", "FizzBuzz"]
         ans = []
-        for i in range(1, n + 1):
-            if i % 15 == 0:
-                ans.append(text[2])
-            elif i % 3 == 0:
-                ans.append(text[0])
-            elif i % 5 == 0:
-                ans.append(text[1])
-            else:
-                ans.append(str(i))
         
-        return ans
+        for num in range(1, n + 1):
+            if num % 3 == 0 or num % 5 == 0: 
+                tmp = ""
+                if num % 3 == 0:
+                    tmp += "Fizz"
+                if num % 5 == 0: 
+                    tmp += "Buzz"
+        
+                ans.append(tmp)
+            
+            else: 
+                ans.append(str(num))
+                
+        return ans 
             
