@@ -1,33 +1,32 @@
 # https://leetcode.com/problems/binary-watch/
 
-from itertools import permutations
 class Solution:
     def readBinaryWatch(self, turnedOn: int) -> List[str]:
-        def hour(leds):
-            h, m, ans = 0, 0, ""
-            for i in range(4):
-                h = h + leds[i]*2**i                
-            for i in range(6):
-                m = m + leds[i + 4]*2**i
-            
-            if h < 12:
-                ans = str(h) + ":"                
-            if m <= 59:
-                if m == 0: 
-                    ans += "00"
-                elif m < 10:
-                    ans += "0"+str(m)
-                else:
-                    ans += str(m)
-            return ans
+        seen = {0: 8, 1: 4, 2: 2, 3:1, 4:32, 5: 16, 6: 8, 7: 4, 8: 2, 9: 1}
         
-        aux = [1]*turnedOn
-        aux.extend([0]*(10 - turnedOn))        
-        perm = set(permutations(aux, 10))
         ans = []
-        for i in perm: 
-            j = hour(i)
-            if len(j) >= 4:
-                ans.append(hour(i))
-        ans.sort()
+        
+        for comb in combinations([i for i in range(10)], turnedOn):            
+            hours = 0 
+            minutes = 0 
+            
+            for value in comb: 
+                if value <= 3: 
+                    hours += seen[value]
+                else: 
+                    minutes += seen[value]
+                
+            tmp = ""
+            
+            if hours < 12 and minutes < 60: 
+                tmp = str(hours)
+            
+                if minutes <= 9:
+                    tmp += ":0" + str(minutes)
+                else: 
+                    tmp += ":" + str(minutes)
+
+                ans.append(tmp)
+
         return ans
+            
