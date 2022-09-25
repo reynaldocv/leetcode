@@ -2,19 +2,16 @@
 
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        pos, dic = {}, {}
-        n = len(s)
-        for i in range(n):
-            dic[s[i]] = dic.get(s[i], 0) + 1
-            if s[i] not in pos: 
-                pos[s[i]] = i
-        ans = n
-        print(dic)
-        print(pos)
-        for i in dic:
-            if dic[i] == 1:
-                ans = min(ans, pos[i])
-        return -1 if ans == n else ans
+        counter = defaultdict(lambda: 0)
+        
+        for (i, char) in enumerate(s):
+            counter[char] += 1 
+        
+        for (i, char) in enumerate(s):
+            if counter[char] == 1: 
+                return i 
+            
+        return -1 
             
         
         
