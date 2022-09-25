@@ -7,18 +7,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def sumOfLeftLeaves(self, root: TreeNode) -> int:
-        def leftLeaves(root, left):
-            if root:
-                if root.left == None and root.right == None: 
-                    if left == True:
-                        self.ans += root.val
-                else:
-                    leftLeaves(root.left, True)
-                    leftLeaves(root.right, False)
-        self.ans = 0
-        leftLeaves(root, "False")
-        return self.ans
+    def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+        def helper(node, isLeft):
+            nonlocal ans
+            
+            if node: 
+                if not node.left and not node.right and isLeft: 
+                    ans += node.val 
+                    
+                helper(node.left, True)
+                helper(node.right, False)
+
+        ans = 0 
         
-                
+        helper(root, False)
+        
+        return ans 
         
