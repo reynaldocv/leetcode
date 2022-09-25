@@ -2,14 +2,16 @@
 
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        dic = {}
-        for i in t: 
-            dic[i] = dic.get(i, 0) + 1
-        for i in s:
-            dic[i] = dic.get(i, 0) - 1
-            if dic[i] == 0:
-                del dic[i]
+        counter = defaultdict(lambda: 0)
         
-        ans = [*dic] 
-        return ans[0]
+        for char in t: 
+            counter[char] += 1 
+        
+        for char in s: 
+            counter[char] -= 1 
+            
+            if counter[char] == 0: 
+                counter.pop(char)
+                
+        return next(key for key in counter)
             
