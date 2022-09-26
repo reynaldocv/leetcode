@@ -2,27 +2,31 @@
 
 class Solution:
     def islandPerimeter(self, grid: List[List[int]]) -> int:
-        def groupOf1(array):
-            n = len(array)
-            aux, ans = 0, 0
-            if array[0] == 1:
-                aux, ans = 1, 1
-            for i in range(0, n - 1):
-                if array[i] == 0 and array[i + 1] == 1:
-                    ans += 1
-            return ans
-        
-        row = len(grid)
-        col = len(grid[0])        
-        grid2 = [[grid[i][j] for i in range(row)] for j in range(col)]
-        
-        ans = 0
-        for i in range(row):
-            ans += groupOf1(grid[i])
+        def helper(arr):
+            prev = 0 
+            ans = 0 
             
-        for i in range(col):
-            ans += groupOf1(grid2[i])
-                
-        return 2*ans
+            for num in arr + [0]:
+                if num == 0: 
+                    if prev == 1: 
+                        ans += 1 
+                        
+                prev = num 
+                    
+            return ans 
+        
+        m, n = len(grid), len(grid[0])
+        
+        ans = 0 
+        
+        for row in grid: 
+            ans +=  2*helper(row)
+            
+        grid = [[grid[i][j] for i in range(m)] for j in range(n)]
+        
+        for row in grid: 
+            ans += 2*helper(row)
+            
+        return ans 
         
         
