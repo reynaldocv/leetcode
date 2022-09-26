@@ -2,17 +2,19 @@
 
 class Solution:
     def countSegments(self, s: str) -> int:
-        if s == "": return 0
-        n, ans, aux = len(s), 0, ""
-        for i in range(n):
-            if s[i] == " ":                
-                if len(aux) != 0: 
-                    ans += 1
-                aux = ""
-            else:
-                aux += s[i]
-        if aux != "":
-            ans += 1
-        return ans
+        ans = 0     
+        prev = ""
+        
+        for char in s + " ":
+            if char == " ":
+                if prev != "":
+                    ans += 1 
+                    
+                prev = ""            
+            else: 
+                prev += char 
+                
+        return ans 
+        
             
             
