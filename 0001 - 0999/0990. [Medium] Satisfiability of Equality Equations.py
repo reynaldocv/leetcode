@@ -2,35 +2,43 @@
 
 class Solution:
     def equationsPossible(self, equations: List[str]) -> bool:
-        def find(u):
-            while u != parent[u]:
-                u = parent[u]
-            
-            return u
-        
-        equations.sort(key = lambda item: 1 if item.count("!=") else 0)
-        
-        idx = 0 
-        parent = {}
-        
-        for elem in equations: 
-            u = elem[:1]
-            operation = elem[1:3]
-            v = elem[3:]
-            if u not in parent: 
-                parent[u] = u
-            if v not in parent: 
-                parent[v] = v
-            
-            pu = find(u)
-            pv = find(v)
+        def helper(son):
+            while son != parents[son]:
+                son = parents[son]
                 
-            if operation == "==":
-                parent[pu] = parent[pv] = min(pu, pv)
-            elif pu == pv:
-                return False
+            return son 
+            
+        index = {chr(ord("a") + i): i for i in range(26)}
+        
+        parents = [i for i in range(26)]
+        
+        equals = [equation for equation in equations if "==" in equation]
+        
+        constraints = [equation for equation in equations if "!=" in equation]
+        
+        for equal in equals: 
+            u = index[equal[0: 1]]
+            v = index[equal[3:]]
+            
+            parentU = helper(u)
+            parentV = helper(v)
+            
+            parents[parentU] = parents[parentV] = min(parentU, parentV)        
+ 
+        for constraint in constraints:             
+            u = index[constraint[0: 1]]
+            v = index[constraint[3:]]
+            
+            parentU = helper(u)
+            parentV = helper(v)
+            
+            if parentU == parentV: 
+                return False 
             
         return True
+        
+        
+        
                 
                 
                 
