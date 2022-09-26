@@ -4,13 +4,12 @@ class Solution:
     def addStrings(self, num1: str, num2: str) -> str:
         num1, num2 = num1[:: -1], num2[:: -1]
         
-        aux = 0 
-        
-        m, n = len(num1), len(num2)
-        
+        m, n = len(num1), len(num2)        
         limit = max(m, n)
         
         ans = ""
+        
+        aux = 0 
         
         for i in range(limit):
             val1 = int(num1[i]) if i < m else 0 
