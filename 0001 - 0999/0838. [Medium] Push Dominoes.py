@@ -2,56 +2,37 @@
 
 class Solution:
     def pushDominoes(self, dominoes: str) -> str:
-        def helper(string):
+        def helper(arr):        
+            processing = False 
             ans = [inf for _ in range(n)]
-            process = False
-            cnt = 0 
-            for (i, char) in enumerate(string): 
-                if char == "L":
-                    process = False
-                    cnt = 0 
+            
+            for (i, char) in enumerate(arr): 
+                if char == ".":
+                    if processing: 
+                        ans[i] = ans[i - 1] + 1
                 elif char == "R":
-                    process = True 
-                    cnt = 1 
-                elif process: 
-                    cnt += 1 
-            
-                if process: 
-                    ans[i] = cnt
-            
-            return ans 
-                
-        n = len(dominoes)    
+                    ans[i] = 1 
+                    processing = True 
+                else: 
+                    processing = False
+                    
+            return ans
         
-        cmp = {"L": "R", "R": "L", ".": "."}
-        tmp = "".join([cmp[char] for char in dominoes])
+        n = len(dominoes)
         
-        left = helper(dominoes)        
-        right = helper(tmp[::-1])[::-1]
+        complement = {"R": "L", "L": "R", ".": "."}
         
-        ans = ""        
+        left = helper(dominoes)
+        right = helper([complement[char] for char in dominoes][:: -1])[:: -1]
+        
+        ans = ""       
+        
         for i in range(n):
             if left[i] == right[i]:
                 ans += "."
             elif left[i] < right[i]:
                 ans += "R"
-            else:
+            else: 
                 ans += "L"
                 
-        return ans
-                    
-        
-            
-                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        return ans 
