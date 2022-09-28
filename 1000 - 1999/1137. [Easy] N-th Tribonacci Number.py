@@ -13,15 +13,14 @@ class Solution:
     
 class Solution2:
     def tribonacci(self, n: int) -> int:
-        @cache
-        def helper(i):
-            if i <= 1: 
-                return i 
-            elif i == 2: 
-                return 1 
+        @cache 
+        def helper(x):
+            if x <= 2: 
+                return 0 if x == 0 else 1 
             else: 
-                return helper(i - 1) + helper(i - 2) + helper(i - 3)
+                return helper(x - 1) + helper(x - 2) + helper(x - 3)
             
         return helper(n)
+        
         
         
