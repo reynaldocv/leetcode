@@ -25,5 +25,4 @@ class Solution:
             counter += 1 
 
         return ans 
-Console
 
