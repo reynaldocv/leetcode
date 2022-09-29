@@ -1,23 +1,24 @@
 # https://leetcode.com/problems/find-k-closest-elements/
 
 class Solution:
-    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
-        n = len(arr)
-        arr.sort(key = lambda item: abs(item - x))
-        ans = []
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:        
+        n = len(arr) 
         
-        print(arr)
+        end = bisect_left(arr, x)
+        start = end - 1
         
-        for num in arr:
-            if num < x: 
-                ans.insert(0, num)
+        while k: 
+            val1 = abs(x - arr[start]) if start >= 0 else inf 
+            val2 = abs(x - arr[end]) if end < n else inf 
+            
+            if val1 <= val2: 
+                start -= 1 
             else: 
-                ans.append(num)
+                end += 1 
                 
-            if len(ans) == k: 
-                break
-
-        return ans
+            k -= 1 
+                
+        return arr[start + 1: end]
 
         
         
