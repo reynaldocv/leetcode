@@ -2,33 +2,34 @@
 
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        def helper(x, y):
+            stack = [(x, y)]
+            grid[x][y] = 0 
+
+            ans = 1 
+
+            while stack: 
+                (x, y) = stack.pop() 
+
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
+
+                    if 0 <= p < m and 0 <= q < n:
+                        if grid[p][q] == 1: 
+                            grid[p][q] = 0 
+                            stack.append((p, q))
+                            
+                            ans += 1 
+
+            return ans 
         
-        def markIsland(x, y, val):
-            points = [(x, y)]
-            ans = 0
-            while points: 
-                (x, y) = points.pop()  
-                if grid[x][y] == 1: 
-                    grid[x][y] = val
-                    ans += 1
-                for (i, j) in directions: 
-                    r = x + i
-                    s = y + j
-                    if 0 <= r < n and 0 <= s < m: 
-                        if grid[r][s] == 1:
-                            points.append((r, s))
-            return ans
-        
-        n = len(grid)
-        m = len(grid[0])
+        m, n = len(grid), len(grid[0])
+
         ans = 0 
-        val = 1
-        for i in range(n):
-            for j in range(m):
+
+        for i in range(m):
+            for j in range(n):
                 if grid[i][j] == 1: 
-                    val += 1
-                    ans = max(ans, markIsland(i, j, val))
-               
+                    ans = max(ans, helper(i, j))
+
         return ans
-                    
