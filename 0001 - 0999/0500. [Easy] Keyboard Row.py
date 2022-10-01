@@ -2,23 +2,20 @@
 
 class Solution:
     def findWords(self, words: List[str]) -> List[str]:
-        row = ["qwertyuiop", "asdfghjkl", "zxcvbnm"]
-        dic = {}
-        for i in range(len(row)):
-            for letter in row[i]:
-                dic[letter] = i
+        rows = {}
         
-        ans = []
-        for word in words:
-            auxword = word.lower()
-            add = True
-            aux = dic[auxword[0]]
-            
-            for i in range(1, len(word)):
-                if aux != dic[auxword[i]]:
-                    add = False
-                    break
-            if add: 
-                ans.append(word)
-        return ans
+        for (i, row) in enumerate(["qwertyuiop", "asdfghjkl", "zxcvbnm"]):
+            for char in row: 
+                rows[char] = i 
                 
+        ans = []
+        
+        for word in words: 
+            tmp = set()
+            for char in word: 
+                tmp.add(rows[char.lower()])
+                
+            if len(tmp) == 1: 
+                ans.append(word)
+                
+        return ans 
