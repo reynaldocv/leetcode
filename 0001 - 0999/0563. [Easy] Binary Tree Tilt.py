@@ -6,22 +6,40 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# Definition for a binary tree node.
 class Solution:
-    def findTilt(self, root: TreeNode) -> int:
-        def tour(root):
-            if root: 
-                sumL = tour(root.left)
-                sumR = tour(root.right)
-                self.ans.append(abs(sumL - sumR))
-                return sumL + sumR + root.val
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        def helper(node):
+            if node: 
+                left, leftSum = helper(node.left)
+                right, rightSum = helper(node.right)
+                
+                tmp = abs(left - right)
+                
+                return left + right + node.val, leftSum + rightSum + tmp
             
-            else:
-                return 0  
+            return 0, 0
         
+        return helper(root)[1]
+
+class Solution2:
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        def helper(node):
+            if node: 
+                left = helper(node.left)
+                right = helper(node.right)
+                
+                self.ans += abs(left - right)
+                
+                return left + right + node.val
+            
+            return 0 
         
-        ans = self.ans = []
-        tour(root)
-        return sum(ans)
+        self.ans = 0 
+        
+        helper(root)
+        
+        return self.ans
 
         
         
