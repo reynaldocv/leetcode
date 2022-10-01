@@ -2,22 +2,20 @@
 
 class Solution:
     def checkRecord(self, s: str) -> bool:
-        aux = ""
-        counter, counterA = 0, 0
-        s += " "        
-        n = len(s)
-        for i in range(n):
-            if s[i] == "A":
-                counterA += 1
-                if counterA >= 2:
-                    return False
-            if s[i] != aux:
-                if aux == "L":
-                    if counter >= 3:
-                        return False
-                aux = s[i]
-                counter = 1
-            else: 
-                counter += 1
+        counterAbsent = 0 
+        counterLate = 0 
+        maxLate = 0 
         
-        return True
+        for char in s: 
+            if char == "L":
+                counterLate += 1 
+                maxLate = max(maxLate, counterLate)
+            
+            else:                 
+                if char == "A":
+                    counterAbsent += 1 
+                    
+                counterLate = 0 
+                
+        return maxLate < 3 and counterAbsent < 2 
+        
