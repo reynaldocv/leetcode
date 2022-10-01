@@ -2,12 +2,17 @@
 
 class Solution:
     def findComplement(self, num: int) -> int:
-        pos = 0
-        ans = 0
-        while num > 0:
-            ans += (((num % 2) + 1) % 2)*2**pos
-            num = num//2
-            pos += 1            
+        ans = 0 
+        base = 1 
+        
+        while num: 
+            bit = num & 1 
             
-        return ans
+            ans += (1 - bit)*base 
+            
+            base *= 2             
+            num //= 2
+            
+        return ans 
+        
             
