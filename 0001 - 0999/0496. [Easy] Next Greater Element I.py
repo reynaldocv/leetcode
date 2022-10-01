@@ -2,21 +2,17 @@
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        seen = {}
-        stack = [nums2[0]]
+        stack = []
+        last = defaultdict(lambda: -1)
         
-        for num in nums2[1:]:
+        for num in nums2: 
             while stack and stack[-1] < num: 
-                seen[stack.pop()] = num
+                elem = stack.pop() 
+                
+                last[elem] = num
             
             stack.append(num)
-        
-        for num in stack: 
-            seen[num] = -1
-        
-        ans = []
-        for num in nums1:
-            ans.append(seen[num])
-            
-        return ans
+                
+        return [last[num] for num in nums1]
+                
         
