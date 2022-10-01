@@ -2,10 +2,15 @@
 
 class Solution:
     def arrayPairSum(self, nums: List[int]) -> int:
-        ans = 0
-        l = len(nums)//2
-        nums.sort(reverse = True)
-        for i in range(l):
-            ans += nums[2*i + 1]
-        return ans
+        n = len(nums)
+        
+        nums.sort() 
+        
+        ans = 0 
+        
+        for i in range(0, n, 2):
+            ans += min(nums[i], nums[i + 1])
+            
+        return ans 
+        
         
