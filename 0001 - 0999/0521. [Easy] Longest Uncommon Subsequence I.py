@@ -6,3 +6,4 @@ class Solution:
             return -1
         
         return max(len(a), len(b))
+    
