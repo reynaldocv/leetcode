@@ -7,18 +7,29 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def getMinimumDifference(self, root: TreeNode) -> int:
-        def route(root):
-            if root:
-                self.arr.append(root.val)
-                route(root.left)
-                route(root.right)
+    def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+        def helper(node):
+            if node: 
+                helper(node.left)
+                
+                arr.append(node.val)
+                
+                helper(node.right)
         
-        arr = self.arr = []
-        route(root)
-        arr.sort()
+        arr = []
+        
+        helper(root)
+        
+        n = len(arr)
+        
         ans = inf
-        for i in range(1, len(arr)):
-            ans = min(ans, arr[i] - arr[i - 1])
-        return ans
+        
+        for i in range(n - 1):
+            ans = min(ans, arr[i + 1] - arr[i])
+            
+        return ans 
+        
+   
+                           
+                   
         
