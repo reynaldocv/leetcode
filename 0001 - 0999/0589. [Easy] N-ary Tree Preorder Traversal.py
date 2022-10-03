@@ -10,14 +10,15 @@ class Node:
 
 class Solution:
     def preorder(self, root: 'Node') -> List[int]:
-        
-        def subpreorder(root):
-            if root:
-                self.ans.append(root.val)
-                if root.children != None:
-                    for child in root.children:
-                        subpreorder(child)
+        def helper(node):
+            if node: 
+                ans.append(node.val)
                 
-        self.ans = []
-        subpreorder(root)
-        return self.ans
+                for child in node.children: 
+                    helper(child)
+                    
+        ans = []
+        
+        helper(root)
+        
+        return ans 
