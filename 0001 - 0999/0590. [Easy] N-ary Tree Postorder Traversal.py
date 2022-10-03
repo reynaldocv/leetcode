@@ -10,13 +10,17 @@ class Node:
 
 class Solution:
     def postorder(self, root: 'Node') -> List[int]:
-        def subpostorder(root):
-            if root: 
-                if root.children: 
-                    for child in root.children: 
-                        subpostorder(child)
-                self.ans.append(root.val)
-                
-        self.ans = []
-        subpostorder(root)
-        return self.ans
+        def helper(node):
+            if node:                 
+                for child in node.children: 
+                    helper(child)
+                    
+                ans.append(node.val)
+            
+        ans = []
+        
+        helper(root)
+        
+        return ans 
+        
+        
