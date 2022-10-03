@@ -7,24 +7,29 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSubtree(self, root: TreeNode, subRoot: TreeNode) -> bool:
-        def sameTree(root, root2):
-            if root == None and root2 == None: 
-                return True
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def helper(node):
+            if node: 
+                if collaborator(node, subRoot):
+                    return True 
+                
+                return helper(node.left) or helper(node.right)
+                
             else:
-                if root and root2: 
-                    if root.val == root2.val: 
-                        isSameLeft = sameTree(root.left, root2.left)
-                        isSameRight = sameTree(root.right, root2.right)
-                        return isSameLeft and isSameRight
-                    else: 
-                        return False
+                return False 
+        
+        def collaborator(node, tmp):
+            if node and tmp: 
+                if node.val == tmp.val:
+                    return collaborator(node.left, tmp.left) and collaborator(node.right, tmp.right)
+                
                 else: 
-                    return False          
+                    return False 
             
-        def isST(root, root2):
-            if root:
-                return sameTree(root, root2) or isST(root.left, root2) or isST(root.right, root2)
-            else:
-                return False
-        return isST(root, subRoot)
+            elif not node and not tmp: 
+                return True 
+            
+            else: 
+                return False 
+        
+        return helper(root)
