@@ -2,11 +2,19 @@
 
 class Solution:
     def findLHS(self, nums: List[int]) -> int:
-        dic = {}
+        counter = defaultdict(lambda: 0)
+        
+        ans = 0 
+        
         for num in nums: 
-            dic[num] = dic.get(num, 0) + 1           
-        ans = 0
-        for key in dic:
-            if key + 1 in dic:
-                ans = max(ans, dic[key] + dic[key + 1])
-        return ans
+            counter[num] += 1 
+            
+            if num + 1 in counter:             
+                ans = max(ans, counter[num] + counter[num + 1])
+                
+            if num - 1 in counter: 
+                ans = max(ans, counter[num] + counter[num - 1])
+            
+        return ans 
+    
+    
