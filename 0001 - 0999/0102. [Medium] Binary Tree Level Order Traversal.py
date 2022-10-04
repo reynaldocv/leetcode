@@ -8,18 +8,24 @@
 #         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        def route(root, level, levels):
-            if root: 
-                levels[level] = levels.get(level, [])
-                levels[level].append(root.val)
-                route(root.left, level + 1, levels)
-                route(root.right, level + 1, levels)
+        def helper(node, lvl):
+            if node: 
+                left = helper(node.left, lvl + 1)
+                
+                nodes[lvl].append(node.val)
+                
+                right = helper(node.right, lvl + 1)
+                
+                return max(left, right) + 1
+                
+            else: 
+                return 0 
         
-        levels = {}
-        route(root, 0, levels)
-        ans = [*levels.values()]
-        return ans
-            
+        nodes = defaultdict(lambda: [])
+        
+        maxLevel = helper(root, 0)
+        
+        return [nodes[i] for i in range(maxLevel)]
         
         
 
