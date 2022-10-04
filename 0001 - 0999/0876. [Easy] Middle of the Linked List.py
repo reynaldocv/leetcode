@@ -8,12 +8,16 @@
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         n = 0 
+        
         arr = []
         
-        while head: 
+        while head:
             arr.append(head)
+            
             head = head.next
             n += 1 
             
         return arr[n//2]
+            
+        
         
