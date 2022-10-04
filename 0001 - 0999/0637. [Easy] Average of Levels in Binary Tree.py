@@ -7,19 +7,24 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def averageOfLevels(self, root: TreeNode) -> List[float]:
-        
-        def high(root, h):
-            if root:
-                self.dic[h] = self.dic.get(h, [])
-                self.dic[h].append(root.val)
-                high(root.left, h + 1)
-                high(root.right, h + 1)
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        def helper(node, lvl):
+            if node: 
+                sumLevel[lvl] += node.val 
+                counter[lvl] += 1 
+                
+                left = helper(node.left, lvl + 1)
+                right = helper(node.right, lvl + 1)
+                
+                return max(left, right) + 1
+                
+            else: 
+                return 0 
             
-        dic = self.dic = {}
-        high(root, 0)
-        ans = [0]*len(dic)
-        for i in dic:
-            ans[i] = sum(dic[i])/len(dic[i])
-        return ans
+        sumLevel = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
+        
+        maxLvl = helper(root, 0)
+        
+        return [sumLevel[i]/counter[i] for i in range(maxLvl)]
         
