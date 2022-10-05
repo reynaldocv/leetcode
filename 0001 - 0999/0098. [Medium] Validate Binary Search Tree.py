@@ -8,20 +8,20 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def inOrder(root):
-            if root: 
-                inOrder(root.left)
-                arr.append(root.val)
-                inOrder(root.right)
+        def helper(node, lower, upper):
+            if node: 
+                if lower < node.val < upper: 
+                    left = helper(node.left, lower, node.val) 
+                    right = helper(node.right, node.val, upper)
+                    
+                    return left and right
+                
+                else: 
+                    return False 
+                
+            return True 
         
-        arr = []
-        inOrder(root)
-        n = len(arr)
-        for i in range(1, n):
-            if arr[i] <= arr[i - 1]:
-                return False
-        
-        return True
+        return helper(root, -inf, inf)
             
         
     
