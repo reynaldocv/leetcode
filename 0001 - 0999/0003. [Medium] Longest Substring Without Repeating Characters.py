@@ -8,8 +8,7 @@ class Solution:
         ans = 0
         
         for (i, char) in enumerate(s):
-            start = max(start, seen[char])
-            
+            start = max(start, seen[char])            
             ans = max(ans, i - start)
             
             seen[char] = i 
