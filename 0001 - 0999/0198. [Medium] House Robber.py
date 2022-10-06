@@ -3,16 +3,17 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         n = len(nums)
-        if n == 1: 
-            return nums[0]
-        elif n == 2: 
-            return max(nums)
-        else: 
-            prev = 0 
-            ans = 0
-            for i in range(1, n):
-                nums[i] = prev + nums[i]
-                prev = max(nums[i - 1], prev)
-                ans = max(nums[i], ans)
-                
-            return ans
+        
+        ans = 0 
+        
+        for i in range(n):
+            val3 = nums[i - 3] if i - 3 >= 0 else 0
+            val2 = nums[i - 2] if i - 2 >= 0 else 0 
+            
+            nums[i] += max(val3, val2)
+            
+            ans = max(ans, nums[i])
+            
+        return ans 
+            
+        
