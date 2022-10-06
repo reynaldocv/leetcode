@@ -2,36 +2,34 @@
 
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        def helper(cnt1, cnt2):
-            for key in cnt1: 
-                if cnt1[key] != cnt2[key]:
-                    return False
+        m, n = len(s1), len(s2)
+        
+        index = {chr(ord("a") + i): i for i in range(26)}
+        counter = (0, )*26
+        
+        for char in s1: 
+            idx = index[char]
             
-            return True 
-        
-        counter = defaultdict(lambda: 0)        
-        cnt = defaultdict(lambda: 0)
-        
-        n, m = len(s1), len(s2)
-        
-        if m < n:
-            return False 
-        
-        for (i, char) in enumerate(s1): 
-            counter[char] += 1 
-            cnt[s2[i]] += 1 
+            counter = counter[: idx] + (counter[idx] + 1, ) + counter[idx + 1: ]
             
-        for (i, char) in enumerate(s2[n:] + "+"):
-            if helper(cnt, counter):
-                return True
+        counting = (0, )* 26
+        
+        for char in s2[: m - 1]:
+            idx = index[char]
             
-            cnt[char] += 1 
-            cnt[s2[i]] -= 1
-            if cnt[s2[i]] == 0: 
-                cnt.pop(s2[i])
-                
-        return False
-                    
-                
-      
+            counting = counting[: idx] + (counting[idx] + 1, ) + counting[idx + 1: ]
+            
+        for (i, char) in enumerate(s2[m - 1: ]):
+            idx = index[char]
+            
+            counting = counting[: idx] + (counting[idx] + 1, ) + counting[idx + 1: ]
+            
+            if counter == counting: 
+                return True 
+            
+            idx = index[s2[i]]
+            
+            counting = counting[: idx] + (counting[idx] - 1, ) + counting[idx + 1: ]
+            
+        return False      
         
