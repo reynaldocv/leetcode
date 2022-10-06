@@ -11,16 +11,19 @@ class Node:
 """
 
 class Solution:
-    def connect(self, root: 'Node') -> 'Node':
-        def route(root, level):
-            if root: 
-                root.next = nodeNext[level] if level in nodeNext else None
-                nodeNext[level] = root
-                route(root.right, level + 1)
-                route(root.left, level + 1)
-                    
-        nodeNext = {}
-        route(root, 0)
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        def helper(node, lvl):
+            if node: 
+                node.next = level[lvl]
+                
+                level[lvl] = node
+                
+                helper(node.right, lvl + 1)
+                helper(node.left, lvl + 1)
+                
+        level = defaultdict(lambda: None)
+        
+        helper(root, 0)
         
         return root
         
