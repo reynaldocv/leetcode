@@ -1,59 +1,29 @@
 # https://leetcode.com/problems/01-matrix/
 
 class Solution:
-    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:        
-        points = []
-        n = len(mat)
-        m = len(mat[0])
-        visited = [[False for _ in range(m)] for _ in range(n)]
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        m, n = len(mat), len(mat[0])
         
-        for i in range(n):
-            for j in range(m):
-                if mat[i][j] == 0:
-                    points.append((i, j))
-                    visited[i][j] = True
-                    
+        stack = [(i, j) for i in range(m) for j in range(n) if mat[i][j] == 0]
         
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        while len(points):
-            (x, y) = points.pop(0)
-            val = mat[x][y]
-            for (i, j) in directions: 
-                r = x + i
-                s = y + j
-                if 0 <= r < n and 0 <= s < m: 
-                    if visited[r][s] == False:
-                        visited[r][s] = True            
-                        mat[r][s] = val + 1                                            
-                        points.append((r, s))
-
+        seen = {(i, j) for i in range(m) for j in range(n) if mat[i][j] == 0}
+        
+        distance = 1 
+        
+        while stack: 
+            newStack = []
+            
+            for (x, y) in stack: 
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
+                
+                    if 0 <= p < m and 0 <= q < n: 
+                        if (p, q) not in seen: 
+                            mat[p][q] = distance
+                            newStack.append((p, q))
+                            seen.add((p, q))
+                            
+            stack = newStack
+            distance += 1 
+            
         return mat
-      
-class Solution2:
-    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:        
-        points = []
-        n = len(mat)
-        m = len(mat[0])
-       
-        ans = [[inf for _ in range(m)] for _ in range(n)]
-        
-        for i in range(n):
-            for j in range(m):
-                if mat[i][j] == 0: 
-                    ans[i][j] = 0 
-                else:
-                    if i > 0: 
-                        ans[i][j] = min(ans[i][j], ans[i - 1][j] + 1)                        
-                    if j > 0: 
-                        ans[i][j] = min(ans[i][j], ans[i][j - 1] + 1)
-        
-        for i in range(n - 1, -1, -1):
-            for j in range(m - 1, -1, -1):
-                if i < n - 1: 
-                    ans[i][j] = min(ans[i][j], ans[i + 1][j] + 1)                        
-                if j < m - 1: 
-                    ans[i][j] = min(ans[i][j], ans[i][j + 1] + 1)
-                    
-        return ans
-
-                    
