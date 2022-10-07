@@ -2,14 +2,16 @@
 
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
-        end = 0 
-        n = len(nums)
-        for i in range(n):            
-            if i <= end:
-                end = max(i + nums[i], end)        
+        last = 0 
+        
+        for (i, num) in enumerate(nums):
+            if i <= last: 
+                last = max(last, i + num)
+                
             else: 
-                return False
-        return True if end >= n - 1 else False
+                return False 
+            
+        return True 
             
                 
         
