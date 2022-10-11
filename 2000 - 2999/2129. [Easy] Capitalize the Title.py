@@ -13,3 +13,19 @@ class Solution:
                 
         return " ".join(words)
         
+class Solution2:
+    def capitalizeTitle(self, title: str) -> str:
+        ans, tmp = "", ""
+        
+        for char in title + " ":
+            if char == " ":
+                if len(tmp) <= 2: 
+                    ans += tmp.lower() + " "
+                else: 
+                    ans += tmp.capitalize() + " "
+                tmp = ""
+            
+            else: 
+                tmp += char
+                
+        return ans [: -1]
