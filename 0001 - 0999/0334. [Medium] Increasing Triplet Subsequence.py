@@ -3,23 +3,34 @@
 class Solution:
     def increasingTriplet(self, nums: List[int]) -> bool:
         n = len(nums)
-        if n <= 2:
-            return False
         
-        minimum = [num for num in nums]
-        maximum = [num for num in nums]
-        
-        for i in range(1, n):
-            minimum[i] = min(minimum[i - 1], minimum[i])
+        right = [num for num in nums]
         
         for i in range(n - 2, -1, -1):
-            maximum[i] = max(maximum[i], maximum[i + 1])
+            right[i] = max(right[i], right[i + 1])
             
+        left = nums[0]
+        
         for i in range(1, n - 1):
-            if minimum[i - 1] < nums[i] < maximum[i + 1]:
-                return True
-        
-        return False
+            if left < nums[i] < right[i + 1]:
+                return True 
             
+            left = min(left, nums[i])
         
+        return False 
+
+class Solution2:
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        arr = []
+        
+        for num in nums: 
+            idx = bisect_left(arr, num)
+            
+            if idx < len(arr):
+                arr[idx] = num 
+            else: 
+                arr.append(num)
+                
+        return len(arr) >= 3
+    
         
