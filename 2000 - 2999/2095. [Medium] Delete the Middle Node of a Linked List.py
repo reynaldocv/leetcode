@@ -8,20 +8,24 @@
 class Solution:
     def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         arr = []
+        
         cur = head
+        n = 0 
+        
         while cur: 
             arr.append(cur)
-            cur = cur.next
             
-        n = len(arr)
-        
+            n += 1 
+            cur = cur.next 
+            
         if n == 1: 
-            return None
+            return None 
+        
         elif n == 2: 
             return ListNode(head.val)
             
         mid = n//2
         
         arr[mid - 1].next = arr[mid + 1]
-        
+            
         return arr[0]
