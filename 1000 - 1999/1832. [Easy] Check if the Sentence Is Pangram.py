@@ -2,12 +2,13 @@
 
 class Solution:
     def checkIfPangram(self, sentence: str) -> bool:
-        dic = {}
-        for i in sentence:
-            dic[i] = dic.get(i, 0) + 1
-        return True if len(dic)>=26 else False
+        seen = set()
+        
+        for char in sentence: 
+            seen.add(char)           
             
-            
+        return len(seen) == 26
+        
             
         
         
