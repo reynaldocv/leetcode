@@ -3,21 +3,25 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
         ans = "1"
-        if n == 1: return ans 
         
-        for i in range(0, n - 1):
-            aux = ""
-            counter = 0 
-            number = ""
-            for i in ans: 
-                if number != i: 
-                    if number != "":                    
-                        aux = aux + str(counter) + number
-                    counter = 1
-                    number = i                    
+        for i in range(n - 1):
+            cnt = 0 
+            prev = ""
+            
+            newString = ""
+            
+            for char in ans + "$":
+                if char == prev: 
+                    cnt += 1 
+                    
                 else: 
-                    counter += 1
-            aux = aux + str(counter) + number            
-            ans = aux
+                    if prev != "":
+                        newString += str(cnt) + prev
+                        
+                    prev = char
+                    cnt = 1
+            
+            ans = newString
+            
         return ans
         
