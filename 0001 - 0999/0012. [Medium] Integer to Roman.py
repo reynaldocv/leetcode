@@ -2,31 +2,23 @@
 
 class Solution:
     def intToRoman(self, num: int) -> str:
-        units = []
-        units.append(["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"])        
-        units.append([])
-        for i in range(10):
-            unit = units[0][i]
-            unit = unit.replace("X", "C")                
-            unit = unit.replace("V", "L")
-            unit = unit.replace("I", "X")            
-            units[1].append(unit)
-        units.append([])        
-        for i in range(10):
-            unit = units[0][i]
-            unit = unit.replace("X", "M")
-            unit = unit.replace("V", "D")
-            unit = unit.replace("I", "C")
-            units[2].append(unit)
-        units.append([])        
-        units[3].extend(["", "M", "MM", "MMM"])
+        tmp = {}
+        tmp[0] = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
+        tmp[1] = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
+        tmp[2] = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
+        tmp[3] = ["", "M", "MM", "MMM"]
+        
+        idx = 0
         
         ans = ""
-        i = 0
-        while num > 0: 
-            ans = units[i][num % 10] + ans
-            num = num//10
-            i += 1
         
-        return ans
+        while num: 
+            unit = num % 10
+            
+            ans = tmp[idx][unit] + ans
+            
+            num //= 10 
+            idx += 1 
+            
+        return ans 
             
