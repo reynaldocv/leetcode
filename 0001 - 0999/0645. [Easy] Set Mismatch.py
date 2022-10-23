@@ -2,15 +2,19 @@
 
 class Solution:
     def findErrorNums(self, nums: List[int]) -> List[int]:
+        seen = set()
+        
         n = len(nums)
-        arr = [0 for i in range(n + 1)]
-        for num in nums:
-            arr[num] += 1
-        ans = [0, 0]
-        for i in range(1, n + 1):
-            if arr[i] == 2:
-                ans[0] = i
-            if arr[i] == 0:
-                ans[1] = i    
-        return ans
+        
+        aSum, tmp = 0, 0
+        
+        for num in nums: 
+            if num in seen: 
+                tmp = num 
+            else: 
+                aSum += num
+                
+            seen.add(num)
+            
+        return (tmp, n*(n + 1)//2 - aSum)
         
