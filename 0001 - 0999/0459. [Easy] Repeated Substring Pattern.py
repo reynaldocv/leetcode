@@ -4,14 +4,19 @@ class Solution:
     def repeatedSubstringPattern(self, s: str) -> bool:
         n = len(s)
         
-        for i in range(1, n + 1//2):
-            if n % i == 0:
-                q = n // i
-                aux = s[:i]*q
-                if aux == s:
-                    return True
-        return False
+        m = 0 
+        tmp = ""
         
+        for char in s[: n//2]: 
+            tmp += char
+            m += 1 
             
+            if n % m == 0: 
+                multiply = n//m
+                
+                if tmp*multiply == s: 
+                    return True 
+                
+        return False
         
         
