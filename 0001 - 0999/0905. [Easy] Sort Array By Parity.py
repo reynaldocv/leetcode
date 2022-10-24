@@ -1,6 +1,10 @@
 # https://leetcode.com/problems/sort-array-by-parity/
 
-class Solution:
+class Solution1:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        return sorted(nums, key = lambda item: item % 2)
+        
+class Solution2:
     def sortArrayByParity(self, A: List[int]) -> List[int]:
         ans1 = []
         ans2 = [] 
