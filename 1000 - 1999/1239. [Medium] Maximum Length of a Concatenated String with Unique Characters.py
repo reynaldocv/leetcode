@@ -2,27 +2,33 @@
 
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
-        def counter(s):
-            counter = {}
-            for char in s: 
-                counter[char] = counter.get(char, 0) + 1
-                if counter[char] > 1: 
-                    return False
+        def counter(word):
+            seen = set()
+            
+            for char in word: 
+                if char in seen: 
+                    return False 
+                
+                seen.add(char)
+                
             return True
         
-        def helper(s, i):
-            if i == n:                 
-                if counter(s): 
-                    self.ans = max(self.ans, len(s))
+        def helper(word, x):
+            if x == n:                 
+                if counter(word): 
+                    return len(word)
+                else: 
+                    return inf 
+            
             else: 
-                helper(s, i + 1)
-                if counter(s + arr[i]):
-                    helper(s + arr[i], i + 1)
+                ans = helper(word, x + 1)
+            
+                if counter(word + arr[x]):
+                    ans = max(ans, helper(word + arr[x], x + 1))
+                    
+                return ans 
         
         n = len(arr)
-        self.ans = 0
-        helper("", 0)
         
-        return self.ans
-                    
+        return helper("", 0)
         
