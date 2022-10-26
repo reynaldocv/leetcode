@@ -2,26 +2,22 @@
 
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
-        aSum = 0
-        counter0 = 0
-        seen = {}
-        position = -inf
+        prev = 0 
+        
+        seen = {prev: -1}
+        
         for (i, num) in enumerate(nums): 
-            if num % k != 0:
-                aSum = (aSum + num) % k                
-                if aSum in seen: 
-                    return True
-                elif aSum == 0: 
-                    return True
-                seen[aSum] = True
+            prev = (prev + num) % k 
+            
+            if prev in seen: 
+                if (i - seen[prev]) >= 2: 
+                    return True 
                 
-            else:                         
-                counter0 = counter0 + 1 if (position == i - 1) else 1
-                position = i                
-                if counter0 >= 2: 
-                    return True
-                    
-        return False
+            else: 
+                seen[prev] = i 
+                
+        return False 
+    
             
                 
                 
