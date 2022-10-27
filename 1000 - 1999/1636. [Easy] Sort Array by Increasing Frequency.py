@@ -5,9 +5,9 @@ class Solution:
         counter = defaultdict(lambda: 0)
         
         for num in nums: 
-            counter[num] += 1
+            counter[num] += 1 
             
-        nums.sort(key = lambda item: (counter[item], -item))
+        nums.sort(key = lambda item: (counter[item],  -item))
         
         return nums
         
