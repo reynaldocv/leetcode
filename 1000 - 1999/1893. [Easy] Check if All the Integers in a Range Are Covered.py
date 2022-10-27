@@ -2,14 +2,21 @@
 
 class Solution:
     def isCovered(self, ranges: List[List[int]], left: int, right: int) -> bool:
-        ans = [0 for i in range(left, right + 1)]
+        limit = right
+        for (a, b) in ranges: 
+            limit = max(limit, b)
         
-        for (start, end) in ranges:
-            for idx in range(start, end + 1):
-                if left <= idx <= right:
-                    ans[idx - left] = 1
         
-        return len(ans) == sum(ans)
-      
+        seen = [0 for i in range(limit + 1)]
+        
+        for (a, b) in ranges: 
+            for x in range(a, b + 1):
+                seen[x] += 1 
+                
+        for x in range(left, right + 1):
+            if seen[x] == 0: 
+                return False 
+            
+        return True 
                 
         
