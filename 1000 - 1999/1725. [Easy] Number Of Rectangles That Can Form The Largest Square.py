@@ -2,10 +2,15 @@
 
 class Solution:
     def countGoodRectangles(self, rectangles: List[List[int]]) -> int:
-        squares = {}
-        ans = 0
-        for rectangle in rectangles:
-            l = min(rectangle)
-            squares[l] = squares.get(l, 0) + 1
-            ans = max(ans, l)
-        return squares[ans]
+        counter = defaultdict(lambda: 0)
+        
+        side = 0 
+        
+        for (a, b) in rectangles: 
+            side = max(side, min(a, b))
+            
+            counter[min(a, b)] += 1 
+            
+        return counter[side]
+            
+        
