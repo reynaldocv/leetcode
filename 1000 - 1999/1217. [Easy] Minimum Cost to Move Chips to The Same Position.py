@@ -2,8 +2,10 @@
 
 class Solution:
     def minCostToMoveChips(self, position: List[int]) -> int:
-        counter = [0, 0]
-        for i in position:
-            counter[i % 2] += 1
+        ans = [0, 0]
         
-        return min(counter)
+        for x in position: 
+            ans[x % 2] += 1 
+            
+        return min(ans)
+        
