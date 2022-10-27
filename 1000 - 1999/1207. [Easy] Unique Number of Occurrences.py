@@ -2,15 +2,19 @@
 
 class Solution:
     def uniqueOccurrences(self, arr: List[int]) -> bool:
-        counter = {}
-        repeated = {}
-        for i in arr:
-            counter[i] = counter.get(i, 0) + 1
-        for j in counter:
-            if counter[j] not in repeated:
-                repeated[counter[j]] = True
-            else:
-                return False
-        return True
+        counter = defaultdict(lambda: 0)
+        
+        for num in arr: 
+            counter[num] += 1 
+    
+        seen = set()
+        
+        for key in counter: 
+            if counter[key] in seen: 
+                return False 
+            
+            seen.add(counter[key])
+            
+        return True 
             
         
