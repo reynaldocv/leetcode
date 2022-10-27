@@ -3,10 +3,10 @@
 class Solution:
     def decode(self, encoded: List[int], first: int) -> List[int]:
         ans = [first]
-        aux = first
-        for i in range(len(encoded)):
-            b = aux^encoded[i]
-            ans.append(b)
-            aux = b
-        return ans
         
+        for num in encoded: 
+            ans.append(ans[-1] ^ num)
+            
+        return ans     
+        
+            
