@@ -2,16 +2,17 @@
 
 class Solution:
     def mergeSimilarItems(self, items1: List[List[int]], items2: List[List[int]]) -> List[List[int]]:
-        seen = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
         for (value, weight) in items1: 
-            seen[value] += weight
-        
-        for (value, weight) in items2: 
-            seen[value] += weight
+            counter[value] += weight
             
-        ans = [(key, seen[key]) for key in seen]
-        ans.sort() 
+        for (value, weight) in items2: 
+            counter[value] += weight
+        
+        ans = [(key, counter[key]) for key in counter]
+        
+        ans.sort()
         
         return ans 
         
