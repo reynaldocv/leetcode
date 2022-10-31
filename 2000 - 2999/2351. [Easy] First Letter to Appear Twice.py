@@ -7,8 +7,9 @@ class Solution:
         for char in s: 
             counter[char] += 1 
             
-            if counter[char] == 2: 
-                return char 
+            if counter[char] > 1: 
+                return char
             
+        
         
         
