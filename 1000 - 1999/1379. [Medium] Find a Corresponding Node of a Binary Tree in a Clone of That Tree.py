@@ -9,17 +9,20 @@
 
 class Solution:
     def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
-        if (original):
-            if original is target:
-                return cloned
-            else:
-                aux = self.getTargetCopy(original.left, cloned.left, target)
-                if (aux):
-                    return aux
-                else:
-                    aux = self.getTargetCopy(original.right, cloned.right, target)
-                    return aux
-        return None                
+        def helper(original, cloned):
+            if original: 
+                if original == target: 
+                    return cloned
+                
+                left = helper(original.left, cloned.left)
+                if not left: 
+                    return helper(original.right, cloned.right)
+                    
+                return left
+            else: 
+                return None
+
+        return helper(original, cloned)               
                     
                     
             
