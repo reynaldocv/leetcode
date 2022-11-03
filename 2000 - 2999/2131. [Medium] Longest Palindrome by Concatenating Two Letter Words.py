@@ -2,32 +2,32 @@
 
 class Solution:
     def longestPalindrome(self, words: List[str]) -> int:
-        cnt = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
         for word in words: 
-            cnt[word] += 1
+            counter[word] += 1 
             
         ans = 0 
-        arr = [key for key in cnt]
+        middle = False 
         
-        for word in arr: 
-            if cnt[word] > 0 and cnt[word[::-1]] > 0:
-                if word != word[::-1]:
-                    times = min(cnt[word], cnt[word[::-1]])
-                    ans += len(word)*2*times
-                    cnt[word] -= times
-                    cnt[word[::-1]] -= times
-                else:
-                    times = cnt[word]//2
-                    ans += len(word)*2*times
-                    cnt[word] -= 2*times
-        
-        maxElem = 0 
-        for word in cnt: 
-            if cnt[word] > 0 and word == word[::-1]: 
-                maxElem = max(maxElem, len(word))
+        for key in counter: 
+            reversedKey = key[:: -1]
+            
+            if key != reversedKey:
+                if reversedKey in counter: 
+                    value = min(counter[key], counter[reversedKey])
+                    ans += value*4 
+
+                    counter[key] -= value
+                    counter[reversedKey] -= value
+
+            else: 
+                ans += (counter[key]//2)*4
                 
-        return ans + maxElem
+                if counter[key] % 2 == 1: 
+                    middle = True 
+                    
+        return ans + 2 if middle else ans
                 
                 
             
