@@ -2,15 +2,19 @@
 
 class Solution:
     def minOperations(self, s: str) -> int:
-        ans = 0
-        bita, bitb = 0, 1
-        n = len(s)
-        for i in range(n):
-            if int(s[i]) != bita: 
-                ans += 1
-            bita = 1 - bita          
-                    
-        return min(ans, n - ans)
-            
-            
+        values = [0, 1]
+        counter = [0, 0]
         
+        for char in s: 
+            value = int(char)
+            if value != values[0]:
+                counter[0] += 1 
+            
+            if value != values[1]:
+                counter[1] += 1 
+                
+            values[0] = 1 - values[0]
+            values[1] = 1 - values[1]
+                
+        return min(counter)
+            
