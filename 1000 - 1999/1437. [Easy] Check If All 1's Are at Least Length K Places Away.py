@@ -2,20 +2,17 @@
 
 class Solution:
     def kLengthApart(self, nums: List[int], k: int) -> bool:
+        cnt = k 
         
-        if 1 not in nums: return True
-        idx = nums.index(1)
-        ans, n, l = True, len(nums), 0
-        for i in range(idx + 1, n):
-            if nums[i] == 0: 
-                l += 1                
-            else: 
-                if (l < k):
-                    ans = False
-                    break
-                l = 0
-        return ans
-
+        for num in nums: 
+            if num == 0: 
+                cnt += 1 
+            else:     
+                if cnt < k: 
+                    return False
+                cnt = 0 
+                
+        return True 
 
                 
         
