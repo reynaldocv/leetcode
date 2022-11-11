@@ -2,15 +2,18 @@
 
 class Solution:
     def maxPower(self, s: str) -> int:
-        aux, ans, n, l = "", 0, len(s), 0
-        for i in range(n):
-            if aux == s[i]:
-                l += 1
-            else:
-                l = 1
-                aux = s[i]
-            ans = max(ans, l)
-        return ans
+        prev = "$"         
+        cnt = 1 
         
+        ans = 0 
         
-        
+        for char in s: 
+            if prev == char: 
+                cnt += 1 
+            else: 
+                prev = char                
+                cnt = 1 
+            
+            ans = max(ans, cnt)
+                
+        return ans 
