@@ -2,29 +2,31 @@
 
 class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
-        def find(value):
-            while value != parent.get(value, value):
-                value = parent.get(value, value)
+        def helper(son):
+            while son != parent[son]:
+                son = parent[son]
                 
-            return value
+            return son 
         
-        def union(val1, val2):
-            parent1 = find(val1)
-            parent2 = find(val2)
-            
-            parent[parent1] = parent[parent2] = min(parent1, parent2)
-            
         n = len(stones)
-        parent = defaultdict(lambda: inf)
+        
+        elems = set()
         
         for (x, y) in stones: 
-            union(x, ~y)
+            elems.add(x)
+            elems.add(~y)
             
-        ans = n 
-        seen = {}
+        parent = {elem: elem for elem in elems}
         
         for (x, y) in stones: 
-            seen[find(x)] = True 
-            seen[find(~y)] = True 
+            parentX = helper(x)
+            parentY = helper(~y)
             
-        return ans - len(seen)  
+            parent[parentX] = parent[parentY] = min(parentX, parentY)
+            
+        seen = set()
+        
+        for key in parent:
+            seen.add(helper(key))
+            
+        return n - len(seen)
