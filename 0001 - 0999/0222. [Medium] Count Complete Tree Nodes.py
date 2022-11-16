@@ -8,6 +8,17 @@
 #         self.right = right
 class Solution:
     def countNodes(self, root: Optional[TreeNode]) -> int:
+        def helper(node):
+            if node: 
+                return 1 + helper(node.left) + helper(node.right)
+            else: 
+                return 0 
+            
+        return helper(root)
+        
+
+class Solution2:
+    def countNodes(self, root: Optional[TreeNode]) -> int:
         def countTotalNodes(root):
             lh = 0
             cur = root        
