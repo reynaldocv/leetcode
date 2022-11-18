@@ -2,19 +2,20 @@
 
 class Solution:
     def checkZeroOnes(self, s: str) -> bool:
-        def lenMaxSequences(s, bit):
-            l, ans = 0, 0
-            n = len(s)
-            for i in range(n):
-                if s[i] == bit:
-                    l += 1
-                else:
-                    ans = max(ans, l)
-                    l = 0
-            ans = max(ans, l)
-            return ans 
-        
-        print(lenMaxSequences(s, "1"))
-        print(lenMaxSequences(s, "0"))
-        return lenMaxSequences(s, "1") > lenMaxSequences(s, "0")
+        counter = [0, 0]
+        cnt = [0, 0]
+
+        for char in s: 
+            if char == "0":
+                cnt[0] += 1 
+                cnt[1] = 0 
+
+            else:
+                cnt[0] = 0 
+                cnt[1] += 1 
+
+            counter[0] = max(counter[0], cnt[0])
+            counter[1] = max(counter[1], cnt[1])
+                
+        return counter[0] < counter[1]
             
