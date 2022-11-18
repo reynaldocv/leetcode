@@ -9,12 +9,12 @@
 class Solution:
     def evaluateTree(self, root: Optional[TreeNode]) -> bool:
         def helper(node):
-            if node: 
-                if node.val in [0, 1]:
-                    return node.val 
-                elif node.val == 2: 
-                    return helper(node.left) or helper(node.right)
-                else: 
-                    return helper(node.left) and helper(node.right)
-                
+            if node.val <= 1: 
+                return node.val == 1 
+            elif node.val == 2:
+                return helper(node.left) or helper(node.right)
+            else: 
+                return helper(node.left) and helper(node.right)
+        
         return helper(root)
+        
