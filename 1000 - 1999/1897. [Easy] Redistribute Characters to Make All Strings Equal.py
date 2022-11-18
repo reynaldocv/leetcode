@@ -2,16 +2,17 @@
 
 class Solution:
     def makeEqual(self, words: List[str]) -> bool:
-        dic = {}
+        counter = defaultdict(lambda: 0)
+        n = 0 
+        
         for word in words: 
-            for w in word: 
-                dic[w] = dic.get(w, 0) + 1
+            n += 1 
+            for char in word: 
+                counter[char] += 1 
+                
+        for key in counter: 
+            if counter[key] % n != 0: 
+                return False 
         
-        n = len(words)
-        
-        for k in dic: 
-            if dic[k] % n != 0: 
-                return False
-        
-        return True
+        return True 
         
