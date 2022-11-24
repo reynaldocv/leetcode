@@ -2,16 +2,15 @@
 
 class Solution:
     def checkOnesSegment(self, s: str) -> bool:
-        n = len(s)
-        if n == 0: return False
-        idx = -1
-        for i in range(n):
-            if s[i] != "1":
-                idx = i
-                break
-        if idx != -1:
-            return False if "1" in s[idx:] else True
-        else:
-            return True
-                
+        cnt = 0 
+        counter = 0
+        for char in s + "0":
+            if char == "1":
+                cnt += 1 
+            else: 
+                if cnt > 0: 
+                    counter += 1                     
+                cnt = 0 
+        
+        return counter <= 1 
                 
