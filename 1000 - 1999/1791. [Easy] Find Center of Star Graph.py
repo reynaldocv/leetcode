@@ -2,12 +2,15 @@
 
 class Solution:
     def findCenter(self, edges: List[List[int]]) -> int:
-        dic = {}
-        for (x, y) in edges: 
-            dic[x] = dic.get(x, 0) + 1
-            dic[y] = dic.get(y, 0) + 1
-            if dic[x] >= 2:
-                return x
-            if dic[y] >= 2:
-                return y
+        counter = defaultdict(lambda :0)
+        
+        ans = (0, -1)
+        
+        for (a, b) in edges: 
+            counter[a] += 1 
+            counter[b] += 1 
+            
+            ans = max(ans, (counter[a], a), (counter[b], b))
+            
+        return ans[1]
             
