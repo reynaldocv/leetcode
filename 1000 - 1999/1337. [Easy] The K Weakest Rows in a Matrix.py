@@ -3,11 +3,9 @@
 class Solution:
     def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
         n = len(mat)
+        
         arr = [i for i in range(n)]
         
-        arr.sort(key = lambda item: (sum(mat[item]), item))
+        arr.sort(key = lambda item: sum(mat[item]))
         
         return arr[: k]
-        
-        
-        
