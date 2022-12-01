@@ -2,12 +2,14 @@
 
 class Solution:
     def findOcurrences(self, text: str, first: str, second: str) -> List[str]:
-        text = text.split(" ")
-        n = len(text)
+        arr = text.split(" ")
+        
+        n = len(arr)
+        
         ans = []
+        
         for i in range(n - 2):
-            if text[i] == first and text[i + 1] == second:
-                ans.append(text[i + 2])
+            if arr[i] == first and arr[i + 1] == second: 
+                ans.append(arr[i + 2])
                 
         return ans
-        
