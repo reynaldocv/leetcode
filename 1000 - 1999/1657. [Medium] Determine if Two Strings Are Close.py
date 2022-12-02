@@ -11,12 +11,12 @@ class Solution:
         for char in word2: 
             count2[char] += 1
         
-        char1 = [key for key in count1]
-        char2 = [key for key in count2]
+        chars1 = [key for key in count1]
+        chars2 = [key for key in count2]
         freq1 = [count1[key] for key in count1]
         freq2 = [count2[key] for key in count2]
         
-        return sorted(char1) == sorted(char2) and sorted(freq1) == sorted(freq2)
+        return sorted(chars1) == sorted(chars2) and sorted(freq1) == sorted(freq2)
         
 
             
