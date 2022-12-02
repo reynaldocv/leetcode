@@ -2,26 +2,33 @@
 
 class Solution:
     def reformat(self, s: str) -> str:
-        def isLetter(n):
-            return True if (0 <= ord(n) - ord("a") <= 26) else False
+        letters = []
+        numbers = []
         
-        aux1, aux2 = "", ""
-        for i in s: 
-            if isLetter(i):
-                aux1 += i
-            else:
-                aux2 += i
+        for char in s: 
+            if char.isdigit(): 
+                numbers.append(char)
+            else: 
+                letters.append(char)
+        
+        m, n = len(letters), len(numbers)
+        
+        if abs(m - n) > 1: 
+            return ""
+        
+        l = min(m, n)
         
         ans = ""
-        if abs(len(aux1) - len(aux2)) <= 1:            
-            if len(aux1) == len(aux2):
-                for i in range(len(aux1)):
-                    ans += aux1[i] + aux2[i] 
-            else: 
-                if len(aux1) < len(aux2):
-                    aux1, aux2 = aux2, aux1
-                for i in range(len(aux2)):  
-                    ans += aux1[i] + aux2[i]
-                ans += aux1[len(aux1) - 1]
-        return ans
         
+        for i in range(l):
+            ans += letters[i] + numbers[i]
+            
+        if m == n: 
+            return ans 
+        
+        elif m > n: 
+            return ans + letters[-1]
+        
+        else: 
+            return numbers[-1] + ans
+            
