@@ -2,19 +2,24 @@
 
 class Solution:
     def countConsistentStrings(self, allowed: str, words: List[str]) -> int:
-        dic = {}
-        for i in allowed: 
-            dic[i] = True
-        ans = 0
+        seen = set()
         
+        for char in allowed: 
+            seen.add(char)
+            
+        ans = 0 
         
         for word in words:
-            aux = True
-            for w in word:
-                if not dic.get(w, False):
-                    aux = False
+            go = True 
+            
+            for char in word: 
+                if char not in seen: 
+                    go = False 
                     break
-            if aux:
+                    
+            if go: 
                 ans += 1 
-        return ans
+                
+        return ans 
+        
         
