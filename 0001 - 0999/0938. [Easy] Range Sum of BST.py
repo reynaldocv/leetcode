@@ -7,13 +7,18 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
-        if root == None:
-            return 0
-        else:
-            if (L <= root.val <= R):
-                return root.val + self.rangeSumBST(root.left, L, R) + self.rangeSumBST(root.right, L, R)
-            else:
-                return self.rangeSumBST(root.left, L, R) + self.rangeSumBST(root.right, L, R)
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        def helper(node):
+            if node: 
+                ans = 0 
+                
+                if low <= node.val <= high: 
+                    ans = node.val
+                
+                return ans + helper(node.left) + helper(node.right)
+                    
+            else: 
+                return 0 
             
+        return helper(root)
             
