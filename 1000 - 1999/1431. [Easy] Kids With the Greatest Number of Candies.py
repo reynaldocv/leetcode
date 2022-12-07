@@ -2,10 +2,12 @@
 
 class Solution:
     def kidsWithCandies(self, candies: List[int], extraCandies: int) -> List[bool]:
-        maxCandies = max(candies)
+        maxElem = max(candies)
+        
         ans = []
-        l = len(candies)
-        for i in range(l):
-            aux = True if candies[i] + extraCandies >= maxCandies else False
-            ans.append(aux)
-        return ans
+        
+        for candie in candies: 
+            ans.append(candie + extraCandies >= maxElem)
+            
+        return ans 
+        
