@@ -7,25 +7,19 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
+    def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+        def helper(node, arr):
+            if node: 
+                helper(node.left, arr)
+                
+                if not node.left and not node.right: 
+                    arr.append(node.val)
         
-        def leafs(root):
-            if root:
-                if root.left == None and root.right == None: 
-                    self.ans.append(root.val)
-                else:
-                    leafs(root.left)
-                    leafs(root.right)
+                helper(node.right, arr)
+            
+        arr1, arr2 = [], []
         
-        ans1 = self.ans = []
-        leafs(root1)        
-        ans2 = self.ans = []
-        leafs(root2)
+        helper(root1, arr1)
+        helper(root2, arr2)
         
-        if len(ans1) == len(ans2):
-            for i in range(len(ans1)):
-                if ans1[i] != ans2[i]:
-                    return False
-            return True
-        else:
-            return False
+        return arr1 == arr2
