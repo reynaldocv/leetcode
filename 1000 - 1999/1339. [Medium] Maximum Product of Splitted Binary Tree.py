@@ -10,7 +10,7 @@ class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
         def helper(node):
             if node: 
-                left = helper(node.left)
+                left = 
                 right = helper(node.right)
                 node.val += left + right
                 return node.val
