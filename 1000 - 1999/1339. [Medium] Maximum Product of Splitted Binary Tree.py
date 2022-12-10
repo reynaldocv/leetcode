@@ -10,29 +10,25 @@ class Solution:
     def maxProduct(self, root: Optional[TreeNode]) -> int:
         def helper(node):
             if node: 
-                left = 
-                right = helper(node.right)
-                node.val += left + right
+                node.val += helper(node.left) + helper(node.right)
+                
                 return node.val
-            else: 
-                return 0 
             
+            return 0 
+                
         def collaborator(node):
-            nonlocal ans
+            nonlocal ans            
             if node: 
-                if node.left: 
-                    tmp = aSum - node.left.val
-                    ans = max(ans, tmp*node.left.val)
-                if node.right: 
-                    tmp = aSum - node.right.val
-                    ans = max(ans, tmp*node.right.val)
+                ans = max(ans, node.val*(aSum - node.val))
+                
                 collaborator(node.left)
                 collaborator(node.right)
             
         MOD = 10**9 + 7
+        ans = 0       
+        
         aSum = helper(root)        
         
-        ans = 0        
         collaborator(root)        
         
         return ans % MOD
