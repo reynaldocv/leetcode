@@ -2,17 +2,14 @@
 
 class Solution:
     def rotateString(self, s: str, goal: str) -> bool:
-        if len(s) != len(goal): return False
-        n = len(s)
-        ans = True
+        n = len(s) 
         
-        for j in range(n):                
-            if s[0] == goal[j]:
-                go = True
-                for k in range(1, n):
-                    if s[k] != goal[(j + k) % n]:
-                        go = False
-                        break
-                if go: 
-                    return True
-        return False
+        tmp = s 
+        
+        for _ in range(n):
+            tmp = tmp[-1] + tmp[: -1]
+            
+            if tmp == goal:
+                return True 
+            
+        return False 
