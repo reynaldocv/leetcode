@@ -1,13 +1,14 @@
 # https://leetcode.com/problems/jewels-and-stones/
 
 class Solution:
-    def numJewelsInStones(self, J: str, S: str) -> int:
-        jewels = {}
-        ans = 0
-        for i in J: 
-            jewels[i] = 1
-        for i in S: 
-            ans += jewels.get(i, 0)
-        return ans
-            
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        jewels = {jewel for jewel in jewels}
+        
+        ans = 0 
+        
+        for stone in stones:
+            if stone in jewels:
+                ans += 1 
+                
+        return ans 
         
