@@ -1,27 +1,28 @@
 # https://leetcode.com/problems/find-if-path-exists-in-graph/
 
 class Solution:
-    def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:        
-        graph = [set([]) for _ in range(n)]
-        for (v0, v1) in edges: 
-            graph[v0].add(v1)
-            graph[v1].add(v0)
-            
-        if start == end: 
-            return True
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        graph = defaultdict(lambda: [])
         
-        seen = {start: True}
-        stack = [start]
+        for (u, v) in edges: 
+            graph[u].append(v)
+            graph[v].append(u)
+            
+        stack = [source]
+        seen = {source}
         
         while stack:
-            v0 = stack.pop(0)
-            for v1 in graph[v0]:
-                if v1 == end: 
-                    return True
-                if v1 not in seen: 
-                    seen[v1] = True
-                    stack.append(v1)
+            u = stack.pop()
             
+            if u == destination: 
+                return True
+            
+            for v in graph[u]:
+                if v not in seen: 
+                    seen.add(v)
+                    stack.append(v)
+                    
         return False
+        
         
         
