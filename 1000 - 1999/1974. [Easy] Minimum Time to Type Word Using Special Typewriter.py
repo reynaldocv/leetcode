@@ -2,16 +2,21 @@
 
 class Solution:
     def minTimeToType(self, word: str) -> int:
-        prev = "a"
-        n = len(word)
-        ans = 0
-        for i in range(n):
-            aux1 = (ord(word[i]) - ord(prev) + 26) % 26
-            aux2 = (ord(prev) - ord(word[i]) + 26) % 26
-            aux = min(aux1, aux2)
-            prev = word[i]
-            ans += aux + 1
+        index = {chr(ord("a") + i): i for i in range(26)}
         
-        return ans
+        source = "a"
+        
+        ans = 0 
+        
+        for char in word: 
+            difference = abs(index[char] - index[source])
+            
+            ans += 1 + min(difference, 26 - difference)
+            
+            source = char
+            
+        return ans 
+        
+        
             
         
