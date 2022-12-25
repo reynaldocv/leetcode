@@ -2,25 +2,22 @@
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        def profit(i):
-            if i in seen: 
-                return seen[i]
-            elif i >= n: 
+        @cache
+        def helper(i):
+            if i >= n: 
                 return 0 
+            
             else: 
-                ans = 0
-                for j in range(i + 1, n):
-                    ans = max(ans, profit(j))
+                ans = helper(i + 1)
                 
-                for j in range(i + 1, n):
-                    ans = max(ans, prices[j] - prices[i] + profit(j + 2))
-                seen[i] = ans
-                return ans
+                for j in range(i, n - 1):
+                    ans = max(ans, prices[j + 1] - prices[i] + helper(j + 3))
+                    
+                return ans 
         
-        seen = {}
         n = len(prices)
         
-        return profit(0)
+        return helper(0)
 
 class Solution2:
     def maxProfit(self, prices: List[int]) -> int:
