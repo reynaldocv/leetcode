@@ -2,13 +2,16 @@
 
 class Solution:
     def titleToNumber(self, columnTitle: str) -> int:
-        values = {chr(ord("A") + i): i + 1 for i in range(26)}
-        ans = 0 
-        p = 1
+        num = {chr(ord("A") + i): i + 1 for i in range(26)}
         
-        for char in columnTitle[::-1]:
-            ans += p*values[char]
-            p *= 26
+        base = 1 
+        
+        ans = 0 
+        
+        for char in columnTitle[:: - 1]:
+            ans += num[char]*base 
             
-        return ans
+            base *= 26
+            
+        return ans 
             
