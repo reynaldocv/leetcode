@@ -7,17 +7,73 @@ class Solution:
         
         tasks.append([inf, inf])
     
-        arr = [(a, b, i) for (i, (a, b)) in enumerate(tasks)]
+        arr = [(startTime, processingTime, idx) for (idx, (startTime, processingTime)) in enumerate(tasks)]
         
         arr.sort()
         
-        t = 0 
-        for (enqueue, processing, idx) in arr: 
-            while heap and t < enqueue: 
-                (proc, i, enq) = heappop(heap)
-                ans.append(i)
-                t = max(t, enq) + proc
+        last = 0 
+        
+        for (start, processing, idx) in arr: 
+            while heap and last < start:                
+                (processingTime, index, startTime) = heappop(heap)
                 
-            heappush(heap, (processing, idx, enqueue))
+                ans.append(index)
+                
+                last = max(last, startTime) + processingTime
+                
+            heappush(heap, (processing, idx, start))
             
         return ans 
+
+            
+class Solution2:
+    def getOrder(self, tasks: List[List[int]]) -> List[int]:
+        n = len(tasks)
+        
+        arr = [(startTime, processingTime, idx) for (idx, (startTime, processingTime)) in enumerate(tasks)]
+        
+        arr.sort()
+        
+        heap = []
+        
+        ans = []
+        
+        last = 0
+        
+        while arr: 
+            while tasks and arr[0][0] <= last:
+                (_, processingTime, idx) = arr.pop(0)
+                
+                heappush(heap, (processingTime, idx))
+            
+            if not heap: 
+                if arr: 
+                    (startTime, processingTime, idx) = arr.pop(0)
+                    
+                    last = startTime + processingTime
+                    
+                    ans.append(idx)
+            
+            else: 
+                (processingTime, idx) = heappop(heap)
+                
+                last += processingTime
+                
+                ans.append(idx)
+                
+        while heap: 
+            (processingTime, idx) = heappop(heap)
+            
+            ans.append(idx)
+            
+        return ans 
+            
+        
+                
+                
+                
+            
+        
+        
+        
+    
