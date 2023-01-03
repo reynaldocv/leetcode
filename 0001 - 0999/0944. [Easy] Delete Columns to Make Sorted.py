@@ -2,20 +2,21 @@
 
 class Solution:
     def minDeletionSize(self, strs: List[str]) -> int:
-        n = len(strs)
-        m = len(strs[0])
-        arr = [[strs[i][j] for i in range(n)] for j in range(m)]
+        ans = 0 
         
-        print(arr)
-        ans = 0
-        for i in range(m):
+        m, n = len(strs), len(strs[0])
+        
+        for i in range(n):
             go = False
-            for j in range(1, n):
-                if ord(arr[i][j - 1]) > ord(arr[i][j]):
+            for j in range(1, m):
+                if strs[j][i] < strs[j - 1][i]:
                     go = True
                     break 
                     
             if go: 
-                ans += 1
-        
-        return ans
+                ans += 1 
+                    
+        return ans 
+                
+            
+            
