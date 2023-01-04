@@ -2,28 +2,27 @@
 
 class Solution:
     def minimumRounds(self, tasks: List[int]) -> int:
+        def helper(num):
+            ans = num//3
+            res = num % 3
+               
+            if res != 0: 
+                ans += 1 
+
+            return ans 
+
+        ans = 0 
+        
         counter = defaultdict(lambda: 0)
         
         for task in tasks: 
             counter[task] += 1 
-        
-        ans = 0 
             
         for key in counter: 
-            cnt = counter[key]
-            if cnt % 3 == 0: 
-                ans += cnt//3
+            if counter[key] == 1: 
+                return -1
             
-            elif cnt % 3 == 1: 
-                if cnt - 4 >= 0: 
-                    ans += (cnt - 4)//3 + 2
-                else: 
-                    return -1
+            ans += helper(counter[key])
             
-            elif cnt % 3 == 2: 
-                if cnt - 2 >= 0: 
-                    ans += (cnt - 2)//3 + 1
-                else: 
-                    return -1
-            
-        return ans 
+        return  ans
+        
