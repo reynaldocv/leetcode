@@ -15,6 +15,25 @@ class Solution:
     
 class Solution2:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
+        points.sort() 
+        
+        (start, end) = (-inf, -inf)
+        
+        ans = 0
+        
+        for (x, y) in points:            
+            if max(start, x) <= min(end, y):
+                start = max(start, x)
+                end = min(end, y)
+                
+            else: 
+                (start, end) = (x, y) 
+                ans += 1
+                
+        return ans
+        
+class Solution3:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
         points.sort()
         arr = [tuple(points[0])]
         
