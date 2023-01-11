@@ -7,21 +7,26 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def tree2str(self, root: TreeNode) -> str:
-        def tour(root):
-            if root: 
-                self.ans += str(root.val)
-                if root.left:
-                    self.ans += "("
-                    tour(root.left)
-                    self.ans += ")"
-                if root.right:
-                    if root.left == None: 
-                        self.ans += "()"
-                    self.ans += "("                        
-                    tour(root.right)
-                    self.ans += ")"
+    def tree2str(self, root: Optional[TreeNode]) -> str:
+        def helper(node):
+            if node: 
+                ans = str(node.val)
+                
+                if node.right:
+                    ans += "(" + helper(node.left) + ")(" + helper(node.right) + ")"
+                
+                elif node.left: 
+                    ans += "(" + helper(node.left) + ")"
                     
-        self.ans = ""
-        tour(root)
-        return self.ans
+                return ans 
+            
+            else: 
+                return ""
+            
+        return helper(root)
+                    
+                    
+                                        
+                                       
+                                    
+        
