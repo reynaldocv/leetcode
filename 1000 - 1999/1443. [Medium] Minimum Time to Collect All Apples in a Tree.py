@@ -3,28 +3,31 @@
 class Solution:
     def minTime(self, n: int, edges: List[List[int]], hasApple: List[bool]) -> int:
         def helper(u):
-            if u != 0 and len(graph[u]) == 1:
-                return (True, 0) if hasApple[u] else (False, 0)
+            ans = 0 
+            apples = False 
             
-            apples, ans = False, 0
-            
-            for v in graph[u]:                
+            for v in graph[u]:
                 if v not in seen: 
-                    seen[v] = True
-                    apple, total = helper(v)
-                    apples = apples or apple
-                    ans += total + 2 if apple else 0 
+                    seen.add(v)
+                        
+                    (apple, distance) = helper(v)
 
-            if not apples: 
-                return (True, 0) if hasApple[u] else (False, 0)
-            else: 
-                return (True, ans)
+                    if apple: 
+                        apples = True
+                        ans += 2 + distance
 
-        graph = [[] for _ in range(n)]
+            return (hasApple[u] or apples, ans)
+                
+        hasApple = {i: apple for (i, apple) in enumerate(hasApple)}
+
+        seen = {0}
+        
+        graph = defaultdict(lambda: [])
+        
         for (u, v) in edges: 
             graph[u].append(v)
             graph[v].append(u)
         
-        seen = {0: True}
+        _, ans = helper(0)
         
-        return helper(0)[1]
+        return ans 
