@@ -2,11 +2,16 @@
 
 class Solution:
     def findPoisonedDuration(self, timeSeries: List[int], duration: int) -> int:
-        ans = duration
-        for i in range(1, len(timeSeries)):
-            if timeSeries[i - 1] + duration - 1 >= timeSeries[i]:
-                ans += timeSeries[i] - timeSeries[i - 1] 
-            else: 
-                ans += duration 
-        return ans
+        n = len(timeSeries) 
         
+        ans = 0 
+        
+        for (i, time) in enumerate(timeSeries): 
+            if i < n - 1: 
+                ans += min(timeSeries[i + 1] - time, duration)
+                
+            else: 
+                ans += duration
+                
+        return ans 
+            
