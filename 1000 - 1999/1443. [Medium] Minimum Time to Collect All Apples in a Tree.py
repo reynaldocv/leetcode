@@ -28,6 +28,6 @@ class Solution:
             graph[u].append(v)
             graph[v].append(u)
         
-        _, ans = helper(0)
+        (_, ans) = helper(0)
         
         return ans 
