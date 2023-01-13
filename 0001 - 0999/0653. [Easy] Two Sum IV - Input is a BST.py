@@ -28,16 +28,18 @@ class Solution:
            
 class Solution2:
     def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
-        self.dic = {}
-        
-        def route(root):
-            if root: 
-                if k - root.val in self.dic: 
-                    return True
-                else: 
-                    self.dic[root.val] = True
-                    return route(root.left) or route(root.right)
-            else: 
-                return False
+        def helper(node):
+            if node: 
+                if k - node.val in seen: 
+                    return True 
+                
+                seen.add(node.val)
+                
+                return helper(node.left) or helper(node.right)
+                
+            return False 
                     
-        return route(root)
+        seen = set()
+        
+        return helper(root)
+        
