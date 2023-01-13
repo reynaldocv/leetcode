@@ -2,15 +2,20 @@
 
 class Solution:
     def findLengthOfLCIS(self, nums: List[int]) -> int:
-        counter = 1
-        n = len(nums)
-        ans = 1
+        n = len(nums) 
+        
+        ans = cnt = 1 
+        
         for i in range(1, n):
-            if nums[i] > nums[i - 1]:                
-                counter += 1                
-            else:
-                ans = max(ans, counter) 
-                counter = 1
-        return max(ans, counter)
-            
+            if nums[i] > nums[i - 1]:
+                cnt += 1 
+                
+            else: 
+                cnt = 1 
+                
+            ans = max(ans, cnt)
+                
+        return ans 
+        
+        
         
