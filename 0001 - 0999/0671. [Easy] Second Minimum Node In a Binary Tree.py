@@ -7,20 +7,35 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def findSecondMinimumValue(self, root: TreeNode) -> int:
-        def tour(root):
-            if root: 
-                self.ans.add(root.val)
-                tour(root.left)
-                tour(root.right)
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        def helper(node, minimum):
+            if node: 
+                ans = inf 
                 
-        ans = self.ans = set([])
-        tour(root)
-        ans = list(ans)
-        ans.sort()
-        if len(ans) <= 1: 
-            return -1
-        else: 
-            return ans[1]
+                if node.val != minimum: 
+                    ans = min(ans, node.val)
+                    
+                left = helper(node.left, minimum)
+                
+                if left != minimum: 
+                    ans = min(ans, left)
+                    
+                right = helper(node.right, minimum)
+                
+                if right != minimum: 
+                    ans = min(ans, right)
+                    
+                return ans 
+                    
+            return inf     
+        
+        minimum = inf 
+        
+        minimum = helper(root, minimum)
+        
+        ans = helper(root, minimum)
+        
+        return -1 if ans == inf else ans
+                
         
                 
