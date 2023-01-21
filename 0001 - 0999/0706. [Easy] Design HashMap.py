@@ -3,17 +3,17 @@
 class MyHashMap:
 
     def __init__(self):
-        self.data = [-1]*1000001
-        
+        self.dict = defaultdict(lambda: -1)
+
     def put(self, key: int, value: int) -> None:
-        self.data[key] = value
-        
+        self.dict[key] = value
+
     def get(self, key: int) -> int:
-        return self.data[key]
-    
+        return self.dict[key]
+
     def remove(self, key: int) -> None:
-        self.data[key] = -1
-        
+        if key in self.dict: 
+            self.dict.pop(key)
 
 # Your MyHashMap object will be instantiated and called as such:
 # obj = MyHashMap()
