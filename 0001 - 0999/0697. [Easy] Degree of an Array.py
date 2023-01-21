@@ -2,23 +2,25 @@
 
 class Solution:
     def findShortestSubArray(self, nums: List[int]) -> int:
-        dic, start, end = {}, {}, {}
-        n = len(nums)
-        for i in range(n):
-            dic[nums[i]] = dic.get(nums[i], 0) + 1
-            if nums[i] not in start:
-                start[nums[i]] = i
-            end[nums[i]] = i
+        minimum = defaultdict(lambda: -1)
+        
+        tmp = (-inf, -inf)
+        
+        counter = defaultdict(lambda: 0)
+        
+        for (i, num) in enumerate(nums): 
+            if minimum[num] == -1:
+                minimum[num] = i 
             
-        freq = 0
-        for num in dic: 
-            freq = max(freq, dic[num])
+            counter[num] += 1 
+            
+            tmp = max(tmp, (counter[num], -(i - minimum[num] + 1)))
+                
+        return -tmp[1]
+            
         
-        ans = inf
+            
+            
+            
         
-        for num in dic: 
-            if dic[num] == freq:
-                ans = min(ans, end[num] - start[num] + 1)
-        
-        return ans
         
