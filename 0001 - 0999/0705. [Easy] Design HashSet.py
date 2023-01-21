@@ -3,29 +3,18 @@
 class MyHashSet:
 
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.array = []
+        self.arr = set()
 
     def add(self, key: int) -> None:
-        if key not in self.array:
-            self.array.append(key)
+        self.arr.add(key)
         
-
     def remove(self, key: int) -> None:
-        if key in self.array:
-            self.array.remove(key)
-        
+        if key in self.arr: 
+            self.arr.remove(key)
 
     def contains(self, key: int) -> bool:
-        """
-        Returns true if this set contains the specified element
-        """
-        return key in self.array
-        
-
-
+        return key in self.arr
+    
 # Your MyHashSet object will be instantiated and called as such:
 # obj = MyHashSet()
 # obj.add(key)
