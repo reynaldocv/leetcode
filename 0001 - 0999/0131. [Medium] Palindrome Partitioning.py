@@ -6,20 +6,26 @@ class Solution:
         def isPalindromic(string):
             return string == string[::-1]
             
-        def helper(start, arr):
-            if start >= n: 
-                ans.append(arr[:])
+        def helper(i, arr):
+            if i >= n: 
+                ans.append(arr.copy())
+                
             else: 
-                for i in range(start + 1, n + 1):
-                    prefix = s[start: i]    
-                    if isPalindromic(prefix):
-                        arr.append(prefix)
-                        helper(i, arr)
+                for j in range(i + 1, n + 1):
+                    tmp = s[i: j]    
+                    
+                    if isPalindromic(tmp): 
+                        arr.append(tmp)
+                        
+                        helper(j, arr)
+                        
                         arr.pop()
                 
         ans = []
+        
         n = len(s)
         
         helper(0, [])
         
         return ans
+        
