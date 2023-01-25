@@ -2,35 +2,32 @@
 
 class Solution:
     def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:
-        seen1 = defaultdict(lambda: inf)
-        seen1[node1] = 0 
-        stack = [(node1, 0)]
+        def helper(u):
+            distance = defaultdict(lambda: inf)
+            distance[u] = 0 
+
+            stack = [(u, 0)]
+
+            while stack: 
+                (u, dist) = stack.pop() 
+                v = edges[u]
+
+                if v != -1 and v not in distance: 
+                    distance[v] = dist + 1
+                    stack.append((v, dist + 1))
+
+            return distance
         
-        while stack: 
-            (u, dist) = stack.pop() 
-            v = edges[u]
-            
-            if v != -1 and v not in seen1: 
-                seen1[v] = dist + 1
-                stack.append((v, dist + 1))
-                
-        seen2 = defaultdict(lambda: inf)
-        seen2[node2] = 0 
-        stack = [(node2, 0)]
-                
-        while stack: 
-            (u, dist) = stack.pop() 
-            v = edges[u]
-            
-            if v != -1 and v not in seen2: 
-                seen2[v] = dist + 1
-                stack.append((v, dist + 1))
-                
-        ans = max((seen1[node2], node2), (seen2[node1], node1))
+        distance1 = helper(node1)
         
-        for key in seen1: 
-            if key in seen2: 
-                ans = min(ans, max((seen1[key], key), (seen2[key], key)))
+        distance2 = helper(node2)
                 
-        return ans[1] if ans[0] != inf else -1
+        ans = (inf, -1)
+        
+        for key in distance1: 
+            if key in distance2: 
+                tmp = max(distance1[key], distance2[key])
+                ans = min(ans, (tmp, key))
+                
+        return ans[1] 
                 
