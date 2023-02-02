@@ -2,17 +2,25 @@
 
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
-        dic = {order[i]: chr(i + ord("a")) for i in range(len(order))}
-        for i in range(len(words)): 
-            aux = ""
-            for w in words[i]: 
-                aux += dic[w]
-            words[i] = aux
+        @cache
+        def helper(word):
+            ans = ""
+            
+            for char in word: 
+                ans += seen[char]
+                
+            return ans
+            
+        seen = {}
         
-        words1 = words.copy()
-        words1.sort()
-        for i in range(len(words)):
-            if words[i] != words1[i]:
-                return False
+        for (i, char) in enumerate(order):
+            seen[char] = chr(ord("a") + i)
+            
+        n = len(words)
+        
+        for i in range(n - 1):
+            if helper(words[i]) > helper(words[i + 1]):
+                return False 
+            
         return True
-        
+    
