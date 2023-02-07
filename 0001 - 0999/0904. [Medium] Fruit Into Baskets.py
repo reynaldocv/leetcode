@@ -2,20 +2,31 @@
 
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
+        n = len(fruits)
+        
+        counter = defaultdict(lambda: 0)
+        
+        start = 0 
+        
         ans = 0 
-        arr = []
-        idx = {}
-        start = -1
-        for (i, fruit) in enumerate(fruits): 
-            idx[fruit] = (i, fruit)
-            if len(idx) == 3: 
-                minIdx = min([idx[key] for key in idx])
-                start = minIdx[0]
-                idx.pop(minIdx[1])
+    
+        for (i, fruit) in enumerate(fruits):
+            counter[fruit] += 1 
             
-            ans = max(ans, i - start)
+            while start < n and len(counter) > 2: 
+                oldFruit = fruits[start]
+                
+                counter[oldFruit] -= 1 
+        
+                if counter[oldFruit] == 0: 
+                    counter.pop(oldFruit)
+                    
+                start += 1 
             
-        return ans
+            ans = max(ans, i - start + 1)
+            
+        return ans 
+
             
                 
                 
