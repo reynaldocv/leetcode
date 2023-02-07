@@ -2,8 +2,6 @@
 
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        n = len(fruits)
-        
         counter = defaultdict(lambda: 0)
         
         start = 0 
@@ -13,7 +11,7 @@ class Solution:
         for (i, fruit) in enumerate(fruits):
             counter[fruit] += 1 
             
-            while start < n and len(counter) > 2: 
+            while len(counter) > 2: 
                 oldFruit = fruits[start]
                 
                 counter[oldFruit] -= 1 
