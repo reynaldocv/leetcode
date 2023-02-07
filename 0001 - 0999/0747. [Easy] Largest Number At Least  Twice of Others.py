@@ -2,21 +2,14 @@
 
 class Solution:
     def dominantIndex(self, nums: List[int]) -> int:
-        n = len(nums)        
-        if n <= 1: return 0
+        maximum = [(-1, 0), (-1, 0)]
         
-        max_ = 0
-        ans = -1
-        for i in range(n): 
-            if max_ < nums[i]:
-                max_ = nums[i]
-                ans = i
-                
-        go = True       
-        for i in range(n):
-            if nums[i] != max_:
-                if nums[i]*2 > max_:
-                    go = False
-                    break
+        for (i, num) in enumerate(nums): 
+            maximum.append((num, i))
             
-        return ans if go else -1
+            maximum.sort(reverse = True)
+            
+            maximum = maximum[: 2]
+            
+        return maximum[0][1] if maximum[0][0] >= 2*maximum[1][0] else -1
+        
