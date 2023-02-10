@@ -2,26 +2,34 @@
 
 class Solution:
     def maxDistance(self, grid: List[List[int]]) -> int:
-        n = len(grid)
-        stack = [(i, j) for i in range(n) for j in range(n) if grid[i][j] == 1]
-        seen = {(i, j): True for i in range(n) for j in range(n) if grid[i][j] == 1}
+        m, n = len(grid), len(grid[0])
         
-        if len(stack) == n*n:
+        stack = []
+        
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1: 
+                    stack.append((i, j))
+                    
+        if not stack or len(stack) == m*n: 
             return -1
         
-        ans = 0
+        ans = -1 
+        
         while stack: 
             newStack = []
-            for (x, y) in stack: 
-                for (r, s) in [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]:
-                    if 0 <= r < n and 0 <= s < n: 
-                        if (r, s) not in seen: 
-                            newStack.append((r, s))
-                            seen[(r, s)] = True
-            
+            for (x, y) in stack:
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
+                    
+                    if 0 <= p < m and 0 <= q < n and grid[p][q] == 0: 
+                        grid[p][q] = 1                        
+                        newStack.append((p, q))
+                        
+            ans += 1 
             stack = newStack
-            ans += 1
             
-        return ans - 1
+        return ans 
+        
         
         
