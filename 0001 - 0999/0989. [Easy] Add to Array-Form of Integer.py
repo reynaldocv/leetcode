@@ -2,13 +2,35 @@
 
 class Solution:
     def addToArrayForm(self, num: List[int], k: int) -> List[int]:
-        arr = [str(num[i]) for i in range(len(num))]
-        num1 = int("".join(arr))
-        arr = num1 + k
+        ans = int("".join(str(digit) for digit in num)) + k 
+        
+        return [int(char) for char in str(ans)]
+
+class Solution2:
+    def addToArrayForm(self, num: List[int], k: int) -> List[int]:
+        num1 = num[:: -1]
+        num2 = [int(digit) for digit in str(k)][:: -1]
+        
+        m, n = len(num1), len(num2)
+        
+        aux = 0
+        
         ans = []
-        if arr == 0: return [0]
-        while arr > 0:
-            r = arr % 10
-            arr = arr // 10
-            ans.insert(0, r)
-        return ans
+        
+        limit = max(m, n)
+        
+        for i in range(limit):
+            bit1 = num1[i] if i < m else 0 
+            bit2 = num2[i] if i < n else 0 
+            
+            bit = bit1 + bit2 + aux
+            
+            ans.append(bit % 10)
+            
+            aux = bit // 10
+            
+        if aux: 
+            ans.append(1)
+                    
+        return ans[:: -1]
+        
