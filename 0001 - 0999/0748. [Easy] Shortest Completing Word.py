@@ -2,30 +2,39 @@
 
 class Solution:
     def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
-        dic = {}
-        for i in licensePlate:
-            i = i.lower()
-            if 0 <= (ord(i) - ord("a")) <= 26:
-                dic[i] = dic.get(i, 0) + 1
+class Solution:
+    def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
+        chars = [chr(ord("a") + i) for i in range(26)]
         
-        print(dic)
-        ans = ""
-        nans = inf
-        for word in words:
-            aux = {}        
-            for i in word: 
-                if i in dic: 
-                    aux[i] = aux.get(i, 0) + 1                  
+        counter = defaultdict(lambda: 0)
+        
+        for char in licensePlate: 
+            minChar = char.lower()
             
-            go = True            
-            for i in dic: 
-                if i not in aux or dic[i] > aux[i]:
-                    go = False
-                    break
+            if minChar in chars: 
+                counter[minChar] += 1 
+            
+        ans = (inf, inf, "")
+        
+        for (i, word) in enumerate(words): 
+            count = defaultdict(lambda: 0)
+            
+            for char in word: 
+                minChar = char.lower()
                 
-            if go:                
-                if nans > len(word):
-                    nans = len(word)
-                    ans = word
-        return ans
+                if minChar in counter: 
+                    count[minChar] += 1 
+                    
+            go = True 
+            
+            for key in counter: 
+                if key not in count or counter[key] > count[key]:
+                    go = False 
+                    
+                    break 
+                    
+            if go:
+                ans = min(ans, (len(word), i,  word))
+            
+        return ans[2]
                 
