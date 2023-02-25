@@ -2,15 +2,14 @@
 
 class Solution:
     def sumZero(self, n: int) -> List[int]:
-        if n % 2 == 1:
-            ans = [x for x in range(-n//2 + 1, n//2 + 1)]
-        else:
-            if n == 0: return []
-            m = n + 1
-            ans = [x for x in range(-m//2 + 1, m//2 + 1)]
-            aux = ans.pop()
-            aux += ans.pop()
-            ans.append(aux)
+        ans = []
+        
+        for i in range(n//2):
+            ans.append(i + 1)
+            ans.append(-(i + 1))
             
-                
-        return ans
+        if n % 2 == 1: 
+            ans.append(0)
+            
+        return ans 
+        
