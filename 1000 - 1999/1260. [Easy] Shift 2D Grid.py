@@ -2,18 +2,18 @@
 
 class Solution:
     def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
-        aux = []
-        n = len(grid)
-        m = len(grid[0])
-        q = n*m
-        for i in range(n):
-            for j in range(m):
-                aux.append(grid[i][j])
-                
-        for i in range(n):
-            for j in range(m):
-                pos = i*m + j
-                grid[i][j] = aux[(pos - k + q) % q]
+        m, n = len(grid), len(grid[0])
         
-        return grid
+        ans = [[0 for _ in range(n)] for _ in range(m)]
+        
+        for i in range(m):
+            for j in range(n):
+                index = (i*n + j + k) % (m*n)
+                
+                x = index//n 
+                y = index % n
+                
+                ans[x][y] = grid[i][j]
+                
+        return ans 
         
