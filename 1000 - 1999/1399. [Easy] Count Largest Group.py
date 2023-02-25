@@ -2,19 +2,33 @@
 
 class Solution:
     def countLargestGroup(self, n: int) -> int:
-        def SumOfDigits(n):
-            if n <= 0: return 0
-            return n % 10 + SumOfDigits(n//10) 
-        
-        max_ = 0
-        sumDigDic = {}
-        for i in range(1, n + 1):
-            aux = SumOfDigits(i)
-            sumDigDic[aux] = sumDigDic.get(aux, 0) + 1
-            max_ = max(max_, sumDigDic[aux])
-        ans = 0
-        for i in sumDigDic:
-            if sumDigDic[i] == max_:
-                ans += 1
-        return ans
+        def helper(num):
+            ans = 0 
             
+            while num: 
+                ans += (num % 10)
+                
+                num //= 10 
+                
+            return ans 
+        
+        ans = 0 
+        
+        maxLen = 0 
+        
+        counter = defaultdict(lambda: 0)
+        
+        for num in range(1, n + 1):
+            sumDigits = helper(num)
+            
+            counter[sumDigits] += 1 
+            
+            if counter[sumDigits] == maxLen: 
+                ans += 1 
+                
+            elif counter[sumDigits] > maxLen: 
+                maxLen = counter[sumDigits]
+                
+                ans = 1 
+                
+        return ans 
