@@ -2,13 +2,15 @@
 
 class Solution:
     def findLucky(self, arr: List[int]) -> int:
-        dic = {}
-        for num in arr: 
-            dic[num] = dic.get(num, 0) + 1
+        counter = defaultdict(lambda: 0)
         
+        for num in arr: 
+            counter[num] += 1 
+            
         ans = -1
-        for k in dic: 
-            if k == dic[k]:
-                ans = max(ans, k)
+        
+        for key in counter: 
+            if key == counter[key]:
+                ans = max(ans, key)
                 
-        return ans
+        return ans 
