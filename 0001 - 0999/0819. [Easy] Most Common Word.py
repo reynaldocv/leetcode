@@ -18,10 +18,10 @@ class Solution:
             if minChar in chars:
                 word += minChar
                 
-            elif word  != "":                
-                if word  not in banned:             
-                    counter[word ] += 1                
-                    ans = max(ans, (counter[word ], word ))
+            elif word != "":                
+                if word not in banned:             
+                    counter[word] += 1                
+                    ans = max(ans, (counter[word], word))
                 
                 word = ""
         
