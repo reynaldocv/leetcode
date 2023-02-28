@@ -2,24 +2,26 @@
 
 class Solution:
     def largestTriangleArea(self, points: List[List[int]]) -> float:
-        
-        """
-        :type points: List[List[int]]
-        :rtype: float
-        """
-        ans = 0
         n = len(points)
-        for i in range(n): 
-            for j in range(i + 1, n):
+        
+        ans = 0
+        
+        for i in range(n - 2):
+            for j in range(i + 1, n - 1):
                 for k in range(j + 1, n):
-                    l1 = ((points[i][0] - points[j][0])**2 + (points[i][1] - points[j][1])**2)**.5
-                    l2 = ((points[i][0] - points[k][0])**2 + (points[i][1] - points[k][1])**2)**.5
-                    l3 = ((points[k][0] - points[j][0])**2 + (points[k][1] - points[j][1])**2)**.5
+                    (x1, y1) = points[i]
+                    (x2, y2) = points[j]
+                    (x3, y3) = points[k]
                     
-                    s = (l1 + l2 + l3)/2
-                    if s > l1 and s > l2 and s > l3:
-                        area = (s*(s - l1)*(s - l2)*(s - l3))**.5
-                        ans = max(ans, area)
+                    a = ((y2 - y1)**2 + (x2 - x1)**2)**.5
+                    b = ((y3 - y1)**2 + (x3 - x1)**2)**.5
+                    c = ((y3 - y2)**2 + (x3 - x2)**2)**.5
+                    
+                    s = (a + b + c)/2
+                    
+                    if s >= max(a, b, c):                    
+                        ans = max(ans, (s*(s - a)*(s - b)*(s - c))**.5)
+                    
         return ans
             
         
