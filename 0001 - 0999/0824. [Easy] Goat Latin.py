@@ -2,12 +2,11 @@
 
 class Solution:
     def toGoatLatin(self, sentence: str) -> str:
-        vowels = {"a", "e", "i", "o", "u"}
+        vowels = "aeiouAEIOU"
         
         ans = ""
         
-        word = ""
-        
+        word = ""        
         times = 1
         
         for char in sentence + " ":
@@ -15,7 +14,7 @@ class Solution:
                 word += char
                 
             else:
-                if word[0].lower() in vowels:
+                if word[0] in vowels:
                     ans += word + "ma"
                 
                 else:
