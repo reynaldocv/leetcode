@@ -1,15 +1,29 @@
 # https://leetcode.com/problems/goat-latin/
 
 class Solution:
-    def toGoatLatin(self, S: str) -> str:
-        vowels = "aeiouAEIOU"
-        words = S.split(" ")
-        n = len(words)
-        for i in range(n):
-            if words[i][0] in vowels: 
-                words[i] += "ma"
-            else:
-                words[i] = words[i][1:] + words[i][0] + "ma"
-            words[i] += "a"*(i + 1) 
+    def toGoatLatin(self, sentence: str) -> str:
+        vowels = {"a", "e", "i", "o", "u"}
         
-        return " ".join(words)
+        ans = ""
+        
+        word = ""
+        
+        times = 1
+        
+        for char in sentence + " ":
+            if char != " ":
+                word += char
+                
+            else:
+                if word[0].lower() in vowels:
+                    ans += word + "ma"
+                
+                else:
+                    ans += word[1: ] + word[0] + "ma"
+                    
+                word = ""
+                ans += "a"*times + " "
+                
+                times += 1
+                
+        return ans[: -1]
