@@ -2,23 +2,28 @@
 
 class Solution:
     def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
-        paragraph = paragraph.lower() + " "
-        bannedword = {i.lower() for i in banned}
-        aux = ""
-        n = len(paragraph)
-        dic = {}
-        for i in range(n):
-            if paragraph[i].islower():
-                aux += paragraph[i]
-            else:
-                if len(aux) > 0:
-                    if aux not in bannedword:
-                        dic[aux] = dic.get(aux, 0) + 1
-                aux = ""
+        banned = {word.lower() for word in banned}
         
-        ans = (-1, "")
-        for i in dic: 
-            ans = max(ans, (dic[i], i))
+        chars = {chr(ord("a") + i) for i in range(26)}
+        
+        counter = defaultdict(lambda: 0)
+        
+        ans = (0, "")
+        
+        word = ""
+        
+        for char in paragraph + " ":
+            minChar = char.lower()
+            
+            if minChar in chars:
+                word += minChar
+                
+            elif word  != "":                
+                if word  not in banned:             
+                    counter[word ] += 1                
+                    ans = max(ans, (counter[word ], word ))
+                
+                word = ""
+        
         return ans[1]
                 
-        
