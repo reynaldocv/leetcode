@@ -2,19 +2,19 @@
 
 class Solution:
     def largeGroupPositions(self, s: str) -> List[List[int]]:
-        S = s + " "
-        n = len(S)
-        aux = ""
-        word = ""
-        start = -1
+        prev = "$"
+        
         ans = []
-        for i in range(n):
-            if aux == S[i]:
-                word += aux
-            else: 
-                if len(word) >= 3: 
-                    ans.append((start, i - 1))                    
-                aux = S[i]
-                start = i
-                word = S[i]
+        
+        start = -1
+        
+        for (i, char) in enumerate(s + "$"):
+            if prev != char:
+                if i - start >= 3:
+                    ans.append((start, i - 1))
+                    
+                start = i 
+                prev = char
+                
         return ans
+                
