@@ -1,15 +1,21 @@
 # https://leetcode.com/problems/number-of-lines-to-write-string/
 
 class Solution:
-    def numberOfLines(self, widths: List[int], S: str) -> List[int]:
-        line = 1
-        aux = 0
-        n = len(S)
+    def numberOfLines(self, widths: List[int], s: str) -> List[int]:
+        ans = 1 
         
-        for i in range(n):
-            aux += widths[ord(S[i]) - ord("a")]
-            if aux > 100:
-                aux = widths[ord(S[i]) - ord("a")]
-                line += 1
+        aSum = 0
         
-        return (line, aux)
+        for char in s:
+            width = widths[ord(char) - ord("a")]
+            aSum += width
+            
+            if aSum > 100:
+                ans += 1 
+                
+                aSum = width
+                
+        return [ans, aSum]
+                
+        
+        
