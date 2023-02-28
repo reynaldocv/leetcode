@@ -2,14 +2,19 @@
 
 class Solution:
     def backspaceCompare(self, s: str, t: str) -> bool:
-        def finalWord(S):
-            arr = []
-            for c in S:
-                if c != '#':
-                    arr.append(c)
-                elif len(arr) > 0:
-                    arr.pop()
-            return "".join(arr)
+        def helper(word):
+            stack = []
+            
+            for char in word:
+                if char == "#":
+                    if stack:
+                        stack.pop()
                 
-        return finalWord(s) == finalWord(t)
+                else:
+                    stack.append(char)
+            
+            return "".join(stack)
         
+        return helper(s) == helper(t)
+                    
+                
