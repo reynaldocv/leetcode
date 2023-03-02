@@ -2,24 +2,28 @@
 
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        newChar = []
+        prev = ""
+        count = 1 
         
-        last = ""
-        counter = 0
-        for char in chars + ["$$"]: 
-            if char == last: 
-                counter += 1
-            else: 
-                if counter > 0:                     
-                    newChar.append(last)
-                    if counter > 1:
-                        newChar.extend([x for x in str(counter)])
-                last = char
-                counter = 1
+        ans = 0 
+        
+        lastChar = chars[-1]
+        
+        for char in chars + [chr(ord(lastChar) + 1)]:
+            if prev != char: 
+                if prev != "":
+                    chars[ans] = prev
+                    ans += 1
+                    
+                    if count > 1:                    
+                        for digit in str(count):
+                            chars[ans] = digit
+                            ans += 1 
                         
-        for i in range(len(newChar)):
-            chars[i] = newChar[i]
+                prev = char
+                count = 1 
             
-        chars = chars[:len(newChar)]
+            else: 
+                count += 1                 
         
-        return len(chars)
+        return ans
