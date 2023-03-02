@@ -7,9 +7,7 @@ class Solution:
         
         ans = 0 
         
-        lastChar = chars[-1]
-        
-        for char in chars + [chr(ord(lastChar) + 1)]:
+        for char in chars + [chr(ord(chars[-1]) + 1)]:
             if prev != char: 
                 if prev != "":
                     chars[ans] = prev
