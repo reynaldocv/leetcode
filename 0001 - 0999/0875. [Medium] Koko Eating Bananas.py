@@ -2,23 +2,28 @@
 
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        def numHours(speed):
+        def helper(velocity):
             ans = 0 
+            
             for pile in piles: 
-                if pile % speed == 0: 
-                    ans += pile//speed
-                else: 
-                    ans += pile//speed + 1
-            return ans
+                ans += pile//velocity
+                
+                if pile % velocity != 0: 
+                    ans += 1 
+                    
+            return ans 
         
         start = 0
-        end = max(piles) + 2
+        end = sum(piles)
+        
         while end - start > 1: 
-            m = (end + start)//2
-            if numHours(m) <= h: 
-                end = m
+            middle = (end + start)//2
+            
+            if helper(middle) <= h: 
+                end = middle 
+            
             else: 
-                start = m 
+                start = middle 
                 
         return end
                 
