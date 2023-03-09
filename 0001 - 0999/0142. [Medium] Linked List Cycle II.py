@@ -9,31 +9,36 @@
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
         seen = {}
-        while head: 
-            print(head.val)
+        
+        while head:             
             if head not in seen: 
                 seen[head] = True
+            
             else: 
                 return head
+            
             head = head.next
         
         return None
-    
+
 class Solution2:
-    def detectCycle(self, head: ListNode) -> ListNode:
-        once = head
-        twice = head
-        while twice and twice.next: 
-            once = once.next
-            twice = twice.next.next
-            if once == twice: 
-                start = head
-                while start != once: 
-                    start = start.next
-                    once = once.next
-                    
-                return start
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
         
+        while fast and fast.next: 
+            slow = slow.next 
+            fast = fast.next.next 
+            
+            if slow == fast: 
+                fast = head
+                
+                while slow != fast: 
+                    slow = slow.next
+                    fast = fast.next
+                    
+                return slow 
+                
         return None
         
       
