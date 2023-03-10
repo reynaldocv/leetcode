@@ -2,21 +2,15 @@
 
 class Solution:
     def isSumEqual(self, firstWord: str, secondWord: str, targetWord: str) -> bool:
-        
-        def change(n, values):
+        def helper(word):
             ans = ""
-            for i in range(len(n)):
-                ans += values[n[i]]
+            
+            for char in word: 
+                ans += values[char]
+                
             return int(ans)
         
-        letters = "abcdefghij"
-        values = {}
-        for i in range(len(letters)):
-            values[letters[i]]  = str(i)
-            
-        print(values)
+        values = {chr(ord("a") + i): str(i) for i in range(10)}
         
-        aux = change(firstWord, values)
-        aux += change(secondWord, values)
-        return  aux == change(targetWord, values) 
+        return helper(firstWord) + helper(secondWord) == helper(targetWord)
         
