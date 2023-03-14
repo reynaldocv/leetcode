@@ -2,16 +2,18 @@
 
 class Solution:
     def findSubarrays(self, nums: List[int]) -> bool:
-        seen = {nums[0] + nums[1]}
+        prev = nums[0]
         
-        n = len(nums)
+        seen = set()
         
-        for i in range(1, n - 1):
-            tmp = nums[i] + nums[i + 1]
+        for (i, num) in enumerate(nums[1: ]):
+            prev += num 
             
-            if tmp in seen: 
+            if prev in seen: 
                 return True 
             
-            seen.add(tmp)
+            seen.add(prev)
+            prev -= nums[i]
             
-        return False
+        return False 
+        
