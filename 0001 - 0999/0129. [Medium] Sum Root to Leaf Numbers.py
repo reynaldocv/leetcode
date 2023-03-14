@@ -8,18 +8,17 @@
 #         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        def numbersToLeaf(root, val):
-            if root: 
-                if root.left == None and root.right == None: 
-                    num = int(val + str(root.val))
-                    return num
-                else: 
-                    return numbersToLeaf(root.left, val + str(root.val)) + numbersToLeaf(root.right, val + str(root.val))
-            else: 
-                return 0
+        def helper(node, value):
+            nonlocal ans
+            if node: 
+                if not node.left and not node.right: 
+                    ans += int(10*value + node.val)
                     
-        return numbersToLeaf(root, "")
-        
-                    
+                helper(node.left, 10*value + node.val)
+                helper(node.right, 10*value + node.val)
             
+        ans = 0 
         
+        helper(root, 0)
+        
+        return ans 
