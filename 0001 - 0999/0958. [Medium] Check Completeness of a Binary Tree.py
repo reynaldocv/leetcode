@@ -9,18 +9,18 @@
 class Solution:
     def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
         def helper(node, idx):
-            nonlocal aSum, maxIdx
+            nonlocal counter, maxIdx
             if node: 
-                aSum += idx
+                counter += 1
                 maxIdx = max(maxIdx, idx)
                 
                 helper(node.left, 2*idx)
                 helper(node.right, 2*idx + 1)
                 
-        aSum = 0 
+        counter = 0
         maxIdx = 0 
         
         helper(root, 1)
         
-        return aSum == maxIdx*(maxIdx + 1)//2
+        return counter == maxIdx
         
