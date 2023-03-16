@@ -8,16 +8,19 @@
 #         self.right = right
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
-        def createTree(inorder, postorder):
-            if len(inorder) == 0: 
-                return None
-            else: 
-                elem = postorder[len(postorder) - 1]
-                idx = inorder.index(elem)
-                root = TreeNode(elem)
-                root.left = createTree(inorder[:idx], postorder[:idx])
-                root.right = createTree(inorder[idx + 1:], postorder[idx: -1])
-                return root
+        def helper(inArr, postArr):
+            if inArr: 
+                value = postArr[-1]
+                
+                idx = inArr.index(value)
+                
+                ans = TreeNode(value)
+                
+                ans.left = helper(inArr[: idx], postArr[: idx])
+                ans.right = helper(inArr[idx + 1: ], postArr[idx : -1])
+                
+                return ans 
+            
+            return None 
         
-        ans = createTree(inorder, postorder)
-        return ans
+        return helper(inorder, postorder)
