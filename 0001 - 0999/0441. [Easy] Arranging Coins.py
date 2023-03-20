@@ -2,16 +2,18 @@
 
 class Solution:
     def arrangeCoins(self, n: int) -> int:
-        start = 0 
+        start = 1
         end = n + 1
         
         while end - start > 1: 
-            mid = (end + start)//2
+            middle = (end + start)//2
             
-            if mid*(mid + 1) <= 2*n:
-                start = mid 
-            else: 
-                end = mid 
+            if middle*(middle + 1)//2 <= n: 
+                start = middle 
                 
-        return start 
+            else: 
+                end = middle 
+                
+        return start
+        
         
