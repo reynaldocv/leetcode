@@ -2,17 +2,16 @@
 
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        dp = defaultdict(lambda: 0)
+        
         n = len(nums)
         
         ans = 0 
         
         for i in range(n):
-            val3 = nums[i - 3] if i - 3 >= 0 else 0
-            val2 = nums[i - 2] if i - 2 >= 0 else 0 
+            dp[i] = nums[i] + max(dp[i - 2], dp[i - 3])
             
-            nums[i] += max(val3, val2)
-            
-            ans = max(ans, nums[i])
+            ans = max(ans, dp[i])
             
         return ans 
             
