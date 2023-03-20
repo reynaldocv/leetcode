@@ -4,6 +4,41 @@ class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         m, n = len(matrix), len(matrix[0])
         
+        start = 0
+        end = m 
+        
+        while end - start > 1: 
+            middle = (end + start)//2
+            
+            if matrix[middle][0] <= target: 
+                start = middle 
+                
+            else: 
+                end = middle 
+                
+        row = start
+        
+        start = -1
+        end = n 
+        
+        while end - start > 1:
+            middle = (end + start)//2
+            
+            if matrix[row][middle] < target: 
+                start = middle 
+                
+            else: 
+                end = middle 
+                
+        if end < n:
+            return matrix[row][end] == target
+        
+        return False 
+    
+class Solution2:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        m, n = len(matrix), len(matrix[0])
+        
         stack = [(0, 0)]
         seen = {(0, 0)}
         
@@ -23,32 +58,4 @@ class Solution:
                             stack.append((p, q))
                             
         return False
-
-class Solution2:
-    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        def searchBinary(arr, target):
-            start = 0 
-            end = len(arr)
-            while end - start > 1:             
-                m = (end + start)//2
-                if target < arr[m]:
-                    end = m 
-                else: 
-                    start = m 
-            return start, end
-            
-        n = len(matrix)
-        m = len(matrix[0])
-        
-        row = -1
-        for i in range(n):
-            if matrix[i][0] <= target <= matrix[i][m - 1]:
-                row = i
-                break
-        
-        if row == -1: 
-            return False
-        else: 
-            start, end = searchBinary(matrix[row], target)     
-            return True if matrix[row][start] == target else False
     
