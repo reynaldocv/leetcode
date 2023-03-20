@@ -3,12 +3,13 @@
 class Solution:
     def findKthPositive(self, arr: List[int], k: int) -> int:
         def helper(value):
-            idx = bisect_left(arr, value)            
-            ans = value - idx
+            idx = bisect_left(arr, value)
+            
+            ans = value - idx 
             
             if idx < n and arr[idx] == value: 
                 ans -= 1 
-                
+            
             return ans 
             
         n = len(arr)
@@ -17,11 +18,13 @@ class Solution:
         end = arr[-1] + k 
         
         while end - start > 1: 
-            mid = (end + start)//2
+            middle = (end + start)//2
             
-            if helper(mid) < k: 
-                start = mid 
-            else: 
-                end = mid 
+            if helper(middle) < k: 
+                start = middle 
                 
-        return end             
+            else: 
+                end = middle 
+                
+        return end 
+                          
