@@ -55,7 +55,6 @@ class Solution2:
             prev = prev.next 
             cur = cur.next
             
-            m += 1 
-            
+            m += 1             
             
         return helper(ans.next)            
