@@ -1,29 +1,25 @@
 # https://leetcode.com/problems/delete-and-earn/
     
 class Solution:
-    def deleteAndEarn(self, nums: List[int]) -> int:        
-        limit = 0 
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        limit = max(nums)
         
         counter = defaultdict(lambda: 0)
         
-        for num in nums: 
-            counter[num] += 1 
-            
-            limit = max(limit, num)
-            
-        dp = [0 for _ in range(limit + 1)]
+        dp = defaultdict(lambda: 0)
         
         ans = 0 
         
-        for num in range(limit + 1):
-            val3 = dp[num - 3] if num - 3 >= 0 else 0  
-            val2 = dp[num - 2] if num - 2 >= 0 else 0 
+        for num in nums: 
+            counter[num] += 1 
+        
+        for i in range(1, limit + 1):
+            dp[i] = i*counter[i] + max(dp[i - 2], dp[i - 3])
             
-            dp[num] += max(val3, val2) + num*counter[num]
-            
-            ans = max(ans, dp[num])
+            ans = max(ans, dp[i])
             
         return ans 
+            
                         
             
         
