@@ -55,6 +55,7 @@ class Solution2:
                     if matrix[p][q] <= target: 
                         if (p, q) not in seen: 
                             seen.add((p, q))
+                            
                             stack.append((p, q))
                             
         return False
