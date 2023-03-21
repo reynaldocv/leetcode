@@ -2,17 +2,17 @@
 
 class Solution:
     def zeroFilledSubarray(self, nums: List[int]) -> int:
-        cnt = 0 
+        count = 0 
+        
         ans = 0 
         
-        for num in nums: 
-            if num == 0: 
-                cnt += 1
-                ans += cnt 
+        for num in nums + [1]:
+            if num == 0:                
+                count += 1 
+                
+                ans += count
                 
             else: 
-                cnt = 0 
-            
-        return ans 
-            
+                count = 0
                 
+        return ans 
