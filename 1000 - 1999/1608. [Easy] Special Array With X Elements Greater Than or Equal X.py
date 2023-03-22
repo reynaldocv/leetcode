@@ -2,26 +2,30 @@
 
 class Solution:
     def specialArray(self, nums: List[int]) -> int:
+        @cache
         def helper(value):
             ans = 0 
+            
             for num in nums: 
-                if num >= value: 
+                if value <= num:
                     ans += 1 
                     
             return ans 
         
-        start = 0 
-        end = max(nums) + 1
+        start = -1 
+        end = max(nums)
         
         while end - start > 1: 
-            mid = (end + start)//2 
-            if helper(mid) == mid: 
-                return mid
-            elif helper(mid) < mid: 
-                end = mid
-            else: 
-                start = mid 
+            middle = (end + start)//2
+            
+            if middle <  helper(middle):
+                start = middle 
                 
-        return -1
+            else:
+                end = middle 
+                
+        return end if end == helper(end) else -1 
+        
+        
                     
                     
