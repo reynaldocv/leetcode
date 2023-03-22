@@ -27,7 +27,7 @@ class Solution:
             
         return ans  
     
-class Solution:
+class Solution2:
     def minScore(self, n: int, roads: List[List[int]]) -> int:
         graph = defaultdict(lambda: {})
         
