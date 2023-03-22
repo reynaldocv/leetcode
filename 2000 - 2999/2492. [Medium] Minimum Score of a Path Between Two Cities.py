@@ -25,4 +25,31 @@ class Solution:
             if helper(u - 1) == 0: 
                 ans = min(ans, distance)
             
-        return ans     
+        return ans  
+    
+class Solution:
+    def minScore(self, n: int, roads: List[List[int]]) -> int:
+        graph = defaultdict(lambda: {})
+        
+        for (u, v, distance) in roads: 
+            graph[u][v] = distance 
+            graph[v][u] = distance
+            
+        stack = [1]
+        
+        seen = {1}
+        
+        ans = inf
+        
+        while stack: 
+            u = stack.pop() 
+            
+            for v in graph[u]:
+                if v not in seen: 
+                    seen.add(v)
+                    
+                    stack.append(v)
+                    
+                ans = min(ans, graph[u][v])
+                
+        return ans if n in seen else -1
