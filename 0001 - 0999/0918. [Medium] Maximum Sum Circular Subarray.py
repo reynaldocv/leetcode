@@ -2,25 +2,38 @@
 
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
+        def helper(arr):
+            ans = [-inf]
+            aSum = 0 
+            
+            for num in arr: 
+                aSum += num
+                
+                ans.append(max(aSum, ans[-1]))
+                
+            return ans 
+        
+        ans = -inf 
+        
+        prev = 0 
+        
+        for num in nums: 
+            prev += num 
+            
+            ans = max(ans, prev)
+            
+            if prev < 0: 
+                prev = 0 
+                
+        left = helper(nums)
+        right = helper(nums[:: -1])[:: -1]
+        
         n = len(nums)
-        ans = cur = nums[0]
-        for i in range(1, n):
-            cur = nums[i] + max(cur, 0)
-            ans = max(ans, cur)
+         
+        for i in range(n + 1):
+            ans = max(ans, left[i] + right[i])
+            
+        return ans 
         
-        rightMaxSums = list(nums)
         
-        rightSum = nums[-1]
-        for i in range(n - 2, -1, -1):
-            rightSum += nums[i]
-            rightMaxSums[i] = max(rightMaxSums[i + 1], rightSum)
-            
-        leftSum = 0
-        for i in range(n - 2):
-            leftSum += nums[i]
-            print(leftSum, rightMaxSums[i + 2])
-            ans = max(ans, leftSum + rightMaxSums[i + 2])
-            
-        return ans
-            
         
