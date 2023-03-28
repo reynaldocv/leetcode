@@ -1,18 +1,44 @@
 # https://leetcode.com/problems/minimum-cost-for-tickets/
 
 class Solution:
-    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
-        days = {day: True for day in days}
-        prices = [inf for i in range(366)]
-        prices[0] = 0 
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:      
+        limit = days[-1]
         
-        for day in range(1, 366):
-            if day in days: 
-                for (duration, cost) in [(0, costs[0]), (6, costs[1]), (29, costs[2])]:
-                    last = min(365, day + duration)
-                    prices[last] = min(prices[last], prices[day - 1] + cost) 
-            
+        dp = [0] + [inf for _ in range(limit)]
+        
+        days = {day for day in days}
+        
+        for i in range(limit + 1):
+            if i in days: 
+                for (ith, j) in enumerate([1, 7, 30]):
+                    last = min(limit, i + j - 1)
+                    
+                    dp[last] = min(dp[last], dp[i - 1] + costs[ith])
+                    
             else: 
-                prices[day] = min(prices[day], prices[day - 1])
+                dp[i] = min(dp[i], dp[i - 1])
                 
-        return prices[-1]
+        return dp[-1]
+        
+class Solution2:
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+        @cache 
+        def helper(x):
+            if x == n: 
+                return 0 
+            
+            ans = inf 
+            
+            for (i, r) in enumerate([1, 7, 30]):
+                y = days[x] + r 
+                
+                idx = bisect_left(days, y)
+                
+                ans = min(ans, costs[i] + helper(idx))
+                
+            return ans 
+        
+        n = len(days)
+        
+        return helper(0)
+        
