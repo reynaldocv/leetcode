@@ -2,15 +2,23 @@
 
 class Solution:
     def reversePrefix(self, word: str, ch: str) -> str:
-        idx = -1
-        if ch in word: 
-            idx = word.index(ch)
+        ans = ""
+        
+        turn = 1 
+        
+        for (i, char) in enumerate(word): 
+            if turn: 
+                ans = char + ans
+                
+            else: 
+                ans += char
             
-        if idx == -1:
+            if char == ch and turn == 1:                                 
+                turn = 1 - turn 
+                
+        if turn == 1:
             return word
-        else: 
-            return word[:idx + 1][::-1] + word[idx + 1:]
-         
-            
+        
+        return ans 
         
         
