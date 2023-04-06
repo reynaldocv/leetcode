@@ -2,10 +2,10 @@
 
 class Solution:
     def buildArray(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        ans = [0 for i in range(n)]
-        for i in range(n):
-            ans[i] = nums[nums[i]]
-        return ans
+        ans = []
         
+        for num in nums:
+            ans.append(nums[num])
+            
+        return ans 
         
