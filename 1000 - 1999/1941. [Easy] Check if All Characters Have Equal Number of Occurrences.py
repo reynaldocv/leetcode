@@ -2,19 +2,17 @@
 
 class Solution:
     def areOccurrencesEqual(self, s: str) -> bool:
-        counter = {}
-        aux = ""
-        for i in s: 
-            counter[i] = counter.get(i, 0) + 1
-            aux = i
-        n = counter[aux]
-        ans = True
-        print(counter)
-        for i in s: 
-            if counter[i] != n: 
-                return False
-        return ans
-                
+        counter = defaultdict(lambda: 0)
+        
+        for char in s: 
+            counter[char] += 1 
             
+        seen = set() 
+        
+        for key in counter: 
+            seen.add(counter[key])
+            
+        return len(seen) == 1
+        
             
         
