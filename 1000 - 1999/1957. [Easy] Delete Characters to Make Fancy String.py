@@ -2,19 +2,22 @@
 
 class Solution:
     def makeFancyString(self, s: str) -> str:
-        aux = ""
-        n = len(s)
-        counter = 0
+        last = ["$", "0"]
+        
         ans = ""
-        for i in range(n):
-            if s[i] == aux: 
-                counter += 1
-                if counter <= 2: 
-                    ans += s[i]
-                    
+        
+        for char in s: 
+            if char == last[0]:
+                if last[1] < 2: 
+                    last[1] += 1 
+                    ans += char
+                
             else: 
-                aux = s[i]
-                counter = 1
-                ans += s[i]
-        return ans
+                last = [char, 1]
+                
+                ans += char
+                
+        return ans 
+            
+                    
                     
