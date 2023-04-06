@@ -10,6 +10,7 @@ class Solution:
             if char == last[0]:
                 if last[1] < 2: 
                     last[1] += 1 
+                    
                     ans += char
                 
             else: 
