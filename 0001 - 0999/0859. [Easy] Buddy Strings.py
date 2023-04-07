@@ -2,27 +2,39 @@
 
 class Solution:
     def buddyStrings(self, s: str, goal: str) -> bool:
-        dic = {}
-        dif = 0
-        pos = []
-        n = len(s)
-        if n != len(goal): return False
+        def helper(word):
+            ans = (0, )*26
+            
+            for char in word: 
+                idx = index[char]
+                
+                ans = ans[: idx] + (ans[idx] + 1, ) + ans[idx + 1: ]
+                
+            return ans 
+            
+        index = {chr(ord("a") + i): i for i in range(26)}
+        
+        m, n = len(s), len(goal)
+        
+        if m != n or helper(s) != helper(goal): 
+            return False 
+        
+        counter = defaultdict(lambda: 0)
+        
+        maxCounter = 0 
+        
+        diff = 0 
+        
         for i in range(n):
-            dic[s[i]] = dic.get(s[i], 0) + 1
+            counter[s[i]] += 1 
+            maxCounter = max(maxCounter, counter[s[i]])
+            
             if s[i] != goal[i]:
-                dif += 1
-                pos.append(i)
-        if dif != 2 and dif != 0: 
-            return False
-        elif dif == 2:
-            if s[pos[0]] == goal[pos[1]] and s[pos[1]] == goal[pos[0]]:
-                return True
-            else: 
-                return False
-        else: 
-            for k in dic: 
-                if dic[k] >= 2:
-                    return True
-            return False
+                diff += 1 
+                
+        if diff == 0: 
+            return maxCounter >= 2
+        
+        return diff == 2
             
         
