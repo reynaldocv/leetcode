@@ -6,18 +6,43 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:    
+class Solution:
     def increasingBST(self, root: TreeNode) -> TreeNode:
+        def helper(node):
+            if node:                 
+                return helper(node.left) + [node] + helper(node.right)                
+                
+            else: 
+                return []
+            
+        arr = helper(root)
         
+        n = len(arr)
         
-        def incrBST(root):             
-            if root != None:
-                incrBST(root.left)                
-                self.ans.right = TreeNode(root.val)
-                self.ans = self.ans.right
-                incrBST(root.right)
+        for i in range(n - 1):
+            arr[i].left = None
+            arr[i].right = arr[i + 1]
+            
+        arr[-1].left = None 
+        arr[-1].right = None 
         
-        ans = self.ans = TreeNode(0)
-        incrBST(root)
+        return arr[0]
+
+class Solution2:
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        def helper(node):
+            nonlocal cur 
+            
+            if node:          
+                helper(node.left)
+                
+                cur.right = TreeNode(node.val)                
+                cur = cur.right
+                
+                helper(node.right)
+                
+        ans = cur = TreeNode(0)
+        
+        helper(root)
+        
         return ans.right
-        
