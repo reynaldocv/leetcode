@@ -1,9 +1,17 @@
 # https://leetcode.com/problems/smallest-range-i/
 
-class Solution:
-    def smallestRangeI(self, A: List[int], K: int) -> int:
-        max_ = max(A)
-        min_ = min(A)
-        ans = max_ - min_ - 2*K
-        return 0 if (ans < 0) else ans
+ass Solution:
+    def smallestRangeI(self, nums: List[int], k: int) -> int:
+        maxElem = max(nums)
+        minElem = min(nums)
+        
+        if maxElem - minElem <= 2*k: 
+            return 0 
+        
+        else: 
+            return maxElem - minElem -2*k
+        
+        
+        
+        
         
