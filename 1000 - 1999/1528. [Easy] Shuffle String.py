@@ -2,10 +2,11 @@
 
 class Solution:
     def restoreString(self, s: str, indices: List[int]) -> str:
-        aux = [(indices[i],s[i]) for i in range(len(indices))]
-        aux.sort()
-        ans = ""
-        for (i, j) in aux:
-            ans += j
-        return ans
+        n = len(indices)
         
+        ans = ["" for _ in range(n)]
+        
+        for i in range(n):
+            ans[indices[i]] = s[i]
+            
+        return "".join(ans)
