@@ -2,36 +2,34 @@
 
 class Solution:
     def surfaceArea(self, grid: List[List[int]]) -> int:
-        def groupNumberGreaterThanK(array , k):
-            n = len(array)
-            ans = 0
-            if array[0] >= k:
-                ans = 1
-            for i in range(n - 1):
-                if array[i] < k and array[i + 1] >= k: 
-                    ans += 1
-            return ans
+        def helper(arr):
+            ans = 0 
+            
+            last = 0 
+            
+            for num in arr + [0]:
+                ans += abs(num - last)
+                
+                last = num
+                
+            return ans 
         
         n = len(grid)
-        max_ = 0
-        ans = 0
-        for i in range(n): 
+        
+        ans = 0 
+        
+        for row in grid: 
+            ans += helper(row)
+            
+        grid = [[grid[j][i] for j in range(n)] for i in range(n)]
+        
+        for row in grid: 
+            ans += helper(row)
+            
+        for i in range(n):
             for j in range(n):
-                if grid[i][j] != 0: 
-                    ans += 1
-                    max_ = max(max_, grid[i][j])
-        ans *= 2
-       
-        
-        grid2 = [[grid[i][j] for i in range(n)] for j in range(n)]
-        
-        for row in grid:
-            for k in range(1, max_ + 1):
-                ans += 2*groupNumberGreaterThanK(row, k)
+                if grid[i][j] > 0: 
+                    ans += 2 
                     
-        for row in grid2:
-            for k in range(1, max_ + 1):
-                ans += 2*groupNumberGreaterThanK(row, k)
-                
-        return ans
+        return ans 
     
