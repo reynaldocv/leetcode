@@ -2,22 +2,47 @@
 
 class Solution:
     def countBinarySubstrings(self, s: str) -> int:
-        auxs = s[0]
-        l = 1
-        aux = []
-        for i in range(1, len(s)):
-            if auxs == s[i]:
-                l += 1
-            else: 
-                aux.append(l)
-                auxs = s[i]
-                l = 1
-        aux.append(l)
-        ans = 0
-        for i in range(0, len(aux) - 1):
-            ans += min(aux[i], aux[i + 1])
+        n = len(s)
+        
+        ans = 0 
+        
+        for (i, char) in enumerate(s):
+            left = i 
+            right = i + 1
+
+            while 0 <= left and right < n and s[left] != s[right] and s[left] == s[i]:
+                ans += 1 
+
+                left -= 1
+                right += 1 
+        
+        return ans 
+    
+class Solution2:
+    def countBinarySubstrings(self, s: str) -> int:
+        counter = []
+        
+        count = 1 
+        last = s[0]
+        
+        for char in s[1: ] + "$": 
+            if char != last: 
+                counter.append(count)
+                
+                count = 1 
+                last = char 
             
-        return ans
+            else: 
+                count += 1
+                
+        n = len(counter)
+        
+        ans = 0 
+        
+        for i in range(n - 1):
+            ans += min(counter[i], counter[i + 1])
+    
+        return ans 
         
             
         
