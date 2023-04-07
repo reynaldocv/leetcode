@@ -2,12 +2,15 @@
 
 class Solution:
     def numIdenticalPairs(self, nums: List[int]) -> int:
-        counter = {}
-        for i in nums:
-            counter[i] = counter.get(i, 0) + 1
-        ans = 0
-        for i in counter.keys():
-            ans += counter[i]*(counter[i] - 1)//2
-        return ans
+        counter = defaultdict(lambda: 0)
+        
+        for num in nums: 
+            counter[num] += 1 
             
+        ans = 0 
+        
+        for key in counter: 
+            ans += (counter[key] - 1)*counter[key]//2
+            
+        return ans 
         
