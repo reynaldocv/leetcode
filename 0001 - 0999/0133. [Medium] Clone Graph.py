@@ -11,23 +11,20 @@ class Node:
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
         def helper(node):
-            if node.val in ans:
-                return ans[node.val]
-            
-            clonedNode = Node(node.val, [])            
-            ans[node.val] = clonedNode
-            
-            for neighbor in node.neighbors:
-                clonedNode.neighbors.append(helper(neighbor))
-            
-            return clonedNode
-            
+            if node.val not in seen:                 
+                clonned = Node(node.val, [])   
+                seen[node.val] = clonned
+
+                for neighbor in node.neighbors:
+                    clonned.neighbors.append(helper(neighbor))
+                            
+            return seen[node.val]
+
         if not node:
             return None
         
-        ans = {}
-        helper(node)
+        seen = {}
         
-        return ans[node.val]
+        return helper(node)
     
     
