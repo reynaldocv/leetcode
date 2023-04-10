@@ -2,24 +2,24 @@
 
 class Solution:
     def isLongPressedName(self, name: str, typed: str) -> bool:
-        n, m, i, j = len(name), len(typed), 0, 0
-        aux = ""
-        while i < n and j < m:
-            if name[i] == typed[j]:
-                aux = name[i]
+        name += "$"
+        typed += "$"
+        
+        m, n = len(name), len(typed)
+        
+        i = 0
+        j = 0
+                
+        while i < m and j < n:
+            if name[i] == typed[j]:                
                 i += 1
                 j += 1
+                
             else:
-                if typed[j] == aux:
+                if 0 <= i - 1 and name[i - 1] == typed[j]:
                     j += 1
+                    
                 else:
                     return False
         
-        if i == n:
-            go = True
-            for i in typed[j:]:
-                if aux != i:
-                    return False
-            return True
-        return False
-                
+        return j == n
