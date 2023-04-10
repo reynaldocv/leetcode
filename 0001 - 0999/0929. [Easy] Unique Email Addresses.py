@@ -2,12 +2,23 @@
 
 class Solution:
     def numUniqueEmails(self, emails: List[str]) -> int:
-        arr = set([])
-        for email in emails:
-            aux = email.split("@")
-            aux2 = aux[0].split("+")
-            aux3 = aux2[0].replace(".", "")
-            arr.add(aux3 + "@" + aux[1])
-      
-        return len(arr)
+        seen = set()
         
+        for email in emails:             
+            words = email.split("@")
+            
+            tmp = ""
+            
+            for char in words[0]:
+                if char != ".":                    
+                    if char == "+":
+                        break
+                    
+                    else: 
+                        tmp += char 
+                        
+            seen.add(tmp + "@" + words[1])
+        
+        return len(seen)
+                
+                
