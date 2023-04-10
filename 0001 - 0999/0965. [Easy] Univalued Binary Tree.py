@@ -7,16 +7,17 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isUnivalTree(self, root: TreeNode) -> bool:
-        def UnivalTree(root, val):
-            if root == None:
-                return True
-            else:
-                return (root.val == val) and UnivalTree(root.left, val) and UnivalTree(root.right, val)
+    def isUnivalTree(self, root: Optional[TreeNode]) -> bool:
+        def helper(node):
+            if node: 
+                seen.add(node.val)
+                
+                helper(node.left)
+                helper(node.right)
         
-        if root == None:
-            return True
-        else:
-            return UnivalTree(root, root.val)
-            
+        seen = set()
+        
+        helper(root)
+        
+        return len(seen) == 1
         
