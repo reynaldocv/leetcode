@@ -2,17 +2,22 @@
 
 class Solution:
     def canThreePartsEqualSum(self, arr: List[int]) -> bool:
-        n = len(arr)
-        sumT = sum(arr)
-        if sumT % 3 != 0:
-            return False
-        sumP = sumT//3
-        counter, aux, i = 0, 0, 0
-        while i < n:
-            aux += arr[i]
-            if aux == sumP:
-                aux = 0
-                counter += 1
-            i += 1
+        aSum = sum(arr)
+        
+        if aSum % 3 != 0: 
+            return False 
+        
+        left = 0 
+        
+        counter = 0 
+        
+        for num in arr: 
+            left += num 
+            
+            if left == aSum//3:
+                left = 0 
+                counter += 1 
+                
         return counter >= 3
+                
             
