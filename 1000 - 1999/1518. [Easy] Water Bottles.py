@@ -2,14 +2,22 @@
 
 class Solution:
     def numWaterBottles(self, numBottles: int, numExchange: int) -> int:
-        ans = numBottles
-        restBottles = numBottles
-        while restBottles >= numExchange: 
-            quo = restBottles // numExchange
-            res = restBottles % numExchange
-            restBottles = quo + res
-            ans += quo
-        return ans
+        remain = 0 
+        
+        ans = 0 
+        
+        while numBottles: 
+            ans += numBottles
+            
+            total = numBottles + remain 
+            
+            numBottles = total//numExchange
+            
+            remain = total % numExchange
+            
+        return ans 
+            
+            
             
             
         
