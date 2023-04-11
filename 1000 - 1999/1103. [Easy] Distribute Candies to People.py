@@ -2,30 +2,23 @@
 
 class Solution:
     def distributeCandies(self, candies: int, num_people: int) -> List[int]:
-        n = num_people
-        s = n*(n + 1)//2
-        qn = int((2*candies)**.5)        
-        q = qn//n 
+        ans = [0 for _ in range(num_people)]
         
-        total = s*q + n**2*(q - 1)*q//2
-        while total > candies:
-            q -= 1
-            total = s*q + n**2*(q - 1)*q//2
+        idx = 0 
+        value = 1 
         
-        ans = [(q*i + (q-1)*q//2*n) for i in range(1, n + 1)]
-        
-        
-        candies -= total
-        i = 0
-        while candies > 0:
-            aux = (i + 1) + n*q
-            if candies <= aux: 
-                ans[i] += candies
+        while candies: 
+            if value <= candies: 
+                ans[idx] += value
+                
+                candies -= value
+                
+                value +=1
+                idx = (idx + 1) % num_people
+                
+            else: 
+                ans[idx] += candies 
+                
                 candies = 0
-            else:
-                candies -= aux
-                ans[i] += aux
-            i += 1
-        
+                
         return ans
-            
