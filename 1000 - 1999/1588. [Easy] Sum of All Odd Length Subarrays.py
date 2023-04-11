@@ -3,6 +3,21 @@
 class Solution:
     def sumOddLengthSubarrays(self, arr: List[int]) -> int:
         n = len(arr)
+        
+        ans = 0 
+        
+        for (i, num) in enumerate(arr):
+            left = i 
+            right = n - i - 1
+            
+            ans += num*(left//2 + 1)*(right//2 + 1)
+            ans += num*((left + 1)//2)*((right + 1)//2)
+            
+        return ans 
+        
+class Solution2:
+    def sumOddLengthSubarrays(self, arr: List[int]) -> int:
+        n = len(arr)
         prefix = [0]
         for num in arr: 
             prefix.append(prefix[-1] + num)
