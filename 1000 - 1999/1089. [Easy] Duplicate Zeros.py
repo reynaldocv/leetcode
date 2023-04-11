@@ -5,18 +5,17 @@ class Solution:
         """
         Do not return anything, modify arr in-place instead.
         """
-        dic = {}
-        n = len(arr)
-        idx = 0
-        for i in range(n):
-            if arr[i] == 0:
-                dic[idx] = 0
-                dic[idx + 1] = 0
-                idx += 2
-            else:               
-                dic[idx] = arr[i]
-                idx += 1
         
-        for i in range(n):
-            arr[i] = dic[i]
-            
+        stack = []
+        
+        for num in arr:
+            if num != 0: 
+                stack.append(num)
+                
+            else: 
+                stack.append(0)
+                stack.append(0)
+                
+        for (i, _) in enumerate(arr):
+            arr[i] = stack[i]
+                
