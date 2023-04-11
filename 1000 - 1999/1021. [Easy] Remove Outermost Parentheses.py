@@ -1,13 +1,26 @@
 # https://leetcode.com/problems/remove-outermost-parentheses/
 
 class Solution:
-    def removeOuterParentheses(self, S: str) -> str:
-        ind = 0
-        l = len(S)
+    def removeOuterParentheses(self, s: str) -> str:
+        prev = ")"
+        
+        lvl = 1 
+        
         ans = ""
-        for i in S:
-            ind = ind + 1 if (i == "(") else ind - 1
-            if not ((ind == 1 and i=="(") or (ind == 0 and i==")")):
-                ans += i                
-        return ans
+        
+        for char in s: 
+            if prev == char: 
+                if char == "(":
+                    lvl += 1 
+                    
+                else: 
+                    lvl -= 1 
+                    
+            if lvl != 1: 
+                ans += char
+                
+            prev = char
+                
+        return ans 
+        
             
