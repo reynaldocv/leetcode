@@ -7,11 +7,12 @@ class Solution:
         for char in s: 
             if char == "*":
                 if stack: 
-                    stack.pop() 
+                    stack.pop()
+                    
             else: 
                 stack.append(char)
                 
         return "".join(stack)
-    
+        
     
         
