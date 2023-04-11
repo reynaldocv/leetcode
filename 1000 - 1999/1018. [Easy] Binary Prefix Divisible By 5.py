@@ -2,10 +2,16 @@
 
 class Solution:
     def prefixesDivBy5(self, nums: List[int]) -> List[bool]:
+        tmp = 0 
+        
         ans = []
-        n = len(nums)
-        aux = 0
-        for i in range(n):
-            aux = 2*aux + nums[i]
-            ans.append(aux % 5 == 0)
-        return ans
+        
+        for bit in nums: 
+            tmp = tmp*2 + bit
+            
+            ans.append(tmp % 5 == 0)
+            
+        return ans 
+        
+        
+        
