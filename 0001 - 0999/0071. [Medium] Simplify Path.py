@@ -2,19 +2,21 @@
 
 class Solution:
     def simplifyPath(self, path: str) -> str:
-        filo = []
-        aux = path.split("/")
-        n = len(aux)
-    
-        for i in range(n):
-            if aux[i] != "" and aux[i] != "/":
-                if aux[i] == "..":
-                    if len(filo) > 0: 
-                        filo.pop()
-                elif aux[i] == ".":
-                    continue
-                else:                     
-                    filo.append(aux[i])
-  
-    
-        return "/" + "/".join(filo)
+        path = path.split("/")
+        
+        stack = []
+        
+        for word in path: 
+            if word != "" and word != ".":
+                if word == "..":
+                    if stack: 
+                        stack.pop() 
+                        
+                else: 
+                    stack.append(word)
+                    
+        return "/" + "/".join(stack)
+                        
+                
+            
+        
