@@ -2,23 +2,37 @@
 
 class Solution:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
-        n = len(pushed)
-        i, j = 0, 0
-        
+        stack = []
+   
+        while pushed: 
+            while stack and popped and stack[-1] == popped[0]: 
+                stack.pop()
+                popped.pop(0)
+            
+            if pushed:             
+                stack.append(pushed.pop(0))
+         
+        while stack and popped and stack[-1] == popped[0]: 
+            stack.pop()
+            popped.pop(0)
+                
+        return len(stack) == 0
+
+class Solution2:
+    def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
         stack = []
         
-        while i < n and j < n: 
-            if stack and stack[-1] == popped[j]:
+        pushed += "$"
+   
+        while pushed: 
+            while stack and popped and stack[-1] == popped[0]: 
                 stack.pop()
-                j += 1
-            else: 
-                stack.append(pushed[i])
-                i += 1
-                
-        while stack and stack[-1] == popped[j]:
-            stack.pop()
-            j += 1
-        return not stack
+                popped.pop(0)
+            
+            if pushed:             
+                stack.append(pushed.pop(0))
+         
+        return len(stack) == 1
         
         
 
