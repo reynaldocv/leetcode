@@ -2,12 +2,17 @@
 
 class Solution:
     def stringMatching(self, words: List[str]) -> List[str]:
-        ans = set([])
-        for word in words: 
-            for word2 in words: 
-                if len(word) < len(word2):
-                    if word in word2: 
-                        ans.add(word)
-        return ans
-            
+        n = len(words)
         
+        words.sort(key = lambda item: -len(item))
+        
+        ans = []
+        
+        for i in range(1, n):
+            for j in range(i):
+                if words[i] in words[j]:
+                    ans.append(words[i])
+                    
+                    break 
+                    
+        return ans 
