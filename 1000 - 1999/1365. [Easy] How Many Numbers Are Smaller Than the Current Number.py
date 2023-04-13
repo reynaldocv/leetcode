@@ -2,15 +2,16 @@
 
 class Solution:
     def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
-        dict = {}
+        arr = [num for num in nums]
         
-        l = len(nums)
-        aux = [(nums[i], i) for i in range(l)]
-        aux.sort()
-        for i in range(l):
-            if aux[i][0] not in dict:
-                dict[aux[i][0]] = i
-        for i in range(l):
-            nums[i] = dict[nums[i]]
-        return nums
+        arr.sort() 
+        
+        ans = []
+        
+        for num in nums: 
+            idx = bisect_left(arr, num)
+            
+            ans.append(idx)
+            
+        return ans 
         
