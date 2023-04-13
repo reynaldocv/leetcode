@@ -3,10 +3,14 @@
 class Solution:
     def findSpecialInteger(self, arr: List[int]) -> int:
         n = len(arr)
-        dic = {}
-        for num in arr: 
-            dic[num] = dic.get(num, 0) + 1
-        for num in dic: 
-            if dic[num] > n/4:
-                return num
         
+        counter = defaultdict(lambda: 0)
+        
+        for num in arr: 
+            counter[num] +=1 
+            
+            if counter[num]*4 > n:
+                return num 
+            
+        
+                
