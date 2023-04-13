@@ -2,16 +2,23 @@
 
 class Solution:
     def maxNumberOfBalloons(self, text: str) -> int:
-        count, counter = {}, {}
-        for s in "balloon":
-            count[s] = count.get(s, 0) + 1
-            
-        for s in text: 
-            counter[s] = counter.get(s, 0) + 1
+        counter = defaultdict(lambda: 0)
         
-        ans = counter.get("b", 0); 
-        for s in "balloon":
-            ans = min(ans, counter.get(s, 0)//count.get(s, 1))
-        return ans
+        cnt = defaultdict(lambda: 0)
+        
+        for char in "balloon":
+            counter[char] += 1 
             
+        for char in text: 
+            if char in counter: 
+                cnt[char] += 1 
+                
+        if len(cnt) != 5: 
+            return 0 
+        
+        ans = inf 
+        
+        for char in "balloon":
+            ans = min(ans, cnt[char]//counter[char])
             
+        return ans 
