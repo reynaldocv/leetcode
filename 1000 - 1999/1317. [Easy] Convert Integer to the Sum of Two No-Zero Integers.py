@@ -2,12 +2,19 @@
 
 class Solution:
     def getNoZeroIntegers(self, n: int) -> List[int]:
-        for numA in range(1, n):
-            strA = str(numA)
-            strB = str(n - numA)
-            if "0" not in strA and "0" not in strB: 
-                return [numA, n - numA]
+        def helper(word):
+            for char in str(word):
+                if char == "0":
+                    return False 
+                
+            return True 
+        
+        for a in range(1, n//2 + 1):
+            b = n - a
             
+            if helper(a) and helper(b):
+                return [a, b]
+        
           
         
             
