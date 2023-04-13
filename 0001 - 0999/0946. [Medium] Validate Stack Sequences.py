@@ -22,7 +22,7 @@ class Solution2:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
         stack = []
         
-        pushed += "$"
+        pushed += ["$"]
    
         while pushed: 
             while stack and popped and stack[-1] == popped[0]: 
