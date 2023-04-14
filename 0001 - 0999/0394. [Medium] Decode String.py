@@ -2,38 +2,43 @@
 
 class Solution:
     def decodeString(self, s: str) -> str:
+        def helper(word):
+            for char in word: 
+                if char not in "0123456789":
+                    return False 
+                
+            return True 
         
         stack = []
         
         for char in s: 
-            if char.isdigit():
-                if stack and stack[-1].isdigit(): 
-                    elem = stack.pop()
-                    stack.append(elem + char)
-                else: 
+            if heper(char):
+                if stack and helper(stack[-1]):
+                    num = stack.pop() 
+
+                    stack.append(num + char)
+                    
+                else:
                     stack.append(char)
-            
-            if char.isalpha(): 
-                if stack and stack[-1].isalpha(): 
-                    elem = stack.pop()
-                    stack.append(elem + char)
-                else: 
-                    stack.append(char)
-            
-            if char == "[":
+                    
+            elif char == "[":
                 stack.append(char)
-            
-            if char == "]":                
-                word = stack.pop()
-                stack.pop()
-                num = int(stack.pop())
-                newWord = num*word
-                if stack and stack[-1].isalpha(): 
-                    elem = stack.pop()
-                    stack.append(elem + newWord)
-                else: 
-                    stack.append(newWord)
                 
-        return stack.pop()        
-        
+            elif char == "]":
+                tmp = ""
+                
+                while stack[-1] != "[":
+                    tmp = stack.pop() + tmp
+                    
+                stack.pop()
+                
+                num = int(stack.pop())
+                
+                stack.append(num*tmp)
+                
+            else: 
+                stack.append(char)
+                
+        return "".join(stack)
+                    
         
