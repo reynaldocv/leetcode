@@ -12,7 +12,7 @@ class Solution:
         stack = []
         
         for char in s: 
-            if heper(char):
+            if helper(char):
                 if stack and helper(stack[-1]):
                     num = stack.pop() 
 
