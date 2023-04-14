@@ -2,16 +2,20 @@
 
 class Solution:
     def buildArray(self, target: List[int], n: int) -> List[str]:
-        ans, j, ntarget = [], 0, len(target)
+        prev = 0 
         
-        for i in range(1, n + 1):           
-            if i == target[j]:
-                j += 1
-                ans.append("Push")
-                if j == ntarget: 
-                    break
-            else: 
+        ans = []
+        
+        for num in target: 
+            diff = num - prev
+            
+            for _ in range(diff - 1):
                 ans.append("Push")
                 ans.append("Pop")
-        return ans
+                
+            ans.append("Push")
+            
+            prev = num
+            
+        return ans 
                 
