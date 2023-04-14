@@ -3,17 +3,21 @@
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
         n = len(students)
-        if students.count(1) == sandwiches.count(1):
-            return 0
         
-        counter = {}
-        for student in students:
-            counter[student] = counter.get(student, 0) + 1
+        counter = defaultdict(lambda: 0)
         
-        for i in range(n):
-            if sandwiches[i] in counter and counter[sandwiches[i]] > 0:
-                counter[sandwiches[i]] -= 1                
-            else:
-                return n - i
-
-        return 0
+        for student in students: 
+            counter[student] += 1 
+        
+        ans = n
+        
+        for sandwich in sandwiches: 
+            if counter[sandwich] > 0: 
+                counter[sandwich] -= 1 
+                
+                ans -= 1 
+                
+            else: 
+                return ans 
+            
+        return 0 
