@@ -8,23 +8,23 @@
 #         self.right = right
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
-        def maximum(nums):
-            ans = (-1, -1)
-            for i in range(len(nums)):
-                ans = max(ans, (nums[i], i))
-            return ans
-        
-        def createBT(nums):
-            if len(nums) == 0:
-                return None
-            else: 
-                value, idx = maximum(nums)
-                ans = TreeNode(value)
-                ans.left = createBT(nums[:idx])
-                ans.right = createBT(nums[idx + 1:])
-                return ans
-        
-        ans = createBT(nums)
-        return ans
+        def helper(arr):
+            if arr: 
+                maxElem = (-1, -1)
                 
-        
+                for (i, num) in enumerate(arr):
+                    maxElem = max(maxElem, (num, i))
+                    
+                (elem, idx) = maxElem
+                    
+                ans = TreeNode(elem)
+                
+                ans.left = helper(arr[: idx])
+                ans.right = helper(arr[idx + 1: ])
+                
+                return ans 
+            
+            else: 
+                return None 
+                
+        return helper(nums)
