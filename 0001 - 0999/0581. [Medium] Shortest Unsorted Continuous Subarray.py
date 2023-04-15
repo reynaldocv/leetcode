@@ -2,20 +2,20 @@
 
 class Solution:
     def findUnsortedSubarray(self, nums: List[int]) -> int:
+        n = len(nums) 
         arr = sorted(nums)
         
-        n = len(nums)
-        start = 0 
-        end = n - 1
+        start, end = -1, -1 
         
-        while start < n and arr[start] == nums[start]:
-            start += 1
-            
-        if start == n: 
-            return 0
+        for i in range(n):
+            if nums[i] != arr[i]:
+                if start == -1:
+                    start = i 
+                    
+                end = i 
+                
+        if end == -1: 
+            return 0 
         
-        while arr[end] == nums[end]:
-            end -= 1
-            
         return end - start + 1
         
