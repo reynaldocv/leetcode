@@ -3,14 +3,23 @@
 class Solution:
     def isValidSerialization(self, preorder: str) -> bool:
         arr = preorder.split(",")
-        n = len(arr)
-        for i in range(n):
-            if arr[i] != "#":
-                arr[i] = "d"
-        aux = ",".join(arr)
         
-        while "d,#,#" in aux: 
-            aux = aux.replace("d,#,#", "#")
+        stack = []
         
-        return True if aux == "#" else False
+        for char in arr: 
+            if char == "#":
+                while stack and stack[-1] == "#":
+                    stack.pop() 
+                    
+                    if not stack: 
+                        return False 
+                    
+                    stack.pop() 
+                    
+                stack.append("#")
+                
+            else: 
+                stack.append(char)
+                
+        return len(stack) == 1 and stack[0] == "#"
         
