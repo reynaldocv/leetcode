@@ -6,17 +6,16 @@ class Solution:
         
         for token in tokens: 
             if token in "+-*/":
-                num2 = str(int(stack.pop()))
-                num1 = str(int(stack.pop()))
+                num2 = str(stack.pop())
+                num1 = str(stack.pop())
                 
-                stack.append(eval(num1 + token + num2))
+                stack.append(int(eval(num1 + token + num2)))
                 
             else: 
-                stack.append(token)
+                stack.append(int(token))
                 
         return stack[-1]
         
-                
             
             
         
