@@ -3,21 +3,25 @@
 class Solution:
     def mctFromLeafValues(self, arr: List[int]) -> int:
         @cache
-        def helper(start, end):
+        def helper(start, end):            
             if start == end: 
-                return (0, arr[start])
-            elif start + 1 == end: 
-                return (arr[start]*arr[end], max(arr[start], arr[end]))
+                return (arr[start], 0)
+            
             else: 
-                ans = (inf, inf)
-                for i in range(start, end):
-                    left, maxL = helper(start, i)
-                    right, maxR = helper(i + 1, end)
-                    
-                    ans = min(ans, (left + right + maxL*maxR, max(maxL, maxR)))
-                    
-                return ans
+                minimum = inf 
                 
+                elem = 0 
+                
+                for i in range(start, end):
+                    (left, leftSum) = helper(start, i)
+                    (right, rightSum) = helper(i + 1, end)
+                    
+                    elem = max(elem, left, right)
+                    
+                    minimum = min(minimum, leftSum + rightSum + left*right)
+                    
+                return (elem, minimum)
+            
         n = len(arr)
         
-        return helper(0, n - 1)[0]
+        return helper(0, n - 1)[1]
