@@ -7,26 +7,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def sumRootToLeaf(self, root: TreeNode) -> int:
-        
-        def BinaryToDex(n):
-            l = len(n) - 1
-            ans = 0
-            for i in range(len(n)):
-                ans += (int(n[i]))*2**l
-                l -= 1
-            return ans
-            
-        def BinaryToLeaf(root, ans):
-            if root: 
-                if root.left == None and root.right == None:
-                    self.ans += BinaryToDex(ans + str(root.val))                   
-                else:
-                    BinaryToLeaf(root.left, ans + str(root.val))
-                    BinaryToLeaf(root.right, ans + str(root.val))                
-            
+    def sumRootToLeaf(self, root: Optional[TreeNode]) -> int:
+        def helper(value, node):
+            nonlocal ans 
+           
+            if node: 
+                value = 2*value + node.val
                 
-        self.ans = 0   
-        BinaryToLeaf(root, "")
-        return self.ans
+                if not node.left and not node.right: 
+                    ans += value
+                    
+                helper(value, node.left)
+                helper(value, node.right)
+                
+        ans = 0 
+        
+        helper(0, root)
+        
+        return ans 
             
