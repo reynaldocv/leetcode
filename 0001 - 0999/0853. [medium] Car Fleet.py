@@ -3,16 +3,21 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         n = len(position)
-        cars = [(position[i], (target - position[i])/speed[i]) for i in range(n)]
         
-        cars.sort(reverse = True)
+        arr = [(position[i], speed[i]) for i in range(n)]
         
-        ans = 0
-        timeToReach = 0
+        arr.sort()
         
-        for (_, time) in cars: 
-            if time > timeToReach: 
-                ans += 1
-                timeToReach = time
-    
-        return ans
+        last = 0 
+        
+        ans = 0 
+        
+        for (position, speed) in arr[:: -1]:
+            endTime = (target - position)/speed
+            
+            if endTime > last: 
+                ans += 1 
+              
+                last = endTime
+            
+        return ans 
