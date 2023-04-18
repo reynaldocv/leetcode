@@ -2,25 +2,29 @@
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        counter = 0 
-        pointer = 0 
-        n = len(nums)
-        aux = -inf
-        ans = 0
-        for i in range(n):
-            if aux != nums[i]:
-                aux = nums[i]
-                counter = 1                
-                nums[pointer] = aux
-                ans += 1
-                pointer += 1
-            else: 
+        prev = -inf 
+        
+        idx = 0 
+        
+        for (i, num) in enumerate(nums):
+            if prev == num: 
                 counter += 1
-                if counter <= 2: 
-                    nums[pointer] = aux
-                    ans += 1
-                    pointer += 1
-        return ans
                 
+                if counter < 3: 
+                    nums[idx] = num
+                    
+                    idx += 1 
+                    
+            else: 
+                nums[idx] = num 
+                counter = 1 
+                
+                idx += 1 
+                
+                prev = num 
+                
+                
+        return idx
+        
             
             
