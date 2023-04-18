@@ -2,24 +2,33 @@
 
 class Solution:
     def maximumGain(self, s: str, x: int, y: int) -> int:
-        val1, val2 = "a", "b"
-        
-        if x > y: 
-            x, y, val1, val2 = y, x, val2, val1
+        def helper(arr, prev, letter, gain):
+            stack = []
             
-        stack = []
-        ans = 0 
-        
-        for _ in range(2):
-            for char in s: 
-                if stack and char == val1 and stack[-1] == val2: 
-                    stack.pop()
-                    ans += y                
+            ans = 0 
+            
+            for char in arr: 
+                if char == letter:
+                    if stack and stack[-1] == prev:
+                        stack.pop() 
+
+                        ans += gain
+
+                    else: 
+                        stack.append(char)
+
                 else: 
                     stack.append(char)
                     
-            s = "".join(stack)
-            x, y, val1, val2 = y, x, val2, val1
-            stack = []
+            return ans, stack
             
-        return ans
+        if y > x: 
+            s = s[:: -1]
+            
+            x, y = y, x 
+            
+        gainAB, stack = helper(s, "a", "b", x)
+        gainBA, _ = helper(stack, "b", "a", y)
+        
+        return gainAB + gainBA
+        
