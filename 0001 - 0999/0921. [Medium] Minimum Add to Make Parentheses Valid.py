@@ -7,11 +7,12 @@ class Solution:
         for char in s: 
             if char == "(":
                 stack.append("(")
-            elif stack and stack[-1] == "(":
-                stack.pop()
+                
+            elif stack and stack[-1] == "(": 
+                stack.pop() 
+                
             else: 
                 stack.append(")")
                 
         return len(stack)
-        
-        
+                
