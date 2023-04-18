@@ -3,35 +3,47 @@
 class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         def helper(arr):
-            arr.append(0)
-            n = len(arr)
-            stack = [0]
-            ans = arr[0]
-            for i in range(1, n):
-                while stack and arr[stack[-1]] > arr[i]: 
-                    hight = arr[stack.pop()]
-                    start = stack[-1] if stack else -1
-                    width = i - start - 1
-                    ans = max(ans, width*hight)
-                
-                stack.append(i)
-                
-            return ans
+            stack = [(-1, -1)]
             
-        n = len(matrix)
-        m = len(matrix[0]) if n >= 1 else 0 
-        if n == 0: 
-            return 0
+            ans = 0 
+            
+            for (i, num) in enumerate(arr + [0]):
+                while stack and stack[-1][0] > num: 
+                    (elem, _) = stack.pop()
+                    
+                    (_, start) = stack[-1]
+                    
+                    ans = max(ans, elem*(i - start - 1))
+                    
+                stack.append((num, i))
+                
+            return ans 
         
-        matrix = [[int(matrix[i][j]) for j in range(m)] for i in range(n)]
-        for j in range(m):
-            for i in range(1, n):
-                if matrix[i][j] != 0: 
-                    matrix[i][j] += matrix[i - 1][j]
+        m, n = len(matrix), len(matrix[0])
         
-        ans = 0
-        for row in matrix: 
+        for i in range(m):
+            for j in range(n):
+                matrix[i][j] = int(matrix[i][j])
+                
+                if matrix[i][j] != 0 and i > 0: 
+                    matrix[i][j] = matrix[i][j] + matrix[i - 1][j]
+                   
+        ans = 0 
+        
+        for row in matrix:
             ans = max(ans, helper(row))
             
-        return ans
+        return ans 
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         
