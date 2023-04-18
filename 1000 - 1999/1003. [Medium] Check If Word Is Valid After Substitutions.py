@@ -2,14 +2,18 @@
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        prev = s + "abc"
-        while prev != s: 
-            prev = s 
-            s = s.replace("abc", "")
-            if prev == s: 
-                break
+        stack = []
+        
+        for char in s: 
+            if char == "c":
+                if len(stack) > 1 and stack[-1] == "b" and stack[-2] == "a":
+                    stack.pop() 
+                    stack.pop() 
                 
-        return s == ""
-            
-        
-        
+                else: 
+                    return False 
+                    
+            else: 
+                stack.append(char)
+                
+        return len(stack) == 0
