@@ -8,20 +8,19 @@
 #         self.right = right
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
-        def create(nums):
-            if len(nums) == 0: 
-                return None
+        def helper(arr):
+            if arr: 
+                value = arr[0]
+                
+                idx = bisect_left(arr, value + 1)
+                
+                ans = TreeNode(value)
+                ans.left = helper(arr[1: idx])
+                ans.right = helper(arr[idx: ])
+                
+                return ans 
             else: 
-                val = nums[0]
-                idx = 0
-                for i in range(1, len(nums)):
-                    if nums[i] < val: 
-                        idx = i
-                    else: 
-                        break
-                ans = TreeNode(val)
-                ans.left = create(nums[1:idx + 1])
-                ans.right = create(nums[idx + 1:])
-                return ans
+                return None
             
-        return create(preorder)
+        return helper(preorder)
+        
