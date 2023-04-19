@@ -3,15 +3,22 @@
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
         heap = []
+        
         for stone in stones: 
             heappush(heap, -stone)
             
-        while len(heap) >= 2: 
+        while len(heap) > 1: 
             stone1 = -heappop(heap)
             stone2 = -heappop(heap)
-            if stone1 != stone2: 
-                stone3 = abs(stone1 - stone2)
-                heappush(heap, -stone3)
-                
-        return -heappop(heap) if heap else 0 
+            
+            remain = abs(stone1 - stone2)
+            
+            if remain != 0:             
+                heappush(heap, -remain)
+            
+        if heap: 
+            return -heappop(heap)
         
+        return 0 
+        
+            
