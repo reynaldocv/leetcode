@@ -2,12 +2,16 @@
 
 class Solution:
     def heightChecker(self, heights: List[int]) -> int:
-        aux = heights.copy()
-        aux.sort()
-        ans = 0
-        l = len(heights)
-        for i in range(l):
-            if heights[i] != aux[i]:
-                ans += 1
-        return ans
+        n = len(heights)
+        
+        arr = sorted(heights)
+        
+        ans = 0 
+        
+        for i in range(n):
+            if arr[i] != heights[i]:
+                ans += 1 
+                
+        return ans 
+        
         
