@@ -3,26 +3,32 @@
 class Solution:
     def calculate(self, s: str) -> int:
         stack = []
-        cur = 0 
+        
+        num = 0 
         operation = "+"
+        
         for char in s + "+":
-            if char == " ":
-                continue
-            elif char.isdigit():
-                cur = (cur * 10) + int(char)
-            else:
+            if char in "0123456789":
+                num = 10*num + int(char)
+                
+            elif char in "+-*/":
                 if operation == "+":
-                    stack.append(cur)
+                    stack.append(num)
+                
                 elif operation == "-":
-                    stack.append(-cur)
+                    stack.append(-num)
+                    
                 elif operation == "*":
-                    stack.append(stack.pop() * cur)
-                elif operation == "/": 
-                    stack.append(int(stack.pop() / cur))
-                operation = char
-                cur = 0 
+                    stack.append(stack.pop()*num)
+                    
+                else: 
+                    stack.append(int(stack.pop()/num))
+                
+                num = 0             
+                operation = char           
                 
         return sum(stack)
+                    
             
             
             
