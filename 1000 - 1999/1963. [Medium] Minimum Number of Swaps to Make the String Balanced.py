@@ -2,12 +2,20 @@
 
 class Solution:
     def minSwaps(self, s: str) -> int:
-        filo = []
-        for char in s: 
-            if len(filo) > 0 and (filo[len(filo) - 1] == "[" and char == "]"):
-                filo.pop()
-            else: 
-                filo.append(char)
-        n = len(filo)
+        stack = []
         
-        return n//4 if n % 4 == 0 else n//4 + 1
+        for char in s: 
+            if char == "[":
+                stack.append(char)
+                
+            else: 
+                if stack and stack[-1] == "[":
+                    stack.pop() 
+                    
+                else: 
+                    stack.append("]")
+                    
+        n = len(stack)//2
+        
+        return (n + 1)//2
+        
