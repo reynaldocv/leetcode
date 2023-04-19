@@ -8,21 +8,18 @@
 #         self.right = right
 class Solution:
     def longestZigZag(self, root: Optional[TreeNode]) -> int:
-        def helper(root, length, right):
-            nonlocal ans
-            if root: 
-                ans = max(ans, length)
-                if right: 
-                    helper(root.left, length + 1, not right)
-                    helper(root.right, 1, right)
-                else: 
-                    helper(root.right, length + 1, not right)
-                    helper(root.left, 1, right)
+        def helper(left, right, node):
+            nonlocal ans 
+            
+            if node: 
+                ans = max(ans, left, right)
+            
+                helper(right + 1, 0, node.left)
+                helper(0, left + 1, node.right)
+                
+        ans = 0 
         
-        ans = 0
+        helper(0, 0, root)
         
-        helper(root, 0, True)
-        
-        return ans
-        
+        return ans 
         
