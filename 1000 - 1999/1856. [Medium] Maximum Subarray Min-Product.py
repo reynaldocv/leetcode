@@ -2,23 +2,29 @@
 
 class Solution:
     def maxSumMinProduct(self, nums: List[int]) -> int:
-        MOD = 10**9 + 7
+        MOD = 10**9 + 7 
         
-        aSum = [0]
-        for num in nums: 
-            aSum.append(aSum[-1] + num)
+        stack = [(-1, -1)]
+        
+        prefixSum = [0]
         
         ans = 0 
-        stack = []
-        for (i, num) in enumerate(nums + [-inf]): 
-            while stack and stack[-1][1] >= num: 
-                _, minElem = stack.pop()
-                idx = stack[-1][0] if stack else -1
+        
+        for num in nums: 
+            prefixSum.append(prefixSum[-1] + num)
+        
+        for (i, num) in enumerate(nums + [0]):
+            while stack and stack[-1][0] > num: 
+                (number, idx) = stack.pop() 
                 
-                ans = max(ans, minElem*(aSum[i] - aSum[idx + 1]))
+                left = stack[-1][1]
                 
-            stack.append((i, num))
+                ans = max(ans, (prefixSum[i] - prefixSum[left + 1])*number)
+                
+            stack.append((num, i))
             
         return ans % MOD
-    
+            
+            
+        
             
