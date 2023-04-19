@@ -11,49 +11,28 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        if root == None: 
-            return None
+        def helper(node):
+            if node: 
+                arr.append(node)
+                
+                helper(node.left)
+                helper(node.right)
+            
+        if not root: 
+            return None 
         
         arr = []
-        preorder = []
-        cur = root
-        while True:
-            if cur: 
-                arr.append(cur)
-                preorder.append(cur)
-                cur = cur.left
-            else: 
-                if len(arr) == 0: 
-                    break
-                cur = arr.pop()
-                cur = cur.right
         
-        root.right = None
-        root.left = None
-        for i in range(1, len(preorder)):
-            root.right = TreeNode(preorder[i].val)
-            root = root.right
-
+        helper(root)
+        
+        n = len(arr)
+        
+        for i in range(n - 1):
+            arr[i].right = arr[i + 1]
+            arr[i].left = None 
             
-class Solution2:
-    def flatten(self, root: Optional[TreeNode]) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
-        def createListTree(root):
-            if root == None:
-                return None
-            left = createListTree(root.left)
-            right = createListTree(root.right)
-            root.left = None
-            root.right = left
-            cur = root
-            while cur.right: 
-                cur = cur.right
-            cur.right = right
-            return root
+        arr[-1].left = None 
+        arr[-1].right = None 
         
-        cur = root
-        createListTree(cur)
         
             
