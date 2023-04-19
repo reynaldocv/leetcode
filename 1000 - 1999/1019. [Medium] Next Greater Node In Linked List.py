@@ -7,43 +7,26 @@
 #         self.next = next
 class Solution:
     def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:
-        n = 0 
-        cur = head
-        while cur: 
-            n += 1
-            cur = cur.next
-            
-        ans = [0]*n
-        
-        FILO = [(head.val, 0)]
-        i = 1
-        head = head.next
-        while head: 
-            val = head.val 
-            while FILO and val > FILO[-1][0]:
-                (_, position) = FILO.pop()
-                ans[position] = val
-            FILO.append((val, i))
-            i += 1
-            head = head.next
-            
-        return ans
-            
-class Solution2:
-    def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:        
-        FILO = []
-        i = 0        
-        ans = []
+        arr = []
         
         while head: 
-            val = head.val 
-            while FILO and val > FILO[-1][0]:
-                (_, position) = FILO.pop()
-                ans[position] = val
-            FILO.append((val, i))
-            head = head.next
-            ans.append(0)
-            i += 1
+            arr.append(head.val)
+            
+            head = head.next 
+            
+        n = len(arr)
+        
+        ans = [0 for _ in range(n)]
+        
+        stack = []
+        
+        for (i, num) in enumerate(arr):
+            while stack and stack[-1][0] < num: 
+                (_, idx) = stack.pop() 
+                
+                ans[idx] = num 
+            
+            stack.append((num, i))
             
         return ans
             
