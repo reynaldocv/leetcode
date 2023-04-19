@@ -2,20 +2,24 @@
 
 class Solution:
     def trap(self, height: List[int]) -> int:
+        def helper(arr):
+            ans = [num for num in arr]
+            
+            for i in range(1, n):
+                ans[i] = max(ans[i], ans[i - 1])
+            
+            return ans 
+            
         n = len(height)
-        leftMax, rightMax = [h for h in height],  [h for h in height]
         
-        for i in range(1, n):
-            leftMax[i] = max(leftMax[i], leftMax[i - 1])
+        left = helper(height)
+        right = helper(height[:: -1])[:: -1]
         
-        for i in range(n - 2, -1, -1):
-            rightMax[i] = max(rightMax[i], rightMax[i + 1])
-
         ans = 0 
-        for i in range(1, n - 1):
-            ans += min(leftMax[i], rightMax[i]) - height[i]
         
-        return ans
-  
+        for i in range(n):
+            ans += min(left[i], right[i]) - height[i]
+            
+        return ans 
 
         
