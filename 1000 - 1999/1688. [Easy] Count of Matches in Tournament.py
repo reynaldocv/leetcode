@@ -2,12 +2,15 @@
 
 class Solution:
     def numberOfMatches(self, n: int) -> int:
-        def matches(n):
-            if n <= 1: return 0
-            if n % 2 == 0:
-                return n//2 + matches(n//2)
-            else:
-                return 1 + n//2 + matches(n//2)
+        ans = 0 
         
-        return matches(n)
+        while n > 1:
+            ans += n//2    
+            
+            if n % 2 == 0:                 
+                n = n//2
+                
+            else: 
+                n = (n + 1)//2
         
+        return ans 
