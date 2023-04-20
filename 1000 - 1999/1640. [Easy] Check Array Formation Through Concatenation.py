@@ -2,25 +2,27 @@
 
 class Solution:
     def canFormArray(self, arr: List[int], pieces: List[List[int]]) -> bool:
-        dic = {}
-        n = len(arr)
-        visited = [False for num in arr]
+        n = len(arr) 
         
-        for i in range(n):
-            dic[arr[i]] = i
+        index = {}
         
+        for (i, num) in enumerate(arr):
+            index[num] = i 
+            
         for piece in pieces: 
             m = len(piece)
-            if piece[0] in dic: 
-                pos = dic[piece[0]]
-                visited[pos] = True
-                for i in range(1, m):
-                    if piece[i] not in dic or pos + i != dic[piece[i]]:
-                        return False
-                    else: 
-                        visited[dic[piece[i]]] = True
-            else: 
-                return False
-        
-        return True if False not in visited else False
             
+            if piece[0] not in index: 
+                return False 
+            
+            idx = index[piece[0]]
+            
+            for i in range(1, m):
+                if idx + i < n and arr[idx + i] == piece[i]:
+                    continue 
+                    
+                else: 
+                    return False
+                
+        return True 
+                    
