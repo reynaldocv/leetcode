@@ -8,20 +8,22 @@
 #         self.right = right
 class Solution:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        def helper(root, idx, lvl):
-            if root: 
-                left[lvl] = min(left.get(lvl, inf), idx)
-                right[lvl] = max(right.get(lvl, -inf), idx)
-                helper(root.left, idx*2, lvl + 1)
-                helper(root.right, idx*2 + 1, lvl + 1)
+        def helper(position, lvl, node):
+            if node: 
+                minimum[lvl] = min(minimum[lvl], position)
+                maximum[lvl] = max(maximum[lvl], position)
+                
+                helper(2*position, lvl + 1, node.left)
+                helper(2*position + 1, lvl + 1, node.right)
             
-        left = {}
-        right = {}
-        helper(root, 0, 0)
-        
+        minimum = defaultdict(lambda: inf)
+        maximum = defaultdict(lambda: -inf)
+
+        helper(0, 0, root)
+
         ans = 0 
-        for key in left: 
-            ans = max(ans, right[key] - left[key] + 1)
-            
+
+        for key in minimum: 
+            ans = max(ans, maximum[key] - minimum[key] + 1)
+
         return ans
-        
