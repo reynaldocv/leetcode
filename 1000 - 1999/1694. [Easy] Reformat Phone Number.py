@@ -2,20 +2,20 @@
 
 class Solution:
     def reformatNumber(self, number: str) -> str:
-        def sequence(s):
-            if len(s) <= 3: 
-                self.ans.append(s)                
-            if len(s) == 4:
-                self.ans.append(s[0:2])
-                sequence(s[2:])
+        def helper(word):
+            if len(word) <= 3:
+                return word
             
-            if len(s) >= 5:
-                self.ans.append(s[0:3])
-                sequence(s[3:])
+            elif len(word) == 4: 
+                return word[: 2] + "-" + word[2: ]
+                
+            else: 
+                return word[: 3] + "-" + helper(word[3: ])
             
-        number = number.replace(" ", "")
-        number = number.replace("-", "")
-        ans = self.ans = []
-        sequence(number)
+        word = ""
         
-        return "-".join(ans)
+        for char in number + " ": 
+            if char != " " and char != "-":
+                word += char 
+                
+        return helper(word)
