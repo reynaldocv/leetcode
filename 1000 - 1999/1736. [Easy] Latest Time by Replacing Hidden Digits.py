@@ -2,34 +2,54 @@
 
 class Solution:
     def maximumTime(self, time: str) -> str:
-        ans = ""
-        if time[0] == "?":
-            if time[1] == "?" or int(time[1]) <= 3:
-                ans += "2"
-            else:
-                ans += "1"
-        else: 
-            ans += time[0]
-        if time[1] == "?":
-            if ans[0] != "2":
-                ans += "9"
-            else: 
-                ans += "3"
-        else: 
-            ans += time[1]
+        hours = ["0" + str(num) for num in range(10)]
+        minutes = ["0" + str(num) for num in range(10)]
         
-        ans += ":"
-        if time[3] == "?":
-            ans += "5"
-        else: 
-            ans += time[3]
+        for num in range(10, 24):
+            hours.append(str(num))
+            
+        for num in range(10, 60):
+            minutes.append(str(num))
+            
+        ans = ["00", "00"]
         
-        if time[4] == "?":
-            ans += "9"
-        else: 
-            ans += time[4]
+        for hour in hours:         
+            add = True 
+            
+            for i in range(2):
+                if time[i] != "?" and time[i] != hour[i]:
+                    add = False
+                    
+                    break 
+                    
+            if add: 
+                ans[0] = max(ans[0], hour)
+                
+        for minute in minutes:         
+            add = True 
+            
+            for i in range(2):
+                if time[3: ][i] != "?" and time[3: ][i] != minute[i]:
+                    add = False
+                    
+                    break 
+                    
+            if add: 
+                ans[1] = max(ans[1], minute)
+                
+        return ":".join(ans)
+                
+                    
+                        
+                    
+                
+            
+        
         
             
-        return ans
+        
+        
+        
+        
             
         
