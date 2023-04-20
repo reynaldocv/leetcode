@@ -2,15 +2,24 @@
 
 class Solution:
     def isPrefixOfWord(self, sentence: str, searchWord: str) -> int:
+        def helper(wordA, wordB):
+            m, n = len(wordA), len(wordB)
+            
+            if m < n: 
+                return False 
+            
+            for (i, char) in enumerate(wordB):
+                if char != wordA[i]:
+                    return False 
+                
+            return True 
+        
         sentence = sentence.split(" ")
-        n = len(sentence)
-        ans = -1
-        for i in range(n): 
-            if searchWord in sentence[i]:
-                if sentence[i].index(searchWord) == 0: 
-                    ans = i + 1
-                    break 
-        return ans
-    
+        
+        for (i, word) in enumerate(sentence): 
+            if helper(word, searchWord):
+                return i + 1
+            
+        return -1
             
         
