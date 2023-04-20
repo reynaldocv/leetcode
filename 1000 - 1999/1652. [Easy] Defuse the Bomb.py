@@ -2,20 +2,29 @@
 
 class Solution:
     def decrypt(self, code: List[int], k: int) -> List[int]:
-        n = len(code)
-        ans = [0]*n
+        def helper(arr, diff):        
+            aSum = sum(arr[: diff])
+            
+            ans = []
+            
+            for i in range(n):
+                aSum += arr[(i + diff) % n] - arr[i]
+                
+                ans.append(aSum)
+                
+            return ans 
         
-        if k == 0: return ans
-        if k > 0:
-            for i in range(n):
-                aux = 0
-                for j in range(i + 1, i + 1 + k):
-                    aux += code[(j + n) % n]
-                ans[i] = aux
+        n = len(code)
+        
+        if k == 0: 
+            return [0 for _ in range(n)]
+        
+        elif k > 0: 
+            return helper(code, k)
+        
         else: 
-            for i in range(n):
-                aux = 0                
-                for j in range(i + k, i ):                    
-                    aux += code[(j + n) % n]
-                ans[i] = aux
-        return ans
+            return helper(code[:: -1], -k)[:: -1]
+                
+            
+        
+        
