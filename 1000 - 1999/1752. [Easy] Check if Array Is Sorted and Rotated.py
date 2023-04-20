@@ -1,14 +1,13 @@
 # https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/
 
 class Solution:
-    def check(self, nums: List[int]) -> bool:        
-        A = [str(num) for num in nums]
-        nums.sort()
-        B = [str(num) for num in nums]
+    def check(self, nums: List[int]) -> bool:
+        n = len(nums)
         
-        A.extend(A)
-        a = "-".join(A)
-        b = "-".join(B)
-        print(a,b)
-        return b in a
+        arr = sorted(nums)
         
+        for i in range(n):             
+            if arr == nums[i: ] + nums[: i]:
+                return True 
+            
+        return False 
