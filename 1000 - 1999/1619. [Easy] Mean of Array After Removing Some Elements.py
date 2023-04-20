@@ -2,11 +2,17 @@
 
 class Solution:
     def trimMean(self, arr: List[int]) -> float:
-        arr.sort()
         n = len(arr)
-        m = n//20
-        arr = arr[:n - m]
-        arr = arr[m:]
-        return sum(arr)/len(arr)
+        
+        arr.sort()
+        
+        for i in range(1, n):
+            arr[i] += arr[i - 1]
+                
+        end = n - n//20 - 1
+        start = n//20 - 1
+        
+        return (arr[end] - arr[start])/(9*n//10)
+        
         
         
