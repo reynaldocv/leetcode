@@ -2,28 +2,37 @@
 
 class Solution:
     def reorderSpaces(self, text: str) -> str:
+        cnt = 0 
         
-        spaces = 0
         words = []
-        n = len(text)
-        aux = ""
-        for i in range(n):
-            if text[i] == " ":
-                spaces += 1
-                if aux != "":
-                    words.append(aux)
-                aux = ""
+        
+        word = ""
+        
+        for char in text + " ":
+            if char == " ":
+                if word: 
+                    words.append(word)
+                
+                word = ""
+                
+                cnt += 1 
+                
             else: 
-                aux += text[i]                
-        if aux != "":
-            words.append(aux)
-        if len(words) == 1:
-            q = 1
-            r = spaces
-        else:
-            q = spaces//(len(words) - 1)
-            r = spaces % (len(words) - 1)
+                word += char
+                
+        cnt -= 1 
+                
+        m = len(words)
+        
+        if m == 1: 
+            return words[0] + " "*cnt
             
-        ans = (" "*q).join(words) + " "*r
-        return ans
+        else: 
+            quotient = cnt//(m - 1)
+            remain = cnt % (m - 1)
+       
+            return (" "*quotient).join(words) + " "*remain        
+        
+        
+        
                 
