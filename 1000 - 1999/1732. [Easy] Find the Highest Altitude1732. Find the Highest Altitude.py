@@ -2,11 +2,15 @@
 
 class Solution:
     def largestAltitude(self, gain: List[int]) -> int:
-        ans, lastHigh = 0, 0
+        prev = 0 
         
-        for i in range(len(gain)):   
-            lastHigh += gain[i]
-            ans = max(ans, lastHigh)
+        ans = 0
+        
+        for num in gain:
+            prev += num 
             
-        return ans
+            ans = max(ans, prev)
+            
+        return ans 
+        
         
