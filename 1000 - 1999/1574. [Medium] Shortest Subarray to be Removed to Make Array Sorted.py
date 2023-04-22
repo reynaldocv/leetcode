@@ -1,30 +1,40 @@
-# 1574. Shortest Subarray to be Removed to Make Array Sorted
+# https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/
 
 class Solution:
     def findLengthOfShortestSubarray(self, arr: List[int]) -> int:
-        n = len(arr)
+        n = len(arr) 
         
-        j = n - 1
-        while j > 0 and arr[j - 1] <= arr[j]:
-            j -= 1 
-         
-        if j == 0: 
+        left = [arr[0]]
+            
+        for num in arr[1: ]:
+            if left[-1] <= num: 
+                left.append(num)
+
+            else: 
+                break 
+                
+        l = len(left)
+                
+        if n == l:
             return 0 
         
-        last = arr[j:] 
-        m = len(last)
-                
-        ans = n - m
-        prev = -1
-        for (i, num) in enumerate(arr): 
-            if prev <= num:                 
-                idx = bisect_left(last, num)
-                if idx == len(last):
-                    ans = min(ans, n - m, n - i -  1)
-                else: 
-                    ans = min(ans, n - (i + 1) - (m - idx))
-                prev = num
+        right = [arr[-1]]
+        
+        for num in arr[: n - 1][:: -1]:
+            if num <= right[0]: 
+                right.insert(0, num)
+
             else: 
-                break
+                break 
+
+        r = len(right)
                 
-        return ans
+        ans = n - max(l, r)
+        
+        for (i, num) in enumerate(left): 
+            idx = bisect_left(right, num)
+            
+            ans = min(ans, n - (i + r - idx + 1))
+            
+        return ans 
+            
