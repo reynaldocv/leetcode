@@ -2,20 +2,20 @@
 
 class Solution:
     def numDifferentIntegers(self, word: str) -> int:
-        n = len(word)
-        numbers, nums = set([]), "1234567890"
-        aux = ""
-        for i in range(n):
-            if word[i] in nums: 
-                aux += word[i] 
-            else: 
-                if len(aux) > 0:
-                    numbers.add(int(aux))
-                aux = ""
-        if len(aux) > 0:
-            numbers.add(int(aux))
+        seen = set()
         
-        return len(numbers)
+        num = ""
+        
+        for char in word + "a":
+            if char in "0123456789":
+                num += char 
+                
+            elif num: 
+                seen.add(int(num))
+                
+                num = ""
+                
+        return len(seen)
         
         
         
