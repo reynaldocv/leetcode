@@ -2,14 +2,22 @@
 
 class Solution:
     def secondHighest(self, s: str) -> int:
-        dic, n = {},  len(s)
-        for i in range(n):
-            if s[i] in "1234567890":
-                dic[int(s[i])] = True
-        if len(dic) <= 1: 
-            return -1
-        else: 
-            ans = [*dic]
-            ans.sort(reverse = True)
-            return ans[1]
+        seen = set()
+        
+        for char in s: 
+            if char in "0123456789":
+                seen.add(int(char))
+                
+        first = None 
+        
+        for num in range(9, -1, -1):
+            if num in seen: 
+                if first: 
+                    return num
+
+                else: 
+                    first = num
+
+        return -1
+        
         
