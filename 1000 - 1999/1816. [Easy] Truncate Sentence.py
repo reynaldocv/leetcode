@@ -2,13 +2,18 @@
 
 class Solution:
     def truncateSentence(self, s: str, k: int) -> str:
-        aux = s.split(" ")
+        counter = 0 
+        
         ans = ""
-        if len(aux) <= k:
-            return s
         
-        for i in range(k):
-            ans += aux[i] + " "
-        
-        return ans[:len(ans) - 1]
+        for char in s:
+            if char == " ":
+                counter += 1 
+                
+            if counter == k: 
+                return ans
+            
+            ans += char 
+            
+        return ans 
         
