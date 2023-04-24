@@ -2,10 +2,13 @@
 
 class Solution:
     def squareIsWhite(self, coordinates: str) -> bool:
-        letters = "abcdefgh"
-        values = {}
-        for letter in letters: 
-            values[letter] = ord(letter) % 2
+        color = False 
         
-        return (values[coordinates[0]] + int(coordinates[1]))%2 == 1
-        
+        if int(coordinates[1]) % 2 == 0:
+            color = not color
+            
+        if coordinates[0] in "bdfh":
+            color = not color
+            
+        return color
+            
