@@ -2,15 +2,17 @@
 
 class Solution:
     def countMatches(self, items: List[List[str]], ruleKey: str, ruleValue: str) -> int:
-        ans = 0
-        dic = {"type":0, "color":1, "name":2}
-        aux = dic[ruleKey]
+        counter = defaultdict(lambda: defaultdict(lambda: 0))
         
-        for item in items:
-            if item[aux] == ruleValue:
-                ans += 1
-                
-        return ans
+        for (type, color, name) in items: 
+            counter["type"][type] += 1
+            counter["color"][color] += 1 
+            counter["name"][name] += 1 
+            
+        return counter[ruleKey][ruleValue]
+            
+        
+            
             
         
     
