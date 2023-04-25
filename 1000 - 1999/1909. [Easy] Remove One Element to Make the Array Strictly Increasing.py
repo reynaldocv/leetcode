@@ -2,33 +2,33 @@
 
 class Solution:
     def canBeIncreasing(self, nums: List[int]) -> bool:
+        nums = [-inf] + nums + [inf]
+        
         n = len(nums)
-        inc = [False for i in range(n)]
-        dec = [False for i in range(n)]
-        inc[0] = True
-        dec[n -1] = True
+        
+        left = [True] + [False for i in range(n - 1)]
+        
         for i in range(1, n):
             if nums[i - 1] < nums[i]:
-                inc[i] = True
-            else:
-                break
+                left[i] = True
+                    
+            else: 
+                break 
+                
+        right = [False for i in range(n - 1)] + [True]
+        
         for i in range(n - 2, -1, -1):
             if nums[i] < nums[i + 1]:
-                dec[i] = True
-            else:
-                break
-             
-        print(inc)
-        print(dec)
-        ans = inc[n - 2] or dec[1]
-        
-        if ans: 
-            return ans
-        
+                right[i] = True
+                
+            else: 
+                break 
+                
         for i in range(1, n - 1):
-            if inc[i - 1] == True and dec[i + 1] == True:
-                if nums[i - 1] < nums[i + 1]:
-                    return True
+            if nums[i - 1] < nums[i + 1] and left[i - 1] and right[i + 1]:
+                return True 
+            
+        return False 
         
         
     
