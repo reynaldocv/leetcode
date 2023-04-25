@@ -2,15 +2,20 @@
 
 class Solution:
     def replaceDigits(self, s: str) -> str:
-        l = len(s)
-        end = ""
-        if l % 2 == 1:
-            end = s[l - 1]
         ans = ""
-        for i in range(l//2):
-            x = 2*i
-            y = 2*i + 1
-            ans += s[x] + chr(ord(s[x]) + int(s[y]))
-        return ans + end
         
+        n = len(s)
+        
+        for i in range(n//2):
+            char = s[2*i]
+            
+            diff = int(s[2*i + 1])
+            
+            ans += char + chr(ord(char) + diff)
+            
+        if n % 2 == 1: 
+            ans += s[-1]
+            
+        return ans 
+    
         
