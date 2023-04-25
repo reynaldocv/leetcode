@@ -2,7 +2,6 @@
 
 class Solution:
     def maxProductDifference(self, nums: List[int]) -> int:
-        nums.sort()
-        l = len(nums)
+        nums.sort() 
         
-        return nums[l-1]*nums[l-2] - nums[0]*nums[1]
+        return nums[-1]*nums[-2] - nums[0]*nums[1]
