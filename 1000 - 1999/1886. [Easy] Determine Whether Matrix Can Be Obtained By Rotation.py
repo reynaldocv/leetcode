@@ -2,18 +2,21 @@
 
 class Solution:
     def findRotation(self, mat: List[List[int]], target: List[List[int]]) -> bool:
-        def helper(mat):
+        def helper(matrix):
             for i in range(n):
-                for j in range(i + 1, n):
-                    mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+                for j in range(i, n):
+                    matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
                     
-            for i in range(n):
-                for j in range(n//2):
-                    mat[i][j], mat[i][n - 1 - j] = mat[i][n - 1 - j], mat[i][j]
+            for i in range(n//2):
+                matrix[i], matrix[n - i - 1] = matrix[n - i - 1], matrix[i]
+                
+            return matrix
             
         n = len(mat)
-        for i in range(4):
-            helper(mat)
+        
+        for _ in range(4):
+            mat = helper(mat)
+            
             if mat == target: 
                 return True 
             
