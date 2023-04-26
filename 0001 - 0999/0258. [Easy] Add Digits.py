@@ -2,20 +2,20 @@
 
 class Solution:
     def addDigits(self, num: int) -> int:
-        @cache
-        def helper(x):
+        def helper(number):
             ans = 0 
             
-            while x: 
-                ans += (x % 10)
-                x //= 10 
+            while number: 
+                ans += (number % 10)
+                
+                number //= 10 
                 
             return ans 
         
         while num >= 10:
             num = helper(num)
             
-        return num 
+        return num
             
             
         
