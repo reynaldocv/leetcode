@@ -32,6 +32,7 @@ class Solution2:
             arr.extend(list(combinations(nums, i + 1)))
         
         ans = 0
+        
         for elem in arr: 
             elem = list(elem)
             
