@@ -2,14 +2,33 @@
 
 class Solution:
     def minimumMoves(self, s: str) -> int:
+        n = len(s) 
+        
+        i = 0 
+        
         ans = 0 
-        idx, n = 0, len(s) 
-        while idx < n: 
-            if s[idx] == "X":
-                idx += 3
+        
+        while i < n: 
+            if s[i] == "X":
+                i += 3
                 ans += 1
             else: 
-                idx += 1
+                i+= 1
         
         return ans
+        
+class Solution2:
+    def minimumMoves(self, s: str) -> int:
+        n = len(s)
+        
+        dp = defaultdict(lambda: 0)
+        
+        for (i, char) in enumerate(s):
+            if char == "X":
+                dp[i] = dp[i - 3] + 1
+                
+            else: 
+                dp[i] = dp[i - 1]
+                
+        return dp[n - 1]
         
