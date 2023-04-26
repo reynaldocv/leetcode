@@ -2,24 +2,26 @@
 
 class Solution:
     def areNumbersAscending(self, s: str) -> bool:
-        arrS = s.split(" ")
-        aux = []
+        last = 0 
         
-        for i in range(len(arrS)):
-            try: 
-                val = int(arrS[i])
-                aux.append(val)
-            except: 
-                continue
+        num = ""
         
-        for i in range(len(aux) - 1):
-            if aux[i] < aux[i + 1]:
-                continue
-            else: 
-                return False
-    
-        return True
+        for char in s + "$":
+            if char in "0987654321":
+                num += char 
             
+            else: 
+                if num:
+                    if last >= int(num):
+                        return False 
+                    
+                    last = int(num)
+                
+                num = ""
+                
+        return True
+                    
+                    
         
         
         
