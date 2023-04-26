@@ -2,11 +2,16 @@
 
 class Solution:
     def maxRepeating(self, sequence: str, word: str) -> int:
-        k = 0
-        aux = ""
-        while aux in sequence: 
-            k += 1
-            aux = word*k
+        start = 0
+        end = len(sequence) + 1
+        
+        while end - start > 1: 
+            middle = (end + start)//2
             
-            
-        return k - 1
+            if word*middle in sequence: 
+                start = middle 
+                
+            else: 
+                end = middle 
+                
+        return start
