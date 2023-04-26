@@ -2,19 +2,26 @@
 
 class Solution:
     def maximumPopulation(self, logs: List[List[int]]) -> int:
-        dic = {}
-        for (date1, date2) in logs: 
-            dic[date1] = dic.get(date1, 0) + 1
-            dic[date2] = dic.get(date2, 0) - 1
+        counter = defaultdict(lambda: 0)
         
-        date = [*dic]
-        date.sort()
-        maxAux = aux = 0
-        ans = 0
-        for d in date:
-            aux += dic[d]
-            if maxAux < aux:
-                maxAux = aux
-                ans = d
-        return ans
-                
+        for (start, end) in logs: 
+            counter[start] += 1
+            counter[end] -= 1 
+            
+        coordinates = [key for key in counter]
+        
+        coordinates.sort() 
+        
+        prev = 0 
+        
+        ans = (0, 0)
+        
+        for x in coordinates:
+            prev += counter[x]
+            
+            print(x, prev)
+            
+            ans = max(ans, (prev, -x))
+            
+        return -ans[1]
+        
