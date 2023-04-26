@@ -2,19 +2,17 @@
 
 class Solution:
     def kthDistinct(self, arr: List[str], k: int) -> str:
-        seen = OrderedDict()
-        for num in arr: 
-            if num in seen: 
-                seen[num] += 1  
-            else: 
-                seen[num] = 1
-                
-        arr = []
-        for key in seen: 
-            if seen[key] <= 1: 
-                arr.append(key)
-                
-        return arr[k - 1] if k <= len(arr) else ""
-           
+        counter = defaultdict(lambda: 0)
         
+        for word in arr: 
+            counter[word] += 1 
+            
+        for word in arr: 
+            if counter[word] == 1: 
+                k -= 1 
+                
+                if k == 0: 
+                    return word
+            
+        return ""
             
