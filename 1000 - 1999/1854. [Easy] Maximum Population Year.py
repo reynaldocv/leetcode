@@ -19,8 +19,6 @@ class Solution:
         for x in coordinates:
             prev += counter[x]
             
-            print(x, prev)
-            
             ans = max(ans, (prev, -x))
             
         return -ans[1]
