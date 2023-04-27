@@ -3,11 +3,15 @@
 class Solution:
     def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
         l = len(original)
+        
         if m*n != l: 
             return []
         
-        ans = []
-        for i in range(m):
-            ans.append(list(original[i*n: (i + 1)*n]))
+        ans = [[0 for _ in range(n)] for _ in range(m)]
         
-        return ans
+        for i in range(m):
+            for j in range(n):
+                ans[i][j] = original[j + i*n]
+                
+        return ans 
+        
