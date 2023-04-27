@@ -2,13 +2,15 @@
 
 class Solution:
     def minMovesToSeat(self, seats: List[int], students: List[int]) -> int:
-        students.sort()
-        seats.sort()
+        n = len(seats)
+        
+        seats.sort() 
+        students.sort() 
+        
         ans = 0 
-        n = len(students)
         
         for i in range(n):
-            ans += abs(students[i] - seats[i])
-        
-        return ans
+            ans += abs(seats[i] - students[i])
+            
+        return ans 
         
