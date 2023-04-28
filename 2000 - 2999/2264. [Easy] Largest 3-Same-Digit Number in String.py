@@ -2,16 +2,14 @@
 
 class Solution:
     def largestGoodInteger(self, num: str) -> str:
-        ans = ""
-        prev = num[: 2]
+        n = len(num)
         
-        for char in num[2: ]:
-            prev += char
-            if prev[0]*3 == prev:
-                ans = max(ans, prev)
+        ans = ""
+        
+        for i in range(n - 2):
+            if num[i] == num[i + 1] and num[i] == num[i + 2]:
+                ans = max(ans, num[i]*3)
                 
-            prev = prev[1: 3]
-            
-        return ans
+        return ans 
             
         
