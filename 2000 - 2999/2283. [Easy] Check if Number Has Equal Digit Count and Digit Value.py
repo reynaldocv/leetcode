@@ -3,13 +3,13 @@
 class Solution:
     def digitCount(self, num: str) -> bool:
         counter = defaultdict(lambda: 0)
+        
         for char in num: 
             counter[char] += 1 
             
-        n = len(num)
-        
-        for i in range(n):
-            if counter[str(i)] != int(num[i]):
+        for (i, char) in enumerate(num):
+            if counter[str(i)] != int(char): 
                 return False 
-            
+        
         return True 
+        
