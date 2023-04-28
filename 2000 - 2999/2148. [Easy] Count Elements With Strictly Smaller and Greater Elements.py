@@ -2,14 +2,18 @@
 
 class Solution:
     def countElements(self, nums: List[int]) -> int:
-        minElem = min(nums)
-        maxElem = max(nums)
+        maxElem = -inf 
+        minElem = inf 
         
-        ans = 0
+        for num in nums: 
+            maxElem = max(maxElem, num)
+            minElem = min(minElem, num)
+            
+        ans = 0    
         
         for num in nums: 
             if minElem < num < maxElem: 
-                ans += 1 
+                ans += 1
                 
-        return ans
-        
+        return ans 
+    
