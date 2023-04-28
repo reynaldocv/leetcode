@@ -2,15 +2,21 @@
 
 class Solution:
     def minimumRecolors(self, blocks: str, k: int) -> int:
-        ans = inf 
-        seen = defaultdict(lambda: 0)
+        counter = {-1: 0}
         
-        counter = 0 
+        cnt = 0 
+        
+        ans = inf
         
         for (i, char) in enumerate(blocks):
-            counter += 1 if char == "B" else 0             
-            ans = min(ans, k - (counter - seen[i -  k]))            
-            seen[i] = counter
+            if char == "W":
+                cnt += 1 
+                
+            if i >= k - 1: 
+                ans = min(ans, cnt - counter[i - k])
+                
+            counter[i] = cnt
             
         return ans 
+
         
