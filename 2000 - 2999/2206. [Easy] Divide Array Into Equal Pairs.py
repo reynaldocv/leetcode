@@ -2,13 +2,15 @@
 
 class Solution:
     def divideArray(self, nums: List[int]) -> bool:
-        counter = defaultdict(lambda: 0)
+        seen = set()
         
         for num in nums: 
-            counter[num] += 1 
+            if num in seen: 
+                seen.remove(num)
+                
+            else: 
+                seen.add(num)
+                
+        return len(seen) == 0
             
-        for key in counter: 
-            if counter[key] % 2 == 1: 
-                return False 
             
-        return True
