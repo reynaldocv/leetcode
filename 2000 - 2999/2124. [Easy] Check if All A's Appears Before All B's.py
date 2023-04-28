@@ -2,12 +2,39 @@
 
 class Solution:
     def checkString(self, s: str) -> bool:
-        index = [-1, -1]
-        for (i, char) in enumerate(s):
+        n = len(s)
+        
+        lastA = -1
+        firstB = n 
+        
+        for (i, char) in enumerate(s): 
             if char == "a":
-                index[0] = i
-            elif index[1] == -1:
-                index[1] = i
+                lastA = i 
                 
-        return index[0] < index[1] if index[1] != -1 else True
+            elif firstB == n: 
+                firstB = i 
+                
+        return lastA + 1 == firstB
+        
+class Solution2:
+    def checkString(self, s: str) -> bool:
+        arr = [char for char in s]
+        
+        n = len(arr)
+        
+        start = 0 
+        
+        while start < n and arr[start] == "a":
+            arr[start] = ""
+            
+            start += 1 
+            
+        end = n - 1
+        
+        while 0 <= end and arr[end] == "b":
+            arr[end] = ""
+            
+            end -= 1 
+            
+        return "".join(arr) == ""
         
