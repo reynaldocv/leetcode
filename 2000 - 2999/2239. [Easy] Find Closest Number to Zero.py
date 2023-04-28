@@ -6,6 +6,5 @@ class Solution:
         
         for num in nums: 
             ans = min(ans, (abs(num), -num))
-                      
+            
         return -ans[1]
-        
