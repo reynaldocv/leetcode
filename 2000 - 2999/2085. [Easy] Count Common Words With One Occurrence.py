@@ -2,20 +2,16 @@
 
 class Solution:
     def countWords(self, words1: List[str], words2: List[str]) -> int:
-        counter1 = defaultdict(lambda: 0)
-        counter2 = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: [0, 0])
         
-        ans = set()
-        
-        for word in words1: 
-            counter1[word] += 1
-        
-        for word in words2: 
-            counter2[word] += 1
-            
-        for key in counter1: 
-            if counter1[key] == counter2[key] == 1: 
-                ans.add(key)
+        for (i, words) in enumerate([words1, words2]):
+            for word in words: 
+                counter[word][i] += 1 
                 
-        return len(ans)
+        ans = 0     
+            
+        for key in counter: 
+            if counter[key] == [1, 1]:
+                ans += 1 
         
+        return ans 
