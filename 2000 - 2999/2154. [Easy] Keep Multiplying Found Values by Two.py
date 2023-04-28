@@ -2,12 +2,10 @@
 
 class Solution:
     def findFinalValue(self, nums: List[int], original: int) -> int:
-        seen = {}
-        for num in nums: 
-            seen[num] = True
-            
-        while original in seen:
-            original *= 2
+        seen = {num for num in nums}
+        
+        while original in seen: 
+            original *= 2 
             
         return original
         
