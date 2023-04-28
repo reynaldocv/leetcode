@@ -1,29 +1,30 @@
 # https://leetcode.com/problems/min-max-game/
 
 class Solution:
+class Solution:
     def minMaxGame(self, nums: List[int]) -> int:
         def helper(arr):
-            n = len(arr)
-            if n == 1: 
-                return arr
+            ans = []
+                
+            turn = True 
             
-            else:                     
-                ans = []
-
-                turn = True 
-
-                for i in range(n//2):
-                    if turn: 
-                        ans.append(min(nums[2*i], nums[2*i + 1]))
-                    else: 
-                        ans.append(max(nums[2*i], nums[2*i + 1]))
-
-                    turn = not turn 
-
-                return ans 
-            
+            while arr: 
+                num1 = arr.pop(0)
+                num2 = arr.pop(0)
+                
+                if turn:                 
+                    ans.append(min(num1, num2))
+                    
+                else: 
+                    ans.append(max(num1, num2))
+                
+                turn = not turn
+                    
+            return ans 
+        
         while len(nums) > 1: 
             nums = helper(nums)
             
-        return nums[0]
+        return nums.pop()
+                
             
