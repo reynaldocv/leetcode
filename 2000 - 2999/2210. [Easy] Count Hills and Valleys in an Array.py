@@ -2,22 +2,27 @@
 
 class Solution:
     def countHillValley(self, nums: List[int]) -> int:
-        prev = -inf
-        arr = []
-        for num in nums: 
-            if num != prev: 
-                arr.append(num)
-            
-            prev = num
+        n = len(nums) 
         
-        n = len(arr)
+        prev = -inf         
+        
+        arr = []
+        
+        for num in nums:
+            if prev != num:
+                arr.append(num)
+                
+            prev = num 
+                
         ans = 0 
         
-        for i in range(1, n - 1):
-            if arr[i - 1] > arr[i] and arr[i + 1] > arr[i]:
+        m = len(arr)
+        
+        for i in range(1, m - 1):
+            if arr[i - 1] < arr[i] and arr[i] > arr[i + 1]:
                 ans += 1 
                 
-            if arr[i - 1] < arr[i] and arr[i + 1] < arr[i]:
+            elif arr[i - 1] > arr[i] and arr[i] < arr[i + 1]:
                 ans += 1 
                 
-        return ans
+        return ans 
