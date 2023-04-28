@@ -3,6 +3,7 @@
 class Solution:
     def greatestLetter(self, s: str) -> str:
         seen = set()
+        
         for char in s: 
             seen.add(char)
             
