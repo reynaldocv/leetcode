@@ -2,42 +2,67 @@
 
 class Solution:
     def numSimilarGroups(self, strs: List[str]) -> int:
-        def helper(val):
-            while val != parent[val]:
-                val = parent[val]
+        def helper(son):
+            while parents[son] != son: 
+                son = parents[son]
                 
-            return val
+            return son 
         
-        def collaborator(val1, val2):
-            parent1 = helper(val1)
-            parent2 = helper(val2)
+        def collaborator(word1, word2):
+            m, n = len(word1), len(word2)
             
-            parent[parent1] = parent[parent2] = min(parent1, parent2)
+            if m != n: 
+                return False 
             
-        def function(str1, str2):
-            ans = 0 
-            for (i, char) in enumerate(str1):
-                if char != str2[i]:
-                    ans += 1 
+            diff = 0 
+            
+            first = None 
+            second = None 
+            
+            for i in range(n):
+                if word1[i] != word2[i]:
+                    diff += 1
                     
-                if ans > 2: 
-                    return False 
-                
-            return True
+                    if first: 
+                        second = (word2[i], word1[i])
+                        
+                    else: 
+                        first = (word1[i], word2[i])
+                        
+            if diff == 0 or (diff == 2 and first == second):
+                return True 
             
+            return False 
+        
         n = len(strs)
-        parent = [i for i in range(n)]
         
-        for i in range(n): 
-            for j in range(i): 
-                parentI = helper(i)
-                parentJ = helper(j)
-                if function(strs[i], strs[j]) and parentI != parentJ:
-                    collaborator(parentI, parentJ)
+        parents = [i for i in range(n)]
         
-        ans = 0 
+        for i in range(n - 1):
+            for j in range(i + 1, n):
+                if collaborator(strs[i], strs[j]):
+                    parentI = helper(i)
+                    parentJ = helper(j)
+                    
+                    parents[parentI] = parents[parentJ] = min(parentI, parentJ)
+                    
+        seen = set()
+        
         for i in range(n):
-            if i == parent[i]:
-                ans +=1 
+            seen.add(helper(i))
             
-        return ans
+        return len(seen)
+                
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                
