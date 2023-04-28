@@ -9,6 +9,7 @@ class Solution:
         for i in range(1, n - 1):
             for j in range(1, m - 1):
                 tmp = grid[i][j]
+        
                 for ii in range(i - 1, i + 2):
                     for jj in range(j - 1, j + 2):
                         tmp = max(tmp, grid[ii][jj])
