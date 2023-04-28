@@ -3,13 +3,12 @@
 class Solution:
     def minimumCost(self, cost: List[int]) -> int:
         ans = 0 
-        cost.sort(reverse = True)
         
-        n = len(cost)
+        cost.sort(key = lambda item: -item)
         
-        for i in range(0, n, 3):
-            ans += cost[i]
-            ans += cost[i + 1] if i + 1 < n else 0 
-            
-        return ans
+        for (i, num) in enumerate(cost):
+            if (i % 3) < 2: 
+                ans += num 
+                
+        return ans 
         
