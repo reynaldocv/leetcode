@@ -2,16 +2,19 @@
 
 class Solution:
     def numberOfPairs(self, nums: List[int]) -> List[int]:
-        counter = defaultdict(lambda: 0)
+        seen = set() 
+        
+        counter = 0 
         
         for num in nums: 
-            counter[num] += 1 
-            
-        ans = [0, 0]
+            if num in seen: 
+                seen.remove(num)
+                counter += 1 
+                
+            else: 
+                seen.add(num)
+                
+        return [counter, len(seen)]
+                
         
-        for key in counter: 
-            ans[0] += counter[key]//2
-            ans[1] += counter[key] % 2
-            
-        return ans 
             
