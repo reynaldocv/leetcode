@@ -2,23 +2,21 @@
 
 class Solution:
     def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
-        seen1 = {num: True for num in nums1}
-        seen2 = {num: True for num in nums2}
+        counter = defaultdict(lambda: [0, 0])
         
+        for (i, nums) in enumerate([nums1, nums2]):
+            for num in nums: 
+                counter[num][i] = 1
+                
         ans = [[], []]
         
-        seen = {}
-        for num in nums1: 
-            if num not in seen: 
-                seen[num] = True
-                if num not in nums2: 
-                    ans[0].append(num)
-
-        seen = {}
-        for num in nums2:             
-            if num not in seen: 
-                seen[num] = True        
-                if num not in nums1: 
-                    ans[1].append(num)
-                
+        for key in counter: 
+            if sum(counter[key]) == 1: 
+                if counter[key][0] == 1: 
+                    ans[0].append(key)
+                    
+                else: 
+                    ans[1].append(key)
+        
         return ans 
+        
