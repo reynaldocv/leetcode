@@ -9,6 +9,7 @@ class Solution:
         
         for rank in ranks: 
             counter[rank] += 1 
+            
             maxElem = max(maxElem, counter[rank])
         
         if len(set(suits)) == 1:
@@ -21,3 +22,4 @@ class Solution:
             return "Pair"
         
         return "High Card"
+
