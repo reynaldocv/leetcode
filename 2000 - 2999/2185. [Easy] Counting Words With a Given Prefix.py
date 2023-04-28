@@ -2,10 +2,25 @@
 
 class Solution:
     def prefixCount(self, words: List[str], pref: str) -> int:
-        ans = 0 
-        for word in words:
-            if pref in word: 
-                if word.index(pref) == 0: 
-                    ans += 1
+        n = len(pref)
+        
+        ans = 0
+        
+        for word in words: 
+            m = len(word)
+            
+            if m >= n: 
+                add = True 
+                
+                for i in range(n):
+                    if word[i] != pref[i]:
+                        add = False
+                        
+                        break 
+                        
+                if add: 
+                    ans += 1 
                     
-        return ans
+        return ans 
+                
+        
