@@ -13,6 +13,7 @@ class Solution:
                 for j in range(max(i - k, 0), min(n, i + k + 1)):
                     if prev < j: 
                         ans.append(j)
+                        
                         prev = j
                         
         return ans 
