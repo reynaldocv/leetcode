@@ -21,6 +21,7 @@ class Solution2:
         for (i, color) in enumerate(colors): 
             if color != colors[0]: 
                 ans = max(ans, i)
+                
             if color != colors[-1]: 
                 ans = max(ans, n - 1 - i)
         
