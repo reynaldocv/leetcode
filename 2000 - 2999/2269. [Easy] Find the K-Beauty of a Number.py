@@ -2,17 +2,17 @@
 
 class Solution:
     def divisorSubstrings(self, num: int, k: int) -> int:
-        strNum = str(num)
-        tmp = strNum[: k - 1]
+        strNum = str(num) 
         
-        ans = 0
+        n = len(strNum) 
         
-        for char in strNum[k - 1: ]:
-            tmp += char
-            if int(tmp) != 0 and num % int(tmp) == 0:
-                ans += 1
+        ans = 0 
+        
+        for i in range(n - k + 1):
+            tmp = int(strNum[i: i + k])
             
-            tmp = tmp[1: ]
-            
+            if tmp != 0 and num % tmp == 0: 
+                ans += 1 
+                
         return ans 
         
