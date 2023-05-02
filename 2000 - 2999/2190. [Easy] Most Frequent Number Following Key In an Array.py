@@ -2,14 +2,18 @@
 
 class Solution:
     def mostFrequent(self, nums: List[int], key: int) -> int:
-        ans = (0, 0)
         n = len(nums)
         
         counter = defaultdict(lambda: 0)
         
-        for i in range(1, n):
-            if nums[i - 1] == key:
-                counter[nums[i]] += 1             
-                ans = max(ans, (counter[nums[i]], nums[i]))
+        ans = (0, -1)
+        
+        for i in range(n - 1):
+            if nums[i] == key: 
+                counter[nums[i + 1]] += 1 
                 
-        return ans[1]  
+                ans = max(ans, (counter[nums[i + 1]], nums[i + 1]))
+                
+        return ans[1]
+            
+        
