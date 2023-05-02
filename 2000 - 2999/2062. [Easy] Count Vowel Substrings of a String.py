@@ -2,7 +2,7 @@
 
 class Solution:
     def countVowelSubstrings(self, word: str) -> int:
-        def isValid(sentence):
+        def helper(sentence):
             counter = [0]*5
             for char in sentence: 
                 if char not in "aeiou":
@@ -18,7 +18,7 @@ class Solution:
         ans = 0
         for i in range(n - 5 + 1):
             for j in range(i + 5, n + 1):
-                if isValid(word[i: j]):
+                if helper(word[i: j]):
                     ans += 1
                 
         return ans 
