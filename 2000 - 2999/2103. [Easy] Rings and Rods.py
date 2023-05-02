@@ -2,19 +2,28 @@
 
 class Solution:
     def countPoints(self, rings: str) -> int:
-        seen = defaultdict(lambda: {})
+        n = len(rings) 
         
-        n = len(rings)
+        counter = defaultdict(lambda: [0, 0, 0])
+        
+        index = {"G": 0, "R": 1, "B": 2}
+        
         for i in range(n//2):
             color = rings[2*i]
-            rod = int(rings[2*i + 1])
-            seen[rod][color] = True
+            position = rings[2*i + 1]
             
-        ans = 0
-        for i in range(10):
-            if len(seen[i]) == 3: 
-                ans += 1
+            idx = index[color]
+            
+            counter[position][idx] = 1 
+            
+        ans = 0    
+        
+        for key in counter:
+            if sum(counter[key]) == 3: 
+                ans += 1 
                 
-        return ans
+        return ans 
+            
+            
         
         
