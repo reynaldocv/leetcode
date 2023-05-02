@@ -2,22 +2,20 @@
 
 class Solution:
     def findKDistantIndices(self, nums: List[int], key: int, k: int) -> List[int]:
-        index = [i for (i, num) in enumerate(nums) if num == key]
-        arr = set()
-        n = len(nums)
+        n = len(nums) 
         
-        for idx in index: 
-            for i in range(k + 1):
-                val = idx - i
-                if val >= 0: 
-                    arr.add(val)
-                val = idx + i
-                if val < n:
-                    arr.add(val)
-                    
-        ans = list(arr)
-        ans.sort()
+        prev = -1
         
-        return ans
+        ans = []
+        
+        for i in range(n):
+            if nums[i] == key: 
+                for j in range(max(i - k, 0), min(n, i + k + 1)):
+                    if prev < j: 
+                        ans.append(j)
+                        prev = j
+                        
+        return ans 
+                
         
         
