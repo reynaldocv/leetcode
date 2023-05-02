@@ -1,29 +1,28 @@
 # https://leetcode.com/problems/largest-number-after-digit-swaps-by-parity/
 
 class Solution:
-    def largestInteger(self, num: int) -> int:
-        positions = [int(char) % 2 for char in str(num)]
-        odds = []
-        evens = []
+    def largestInteger(self, num: int) -> int:    
+        arr = [char for char in str(num)]
         
-        for char in str(num):
-            if int(char) % 2 == 1: 
-                odds.append(int(char))
-            else: 
-                evens.append(int(char))
+        even = []
+        odd = []
+        
+        for char in arr: 
+            if char in "02468":
+                even.append(char)
                 
-        odds.sort(reverse = True)
-        evens.sort(reverse = True)
-        
-        ans = ""
-        i, j = 0, 0
-        
-        for isOdd in positions:
-            if isOdd: 
-                ans += str(odds[i])
-                i += 1 
             else: 
-                ans += str(evens[j])
-                j += 1
+                odd.append(char)
                 
-        return int(ans)
+        even.sort()
+        odd.sort() 
+        
+        for (i, num) in enumerate(arr):
+            if num in "02468":
+                arr[i] = str(even.pop())
+                
+            else: 
+                arr[i] = str(odd.pop())
+                
+        return int("".join(arr))
+                
