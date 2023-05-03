@@ -2,10 +2,19 @@
 
 class Solution:
     def maxProfit(self, prices: List[int], fee: int) -> int:
+        n = len(prices)
         
-        cash, hold = 0, -prices[0]
-        for i in range(1, len(prices)):
-            cash = max(cash, hold + prices[i] - fee)
-            hold = max(hold, cash - prices[i])
+        hold = [0 for _ in range(n)]
+        free = [0 for _ in range(n)]
         
-        return cash
+        hold[0] -= prices[0]
+        
+        for i in range(1, n):
+            hold[i] = max(hold[i - 1], free[i - 1] - prices[i])
+            free[i] = max(free[i - 1], hold[i - 1] + prices[i] - fee)
+            
+        return free[-1]    
+        
+            
+
+        
