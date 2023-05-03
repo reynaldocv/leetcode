@@ -2,27 +2,33 @@
 
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        n = len(nums)
-        if n == 1: 
-            return nums[0]        
+        ans = -inf
         
-        ans = 0        
-        aux = 1
-        for i in range(n):
-            if nums[i] == 0:                   
-                aux = 1
+        minus = None 
+        
+        prev = 1 
+        
+        for num in nums: 
+            prev*= num 
+            
+            if prev < 0: 
+                if minus: 
+                    ans = max(ans, prev//minus)
+                    
+                else: 
+                    ans = max(ans, prev)
+                    
+                    minus = prev 
+                    
+            elif prev == 0: 
+                ans = max(ans, 0)
+                
+                prev = 1 
+                minus = None 
+                
             else: 
-                aux *= nums[i]
-                ans = max(ans, aux)
+                ans = max(ans, prev)
+                
+        return ans 
         
-        nums = nums[::-1]
-        aux = 1
-        for i in range(n):
-            if nums[i] == 0:                   
-                aux = 1
-            else: 
-                aux *= nums[i]
-                ans = max(ans, aux)
-        
-        return ans
         
