@@ -2,18 +2,19 @@
 
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
-        idx = 1
         heap = [1]
-        seen = {1: True}
-        while idx < n: 
-            num = heappop(heap)
-            for k in [2, 3, 5]:
-                if k*num not in seen: 
-                    heappush(heap, k*num)
-                    seen[k*num] = True
-            idx += 1
+        seen = {1}
         
-        return heappop(heap)
-         
+        for _ in range(n - 1):
+            num = heappop(heap)
             
+            for r in [2, 3, 5]:
+                if r*num not in seen: 
+                    heappush(heap, r*num)
+                    
+                    seen.add(r*num)
+                    
+        return heappop(heap)
+                    
+                    
         
