@@ -10,21 +10,29 @@ class Solution:
             else: 
                 ans = helper(i + 1)
                 
-                for j in range(i, n - 1):
-                    ans = max(ans, prices[j + 1] - prices[i] + helper(j + 3))
-                    
+                for j in range(i + 1, n):
+                    ans = max(ans, prices[j] - prices[i] + helper(j + 2))
+                
                 return ans 
-        
+            
         n = len(prices)
         
         return helper(0)
 
 class Solution2:
     def maxProfit(self, prices: List[int]) -> int:
-
-        dp = [0] * len(prices)
-        for j in range(len(prices)):
-            for i in range(j):
-                dp[j] = max(dp[j], (dp[i - 2] if i >= 2 else 0) + prices[j] - prices[i], dp[i])
-                
-        return dp[-1]
+        n = len(prices)
+        
+        dp = defaultdict(lambda: 0)
+        
+        for i in range(1, n):
+            tmp = dp[i - 1]
+            
+            for j in range(i):
+                if prices[i] > prices[j]:
+                    tmp = max(tmp, prices[i] - prices[j] + dp[j - 2])
+                    
+            dp[i] = tmp 
+            
+        return dp[n - 1]
+                    
