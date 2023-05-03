@@ -2,28 +2,37 @@
 
 class Solution:
     def getMaxLen(self, nums: List[int]) -> int:
-        mult = 1
-        start = -1
-        ans = 0
+        ans = 0 
+        
+        negative = None         
+        positive = -1
+        
+        prev = 1 
+        
         for (i, num) in enumerate(nums): 
-            mult *= num
-            if mult > 0: 
-                ans = max(ans, i - start)
-            elif mult == 0: 
-                start = i
-                mult = 1
-        
-        mult = 1
-        start = -1
-        for (i, num) in enumerate(nums[::-1]): 
-            mult *= num
-            if mult > 0: 
-                ans = max(ans, i - start)
-            elif mult == 0: 
-                start = i
-                mult = 1
-        
-        return ans
+            if num < 0: 
+                prev *= -1
+                
+            elif num == 0: 
+                prev = 0 
+            
+            if prev > 0: 
+                ans = max(ans, i - positive)
+                
+            elif prev < 0: 
+                if negative != None: 
+                    ans = max(ans, i - negative)
+                    
+                else: 
+                    negative = i 
+                    
+            else: 
+                prev = 1
+                
+                positive = i                 
+                negative = None
+                    
+        return ans 
             
         
         
