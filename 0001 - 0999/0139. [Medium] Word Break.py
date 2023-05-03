@@ -2,17 +2,25 @@
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        words = [s]
-        existed = {s: True}
-        while len(words) > 0: 
-            word = words.pop()
-            if word == "":
-                return True
-            for w in wordDict: 
-                if w in word and word.index(w) == 0: 
-                    aux = word.replace(w, "", 1)
-                    if aux not in existed:
-                        words.append(aux)
-                        existed[aux] = aux
-                        
-        return False
+        @cache 
+        def helper(i):
+            if i >= n: 
+                return True 
+            
+            else: 
+                tmp = ""
+                
+                for j in range(i, n):
+                    tmp += s[j]
+                    
+                    if tmp in seen and helper(j + 1):
+                        return True 
+                    
+                return False 
+            
+        n = len(s)
+        
+        seen = {word for word in wordDict}
+        
+        return helper(0)
+                
