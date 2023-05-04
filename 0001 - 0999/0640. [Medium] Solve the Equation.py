@@ -1,43 +1,36 @@
 # https://leetcode.com/problems/solve-the-equation/
 
 class Solution:
-    def solveEquation(self, equation: str) -> str:
-        def helper(sentence):
-            ans = [0, 0]
-            sign = 1
-            num = ""
-            for char in sentence + "+": 
-                if char in "+-":
-                    if num != "": 
-                        ans[1] += sign*int(num)
+    def predictPartyVictory(self, senate: str) -> str:        
+        counter = defaultdict(lambda: 0)
+        
+        value = {"D": 0, "R": 1}
+        
+        while True: 
+            tmp = ""            
+        
+            for char in senate: 
+                val = value[char]
+
+                if counter[val] == 0: 
+                    counter[1 - val] += 1 
+                    
+                    tmp += char 
+                    
+                else:
+                    counter[val] -= 1 
+            
+            m = len(tmp)
+            
+            if tmp[0]*m == tmp: 
+                if tmp[0] == "R":
+                    return "Radiant"
+                
+                else: 
+                    return "Dire"
+            
+            senate = tmp             
                         
-                    sign = 1 if char == "+" else -1
-                    num = ""
-                    
-                elif char.isdigit():
-                    num += char
-                    
-                elif char == "x":
-                    ans[0] += sign*int(num) if num != "" else sign
-                    sign = 1
-                    num = ""
-                    
-            return ans
-            
-        sentences = equation.split("=")
-        arr1 = helper(sentences[0])
-        arr2 = helper(sentences[1])
-        
-        ans = (arr1[0] - arr2[0], arr1[1] - arr2[1])
-        
-        if ans[0] == 0:
-            if ans[1] == 0:
-                return "Infinite solutions"
-            else: 
-                return "No solution"            
-        else: 
-            return "x=" + str(-ans[1]//ans[0])
-            
             
         
         
