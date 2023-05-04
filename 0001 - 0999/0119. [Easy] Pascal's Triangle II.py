@@ -9,8 +9,10 @@ class Solution:
         
         for i in range(1, rowIndex + 1):
             ans[i] = ans[i - 1]*num//den
+            
             num -= 1 
             den += 1 
             
         return ans 
+    
       
