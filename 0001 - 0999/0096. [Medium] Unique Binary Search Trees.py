@@ -2,12 +2,27 @@
 
 class Solution:
     def numTrees(self, n: int) -> int:
-        ans = [0 for i in range(n + 1)]
-        ans[0] = ans[1] = 1
-        for k in range(2, n + 1):
-            aux = 0
-            for j in range(0, k):
-                aux += ans[j]*ans[k - 1 - j]
-            ans[k] = aux
+        @cache
+        def helper(num):
+            if num <= 1: 
+                return 1 
+            
+            else: 
+                ans = 0 
+                
+                for i in range(0, num):
+                    ans += helper(i)*helper(num - 1 - i)
+                    
+                return ans 
+            
+        return helper(n)
         
-        return ans[n]
+class Solution:
+    def numTrees(self, n: int) -> int:
+        dp = [1] + [0 for _ in range(n)]
+        
+        for i in range(1, n + 1):
+            for j in range(i):
+                dp[i] += dp[j]*dp[i - 1 - j]
+                
+        return dp[-1]
