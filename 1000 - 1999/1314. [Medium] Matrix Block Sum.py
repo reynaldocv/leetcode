@@ -2,31 +2,28 @@
 
 class Solution:
     def matrixBlockSum(self, mat: List[List[int]], k: int) -> List[List[int]]:
-        n = len(mat)
-        m = len(mat[0])
-        accMat = [[mat[i][j] for j in range(m)] for i in range(n)]        
-        for i in range(n):
-            for j in range(m):
-                if i == 0 and j > 0: 
-                    accMat[0][j] += accMat[0][j - 1]
-                if j == 0 and i > 0: 
-                    accMat[i][0] += accMat[i - 1][0]
-                if i > 0 and j > 0: 
-                    accMat[i][j] += accMat[i - 1][j] + accMat[i][j - 1] - accMat[i - 1][j - 1]
+        m, n = len(mat), len(mat[0])
         
-        ans = [[0 for j in range(m)] for i in range(n)]        
-        for i in range(n):
-            for j in range(m):
-                x0, y0 = i - k - 1, j - k - 1
-                x1, y1 = min(n - 1, i + k), min(m - 1, j + k)
-                ans[i][j] = accMat[x1][y1]
-                if x0 >= 0: 
-                    ans[i][j] -= accMat[x0][y1]
-                if y0 >= 0: 
-                    ans[i][j] -= accMat[x1][y0]
-                if x0 >= 0 and y0>= 0: 
-                    ans[i][j] += accMat[x0][y0]
-    
-        return ans
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                dp[i][j] += dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + mat[i - 1][j - 1]
+                
+        ans = [[0 for _ in range(n)] for _ in range(m)]
+                
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                maxI = i + k if i + k < m else m
+                minI = i - k - 1 if i - k - 1 > 0 else 0 
+                
+                maxJ = j + k if j + k < n else n
+                minJ = j - k - 1 if j - k - 1 > 0 else 0 
+                
+                ans[i - 1][j - 1] = dp[maxI][maxJ] - dp[minI][maxJ] - dp[maxI][minJ] + dp[minI][minJ]
+                
+        return ans 
+                 
+                
                     
                 
