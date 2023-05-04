@@ -17,7 +17,7 @@ class Solution:
             
         return helper(n)
         
-class Solution:
+class Solution2:
     def numTrees(self, n: int) -> int:
         dp = [1] + [0 for _ in range(n)]
         
