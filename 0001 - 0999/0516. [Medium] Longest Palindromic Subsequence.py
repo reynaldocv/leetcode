@@ -16,8 +16,7 @@ class Solution:
                 else: 
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
                     
-        return dp[-1][-1]
-        
+        return dp[-1][-1]        
     
 class Solution2:
     def longestPalindromeSubseq(self, s: str) -> int:
