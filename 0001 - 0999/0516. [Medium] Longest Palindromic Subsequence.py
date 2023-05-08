@@ -27,7 +27,7 @@ class Solution2:
                 return 0 
             
             elif start == end: 
-                return 1
+                return 1 
             
             elif s[start] == s[end]:
                 return 2 + helper(start + 1, end - 1)
