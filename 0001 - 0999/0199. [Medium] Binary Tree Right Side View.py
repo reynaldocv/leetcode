@@ -8,17 +8,22 @@
 #         self.right = right
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        def rightSide(root, lvl, ans):
-            if root: 
-                if lvl >= len(ans):
-                    ans.append(root.val)
-                rightSide(root.right, lvl + 1, ans)
-                rightSide(root.left, lvl + 1, ans)
+        def helper(node, lvl):
+            if node: 
+                seen[lvl] = node.val
                 
-        ans = []
-        rightSide(root, 0, ans)
+                helper(node.left, lvl + 1)
+                helper(node.right, lvl + 1)
         
-        return ans
+        seen = defaultdict(lambda: None)
+        
+        helper(root, 0)
+        
+        n = len(seen)
+        
+        return [seen[i] for i in range(n)]
+        
+        
                     
                 
         
