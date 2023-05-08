@@ -2,21 +2,30 @@
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        n, ans, nans = len(s), "", 0
+        n = len(s)
+        
+        ans = (0, 0, 0)
+        
         for i in range(n):
-            j = 0
-            while i - j >= 0 and i + j < n and s[i - j] == s[i + j]:
-                j += 1
-                if nans < 2*j - 1:
-                    ans = s[i - j + 1: i + j]
-                    nans = 2*j - 1
-        
-            j = 0
-            while i - j >= 0 and i + j + 1 < n and s[i - j] == s[i + j + 1]:
-                j += 1
-                if nans < 2*j:
-                    ans = s[i - j + 1: i + j + 1]
-                    nans = 2*j
-        return ans
-        
+            start = i 
+            end = i 
+            
+            while start >= 0 and end < n and s[start] == s[end]:
+                start -= 1 
+                end += 1 
+                
+            ans = max(ans, (end - start - 1, start + 1, end))
+            
+            start = i 
+            end = i + 1
+            
+            while start >= 0 and end < n and s[start] == s[end]:
+                start -= 1 
+                end += 1 
+            
+            ans = max(ans, (end - start - 1, start + 1, end))
+            
+        return s[ans[1]: ans[2]]
+            
+            
                 
