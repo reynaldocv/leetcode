@@ -5,30 +5,30 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        def helper(val, x, y, matrix):
-            ans = 0 
-            for (i, j) in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]:
-                r, s = x + i, y + j
-                if 0 <= r < n and 0 <= s < m: 
-                    if matrix[r][s] == val: 
-                        ans += 1
-            
-            return ans
-    
-        n, m = len(board), len(board[0])
-        matrix = [[board[i][j] for j in range(m)] for i in range(n)]
+        m, n = len(board), len(board[0])
         
-        for i in range(n):
-            for j in range(m):
-                if matrix[i][j] == 1: 
-                    quantity = helper(1, i, j, matrix)
-                    if quantity < 2 or quantity > 3: 
-                        board[i][j] = 0 
-                else: 
-                    quantity = helper(1, i, j, matrix)
-                    if quantity == 3: 
-                        board[i][j] = 1
-                        
+        tmp = [[board[i][j] for j in range(n)] for i in range(m)]
+        
+        for i in range(m):
+            for j in range(n):
+                count = 0 
+                
+                for (r, s) in [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]:
+                    x, y = i + r, j + s
+                    
+                    if 0 <= x < m and 0 <= y < n: 
+                        if tmp[x][y] == 1: 
+                            count += 1 
+                
+                if tmp[i][j] == 0 and count == 3: 
+                    board[i][j] = 1 
+                    
+                if tmp[i][j] == 1 and not (2 <= count <= 3): 
+                    board[i][j] = 0 
+                    
+    
+        
+        
                         
                 
             
