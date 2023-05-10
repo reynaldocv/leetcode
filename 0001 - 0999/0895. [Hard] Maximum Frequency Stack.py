@@ -3,26 +3,28 @@
 class FreqStack:
 
     def __init__(self):
-        self.freq = defaultdict(lambda: 0)
-        self.group = defaultdict(lambda: [])
+        self.counter = defaultdict(lambda: 0)        
+        self.stacks = defaultdict(lambda: [])
+        
         self.maxFreq = 0
-        
+
     def push(self, val: int) -> None:
-        freq = self.freq[val] + 1
-        self.freq[val] = freq
+        self.counter[val] += 1
         
-        if freq > self.maxFreq: 
-            self.maxFreq = freq
-            
-        self.group[freq].append(val)
+        self.stacks[self.counter[val]].append(val)
         
+        self.maxFreq = max(self.maxFreq, self.counter[val])
+
     def pop(self) -> int:        
-        elem = self.group[self.maxFreq].pop()
-        self.freq[elem] -= 1 
+        elem = self.stacks[self.maxFreq].pop()
         
-        if not self.group[self.maxFreq]:
-            self.maxFreq -= 1
+        self.counter[elem] -= 1 
         
+        if len(self.stacks[self.maxFreq]) == 0:
+            self.stacks.pop(self.maxFreq)
+        
+            self.maxFreq -= 1 
+            
         return elem
 
 # Your FreqStack object will be instantiated and called as such:
