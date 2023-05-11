@@ -1,25 +1,36 @@
 # https://leetcode.com/problems/uncrossed-lines/
 
 class Solution:
-    def maxUncrossedLines(self, nums1: List[int], nums2: List[int]) -> int:        
-        @cache
+    def maxUncrossedLines(self, nums1: List[int], nums2: List[int]) -> int:
+        m, n = len(nums1), len(nums2)
+        
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if nums1[i - 1] == nums2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                    
+                else: 
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                    
+        return dp[-1][-1]
+        
+class Solution2:
+    def maxUncrossedLines(self, nums1: List[int], nums2: List[int]) -> int:
+        @cache        
         def helper(i, j):
-            
-            if i >= n or j >= m: 
+            if i >= m or j >= n: 
                 return 0 
+            
             else: 
-                num = nums1[i]
-                if num in nums2[j:]:
-                    j2 = j + nums2[j:].index(num)
-                    val1 = 1 + helper(i + 1, j2 + 1)
-                    val2 = helper(i + 1, j)
-                
-                    return max(val1, val2)
+                if nums1[i] == nums2[j]:
+                    return 1 + helper(i + 1, j + 1)
                 
                 else: 
-                    return helper(i + 1, j)
-                
-        n, m = len(nums1), len(nums2)    
+                    return max(helper(i + 1, j), helper(i, j + 1))
+        
+        m, n = len(nums1), len(nums2)
         
         return helper(0, 0)
         
