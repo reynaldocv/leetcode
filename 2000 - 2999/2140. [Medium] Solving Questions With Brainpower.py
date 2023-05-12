@@ -2,17 +2,18 @@
 
 class Solution:
     def mostPoints(self, questions: List[List[int]]) -> int:
-        memo = defaultdict(lambda: 0)
-        ans = 0 
+        @cache 
+        def helper(i):
+            if i >= n: 
+                return 0 
+            
+            else: 
+                return max(helper(i + 1), questions[i][0] + helper(i + questions[i][1] + 1))
+                           
+        n = len(questions)
         
-        for (i, (points, nextDays)) in enumerate(questions):
-            memo[i] = max(memo[i - 1], memo[i])
-            
-            val = memo[i] + points            
-            memo[i + nextDays + 1] = max(memo[i + nextDays + 1], val)
-            
-            ans = max(ans, val)   
-            
-        return ans
+        return helper(0)
+                           
+                          
         
         
