@@ -17,6 +17,28 @@ class Solution:
                     
         return sum(dp[low: high + 1]) % MOD
         
+ class Solution2:
+    def countGoodStrings(self, low: int, high: int, zero: int, one: int) -> int:
+        @cache 
+        def helper(i):
+            if i == 0: 
+                return 1 
+            
+            elif i < 0: 
+                return 0 
+            
+            else: 
+                return (helper(i - zero) + helper(i - one)) % MOD
+        
+        MOD = 10**9 + 7
+        
+        ans = 0 
+        
+        for i in range(low, high + 1):
+            ans = (ans + helper(i)) % MOD
+            
+        return ans 
+        
         
         
         
