@@ -7,37 +7,27 @@
 #         self.next = next
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        n = 0 
-        cur = head
-        while cur: 
-            cur = cur.next
-            n += 1
+        if not head: 
+            return None 
         
-        start = min(k, n - k + 1)
-        end = max(k, n - k + 1)
-        val1, val2 = 0, 0
+        arr = []
         
-        cur = head
-        i = 1
-        while cur: 
-            if i == start: 
-                val1 = cur.val
-            if i == end: 
-                val2 = cur.val
-            cur = cur.next
-            i +=1
+        while head: 
+            arr.append(head)
             
-        cur = head
-        i = 1
-        while cur: 
-            if i == start: 
-                cur.val = val2
-            if i == end: 
-                cur.val = val1
-            cur = cur.next
-            i +=1
+            head = head.next 
+            
+        n = len(arr)
         
-        return head
+        arr[k - 1], arr[n - k] = arr[n - k], arr[k - 1]
+        
+        for i in range(n - 1):
+            arr[i].next = arr[i + 1]
+            
+        arr[-1].next = None 
+        
+        return arr[0]
+        
             
             
             
