@@ -2,25 +2,18 @@
 
 class Solution:
     def isMonotonic(self, nums: List[int]) -> bool:
+        def helper(arr):
+            for i in range(n - 1):
+                if arr[i] > arr[i + 1]:
+                    return False 
+                
+            return True 
+        
         n = len(nums)
         
-        if n == 1: 
-            return True
+        return helper(nums) or helper(nums[:: -1])
         
-        asc = desc = True
+                
         
-        for i in range(0, n - 1):
-            if nums[i] < nums[i + 1]:
-                asc = False
-                break
                 
-              
-                
-        for i in range(0, n - 1):
-            if nums[i] > nums[i + 1]:
-                desc = False
-                break
-                
-        return (asc or desc)
-        
  
