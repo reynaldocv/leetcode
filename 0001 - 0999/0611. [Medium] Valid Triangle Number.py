@@ -2,23 +2,17 @@
 
 class Solution:
     def triangleNumber(self, nums: List[int]) -> int:
-        n = len(nums)
+        n = len(nums) 
         
-        nums.sort()        
+        nums.sort() 
+        
         ans = 0 
         
         for i in range(n - 2):
             for j in range(i + 1, n - 1):
-                minElem = nums[j] - nums[i]
-                maxElem = nums[j] + nums[i]
+                idx = bisect_left(nums, nums[i] + nums[j])
                 
-                end = bisect_left(nums, maxElem)                
-                if end <= j: 
-                    break 
+                ans += max(0, idx - j - 1)
                 
-                start = max(j + 1, bisect_left(nums, minElem + 1))
-                
-                ans += end - start 
-        
         return ans 
     
