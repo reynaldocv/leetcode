@@ -19,12 +19,7 @@ class Solution:
             
         n = len(arr)
         
-        arr[k - 1], arr[n - k] = arr[n - k], arr[k - 1]
-        
-        for i in range(n - 1):
-            arr[i].next = arr[i + 1]
-            
-        arr[-1].next = None 
+        arr[k - 1].val , arr[n - k].val = arr[n - k].val, arr[k - 1].val 
         
         return arr[0]
         
