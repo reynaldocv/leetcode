@@ -1,17 +1,20 @@
 # https://leetcode.com/problems/minimum-size-subarray-sum/submissions/
 
 class Solution:
-    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
-        n = len(nums)
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:        
         ans = inf
-        left = 0 
-        aSum = 0 
-        for i in range(n):
-            aSum += nums[i]
-            while aSum >= target: 
-                ans = min(ans, i - left + 1)
-                aSum -= nums[left]
-                left += 1
+        
+        prev = 0 
+        start = 0
+        
+        for (i, num) in enumerate(nums):
+            prev += num 
+                
+            while start <= i and prev >= target: 
+                ans = min(ans, i - start + 1)
+                
+                prev -= nums[start]
+                start += 1 
                 
         return ans if ans != inf else 0 
         
