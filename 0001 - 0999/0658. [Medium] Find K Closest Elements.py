@@ -21,6 +21,13 @@ class Solution:
             
         return arr[start + 1: end] 
                 
+class Solution2:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        arr.sort(key = lambda item: (abs(item - x), item))
+        
+        return sorted(arr[: k])
+                 
+          
         
         
         
