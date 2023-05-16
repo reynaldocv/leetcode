@@ -2,25 +2,30 @@
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        exist = {}
+        n = len(nums) 
+        
         nums.sort()
-        n = len(nums)
-        ans = []
-        for i in range(n):
-            j = i + 1
-            k = n - 1
-            while k - j > 0:
-                sum3 = nums[i] + nums[j] + nums[k]
-                if sum3 > 0: 
-                    k -= 1
-                elif sum3 < 0: 
-                    j += 1
-                else: 
-                    key = str(nums[i]) + str(nums[j]) + str(nums[k])
-                    if exist.get(key, False) == False:
-                        ans.append([nums[i], nums[j], nums[k]])
-                        exist[key] = True
-                    j += 1
+        
+        ans = set()
+        
+        for (i, num) in enumerate(nums):
+            start = i + 1
+            end = n - 1
             
-        return ans
+            while end > start: 
+                tmp = num + nums[start] + nums[end]
+                if tmp == 0: 
+                    ans.add((num, nums[start], nums[end]))
+                    
+                    start += 1 
+                    end -= 1 
+                    
+                elif tmp < 0: 
+                    start += 1 
+                    
+                else: 
+                    end -= 1 
+                    
+        return ans 
+        
                     
