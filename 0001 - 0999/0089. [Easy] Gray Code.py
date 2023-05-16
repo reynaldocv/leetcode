@@ -2,17 +2,22 @@
 
 class Solution:
     def grayCode(self, n: int) -> List[int]:
-        arr = [0 for i in range(2**n)]
-        arr[1] = 1
+        ans = [0 for _ in range(2**n)]
         
-        ratio = 2
-        for i in range(2, n + 1):
-            end = 2*ratio            
-            k = 1
-            for j in range(ratio, 2*ratio):            
-                arr[j] = ratio + arr[j - k]
-                k += 2
-            ratio *= 2
-        return arr
+        ans[1] = 1 
+        
+        for i in range(1, n):
+            value = 2**i
+            
+            start = 2**i  
+            end = 2**i - 1
+            
+            for _ in range(2**i):
+                ans[start] = value + ans[end]
                 
+                start += 1 
+                end -= 1 
+                
+        return ans 
+            
         
