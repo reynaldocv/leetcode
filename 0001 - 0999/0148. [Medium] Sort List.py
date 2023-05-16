@@ -8,23 +8,26 @@
 class Solution:
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if not head: 
-            return None
+            return None 
         
-        nodes = []
-        n = 0
-        while head:
-            nodes.append(head)
-            n += 1 
-            head = head.next
+        arr = []
         
-        nodes.sort(key = lambda item: item.val)
+        while head: 
+            arr.append(head)
+            
+            head = head.next 
+            
+        arr.sort(key = lambda item: item.val)
+        
+        n = len(arr)
         
         for i in range(n - 1):
-            nodes[i].next = nodes[i + 1]
+            arr[i].next = arr[i + 1]
             
-        nodes[-1].next = None
+        arr[-1].next = None 
         
-        return nodes[0]
+        return arr[0]
+        
             
         
         
