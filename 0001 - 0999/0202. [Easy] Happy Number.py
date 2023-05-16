@@ -3,16 +3,16 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
         @cache
-        def helper(x):
+        def helper(number):
             ans = 0 
             
-            while x:
-                ans += (x % 10)**2
+            while number: 
+                ans += (number % 10)**2
                 
-                x //= 10
+                number //= 10 
                 
             return ans 
-                
+        
         seen = {1}
         
         while n not in seen: 
@@ -21,5 +21,6 @@ class Solution:
             n = helper(n)
             
         return n == 1
+            
         
         
