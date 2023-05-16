@@ -4,19 +4,15 @@ class Solution:
     def repeatedSubstringPattern(self, s: str) -> bool:
         n = len(s)
         
-        m = 0 
-        tmp = ""
+        prev = ""
         
-        for char in s[: n//2]: 
-            tmp += char
-            m += 1 
+        for char in s[: n//2]:
+            prev += char 
             
-            if n % m == 0: 
-                multiply = n//m
-                
-                if tmp*multiply == s: 
+            if n % len(prev) == 0: 
+                if prev*(n//len(prev)) == s: 
                     return True 
                 
-        return False
+        return False 
         
         
