@@ -6,30 +6,30 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def rotateRight(self, head: ListNode, k: int) -> ListNode:
-        n = 0 
-        cur = head
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head: 
+            return None 
+        
+        arr = []
+        
         while head: 
-            n += 1
+            arr.append(head)
+            
             head = head.next
+            
+        n = len(arr)
         
-        if n == 0: 
-            return head
+        k = k % n 
         
-        k = (n - k) % n
-        tail = prev = ListNode(0, cur)
-        head = cur
-        while k >= 1: 
-            prev = prev.next
-            head = head.next
-            k -= 1            
-        prev.next = None
+        arr = arr[n - k: ] + arr[: n - k]
         
-        ans = head
-        while head.next: 
-            head = head.next
-        head.next = tail.next
-    
-        return ans
+        for i in range(n - 1):
+            arr[i].next = arr[i + 1]
+            
+        arr[-1].next = None 
+        
+        return arr[0]
+            
+        
             
             
