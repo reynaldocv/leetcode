@@ -10,20 +10,20 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         def helper(node):
             if node: 
-                (left, leftBool) = helper(node.left)
-                (right, rightBool) = helper(node.right)
+                (left, highLeft) = helper(node.left)
+                (right, highRight) = helper(node.right)
                 
-                if leftBool and rightBool: 
-                    if abs(left - right) <= 1: 
-                        return (1 + max(left, right), True)
-                    else: 
-                        return (0, False)
+                if left and right and abs(highLeft - highRight) <= 1: 
+                    return (True, 1 + max(highLeft, highRight))
+                    
                 else: 
-                    return (0, False)                 
-            else: 
-                return (0, True)
+                    return (False, 0)
                 
-        return helper(root)[1]
+            else: 
+                return (True, 0)
+            
+        return helper(root)[0]
+            
        
                 
                 
