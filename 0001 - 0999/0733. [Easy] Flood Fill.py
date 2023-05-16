@@ -5,7 +5,7 @@ class Solution:
         if image[sr][sc] == color: 
             return image
         
-        n, m = len(image), len(image[0])
+        m, n = len(image), len(image[0])
         
         oldColor = image[sr][sc]
         
@@ -18,13 +18,14 @@ class Solution:
             for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 p, q = x + r, y + s
                 
-                if 0 <= p < n and 0 <= q < m and (p, q):
+                if 0 <= p < m and 0 <= q < n: 
                     if image[p][q] == oldColor: 
                         image[p][q] = color
-                    
+                        
                         stack.append((p, q))
-            
-        return image    
+        
+        return image
+         
             
             
                 
