@@ -5,17 +5,20 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        counter = defaultdict(lambda: 0)
         
-        counter = {0: 0, 1: 0, 2:  0}
         for num in nums: 
-            counter[num] += 1
+            counter[num] += 1 
+            
+        i = 0     
         
-        k = 0
-        for i in range(len(nums)):
-            while counter[k] <= 0:                
-                k += 1
-            nums[i] = k
-            counter[k] -= 1
+        for num in [0, 1, 2]:
+            while counter[num] > 0: 
+                nums[i] = num
+                
+                counter[num] -= 1 
+                i += 1 
+                
         
         
             
