@@ -8,14 +8,13 @@
 class Solution:
     def pairSum(self, head: Optional[ListNode]) -> int:
         arr = []
-        
-        n = 0 
-        
+                
         while head: 
             arr.append(head.val)
             
             head = head.next 
-            n += 1 
+            
+        n = len(arr)
             
         ans = 0 
         
@@ -23,4 +22,5 @@ class Solution:
             ans = max(ans, arr[i] + arr[n - 1 - i])
             
         return ans 
+        
         
