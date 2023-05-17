@@ -7,19 +7,16 @@
 #         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        m = 0 
-        
         arr = []
         
-        while head:
+        while head: 
             arr.append(head)
-            m += 1  
             
-            head = head.next
+            head = head.next 
             
-        n = m - n 
+        m = len(arr)
         
-        arr.pop(n)
+        arr.pop(m - n)
         
         if not arr: 
             return None 
@@ -27,9 +24,10 @@ class Solution:
         for i in range(m - 2):
             arr[i].next = arr[i + 1]
             
-        arr[-1].next = None
+        arr[-1].next = None 
         
         return arr[0]
+            
 
 class Solution2:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
