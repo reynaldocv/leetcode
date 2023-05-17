@@ -31,28 +31,27 @@ class Solution:
 
 class Solution2:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        def helper(node):
-            ans = None 
-
-            while node: 
-                ans = ListNode(node.val, ans)
-
-                node = node.next 
-                
-            return ans 
-
-        m = 1 
+        m = 0 
         
-        ans = prev = ListNode(0, helper(head))
-        cur = prev.next
+        cur = head 
         
-        while m <= n: 
-            if m == n: 
-                prev.next = cur.next                
+        while cur: 
+            cur = cur.next 
+        
+            m += 1 
+            
+        k = m - n 
+        
+        ans = head = ListNode(0, head)
+        
+        while k >= 0: 
+            if k == 0: 
+                head.next = head.next.next
                 
-            prev = prev.next 
-            cur = cur.next
+                break 
+                
+            head = head.next             
+            k -= 1
             
-            m += 1             
-            
-        return helper(ans.next)            
+        return ans.next 
+                
