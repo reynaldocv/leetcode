@@ -6,30 +6,53 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def deleteDuplicates(self, head: ListNode) -> ListNode:
-        if head == None or head.next == None: 
-            return head
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        cur = head 
         
-        ans = prevprev = ListNode(0, head)
-        prev = head
-        cur = head.next
-        removePrev = False
-        while cur:             
-            if prev.val == cur.val: 
-                removePrev = True
-                prev.next = cur.next
+        counter = defaultdict(lambda: 0)
+        
+        while cur: 
+            counter[cur.val] += 1 
+            
+            cur = cur.next 
+            
+        ans = cur = ListNode(0)
+        
+        while head: 
+            if counter[head.val] == 1: 
+                cur.next = ListNode(head.val)
+                
                 cur = cur.next
-            elif removePrev:                   
-                prevprev.next = cur
-                prev = cur  
-                cur = prev.next 
-                removePrev = False
-            else:
-                prevprev = prevprev.next
-                prev = prev.next
-                cur = cur.next
-        
-        if removePrev: 
-            prevprev.next = None
-        
+                
+            head = head.next 
+            
         return ans.next
+    
+class Solution2:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:            
+        ans = cur = ListNode(0)
+        
+        prev = inf 
+        
+        counter = 2 
+        
+        while head: 
+            if head.val != prev: 
+                if counter == 1: 
+                    cur.next = ListNode(prev)
+                    
+                    cur = cur.next 
+                    
+                prev = head.val                 
+                counter = 1 
+                    
+            else: 
+                counter += 1 
+                
+            head = head.next
+            
+        if counter == 1: 
+            cur.next = ListNode(prev)
+            
+        return ans.next
+        
