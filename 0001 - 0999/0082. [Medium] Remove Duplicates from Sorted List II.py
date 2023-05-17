@@ -32,8 +32,7 @@ class Solution2:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:            
         ans = cur = ListNode(0)
         
-        prev = inf 
-        
+        prev = inf         
         counter = 2 
         
         while head: 
