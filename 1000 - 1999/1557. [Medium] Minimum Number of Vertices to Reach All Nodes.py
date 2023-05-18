@@ -2,14 +2,11 @@
 
 class Solution:
     def findSmallestSetOfVertices(self, n: int, edges: List[List[int]]) -> List[int]:
-        dic = {}
-        for (start, end) in edges: 
-            dic[end] = True
+        counter = defaultdict(lambda: 0)
         
-        ans = []
-        for i in range(n):
-            if i not in dic: 
-                ans.append(i)
-                
-        return ans
+        for (a, b) in edges: 
+            counter[b] += 1 
+            
+        return [i for i in range(n) if counter[i] == 0]
+        
         
