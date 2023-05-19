@@ -2,16 +2,19 @@
 
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
-        seen = {-1: -1}
-        idx = 0
+        index = defaultdict(lambda: -1)
+        
         ans = 0 
+        
+        counter = 0 
+        
         for (i, num) in enumerate(nums):
             if num == 0: 
-                seen[idx] = i 
-                idx += 1
-            
-            prev = idx - k - 1 if idx > k else -1            
-            ans = max(ans, i - seen[prev])
-            
-        return ans
+                counter += 1 
+                
+                index[counter] = i 
+                
+            ans = max(ans, i - index[counter - k])            
+                
+        return ans 
         
