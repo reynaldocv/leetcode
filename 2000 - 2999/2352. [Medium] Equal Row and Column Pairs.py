@@ -3,19 +3,20 @@
 class Solution:
     def equalPairs(self, grid: List[List[int]]) -> int:
         n = len(grid)
+        
+        trasversal = [[grid[i][j] for i in range(n)] for j in range(n)]
+        
         counter = defaultdict(lambda: 0)
         
-        for i in range(n):
-            counter[tuple(grid[i])] += 1 
+        for row in grid:
+            counter[tuple(row)] += 1 
             
-        grid = [[grid[j][i] for j in range(n)] for i in range(n)]
-        
         ans = 0 
         
-        for i in range(n):
-            key = tuple(grid[i])
-            ans += counter[key]
-            
+        for row in trasversal: 
+            ans += counter[tuple(row)]
+                
         return ans 
+                
         
             
