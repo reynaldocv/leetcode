@@ -6,23 +6,26 @@ class Solution:
         
         nums.sort() 
         
-        ans = 0 
-        
         start = 0 
         end = n - 1
         
-        while end > start: 
-            if nums[start] + nums[end] == k:
+        ans = 0 
+        
+        while end - start > 0: 
+            tmp = nums[start] + nums[end]
+            if tmp == k: 
                 ans += 1 
+                
                 start += 1 
                 end -= 1 
                 
-            elif nums[start] + nums[end] < k:
+            elif tmp < k: 
                 start += 1 
-            
+                
             else: 
                 end -= 1 
                 
         return ans 
+                
     
             
