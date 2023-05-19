@@ -1,24 +1,32 @@
 # https://leetcode.com/problems/is-graph-bipartite/
-
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-        def helper(u, even):
-            for v in graph[u]:
-                if (v, even) not in seen: 
-                    seen[(v, even)] = True
-                    helper(v, not even)
+        def helper(x, bit):
+            stack = [(x, bit)]
+            
+            color[bit].add(x)
+            
+            while stack: 
+                (x, bit) = stack.pop() 
+                
+                for y in graph[x]:
+                    if y in color[bit]:
+                        return False 
+                    
+                    if y not in color[1 - bit]:
+                        stack.append((y, 1 - bit))
+                        color[1 - bit].add(y)
+                
+            return True
+            
+        color = defaultdict(lambda: set())
         
-        seen = {}
         n = len(graph)
         
-        for u in range(n):
-            if (u, True) not in seen and (u, False) not in seen:
-                seen[(u, False)] = True
-                helper(u, True)
-        
-        for (u, v) in seen: 
-            if (u, not v) in seen: 
-                return False
-        
-        return True
-        
+        for i in range(n):
+            if i not in color[0] and i not in color[1]:
+                if not helper(i, 0):
+                    return False
+                
+        return True 
+            
