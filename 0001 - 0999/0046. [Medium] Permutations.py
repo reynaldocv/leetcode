@@ -2,24 +2,31 @@
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def permutations(arr, elems, visited, n):
-            if len(arr) == n: 
-                self.ans.append(list(arr))
+        def helper(arr, i):
+            if i == n: 
+                ans.append(arr.copy())
+                
             else: 
-                for i in range(n):
-                    if visited[i] == False: 
-                        visited[i] = True
-                        arr. append(elems[i])
-                        permutations(arr, elems, visited, n)
-                        arr.pop()
-                        visited[i] = False
+                for (j, num) in enumerate(nums): 
+                    if not visited[j]:
+                        visited[j] = True 
+                        arr.append(num)
+                        
+                        helper(arr, i + 1)
+                        
+                        visited[j] = False
+                        arr.pop() 
             
-        visited = [False for num in nums]
         n = len(nums)
-        self.ans = []
-        permutations([], nums, visited, n)
         
-        return self.ans
+        visited = [False for _ in range(n)]
+        
+        ans = []
+        
+        helper([], 0)
+        
+        return ans 
+        
                     
             
         
