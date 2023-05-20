@@ -6,23 +6,27 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        def helper(root, p, q):
-            if root: 
-                if root.val in [p.val, q.val]:
-                    return root
-                else: 
-                    l = helper(root.left, p, q)
-                    r = helper(root.right, p, q)
-                    if l and r: 
-                        return root
-                    elif l: 
-                        return l
+        def helper(node):
+            if node: 
+                if node == p or node == q:                     
+                    return node
+                
+                else:                     
+                    left = helper(node.left)
+                    right = helper(node.right)
+
+                    if left and right: 
+                        return node
+
+                    elif left: 
+                        return left 
+
                     else: 
-                        return r
+                        return right 
             else: 
-                return None
-            
-        return helper(root, p, q)
+                return None 
+                
+        return helper(root)
+        
