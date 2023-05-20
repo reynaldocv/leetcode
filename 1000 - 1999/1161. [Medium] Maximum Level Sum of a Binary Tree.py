@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/
 
-# Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
@@ -8,23 +7,22 @@
 #         self.right = right
 class Solution:
     def maxLevelSum(self, root: Optional[TreeNode]) -> int:
-        def helper(root, lvl):
-            if root: 
-                seen[lvl] += root.val
-                helper(root.left, lvl + 1)
-                helper(root.right, lvl + 1)
+        def helper(node, lvl):
+            if node: 
+                aSum[lvl] += node.val 
                 
-        seen = defaultdict(lambda: 0)
+                helper(node.left, lvl + 1)
+                helper(node.right, lvl + 1)
+        
+        aSum = defaultdict(lambda: 0)
+        
+        ans = (-inf, -1)
         
         helper(root, 1)
         
-        ans = (-inf, 0)
-        
-        for key in seen: 
-            if ans[0] == seen[key]:
-                ans = (ans[0], min(ans[1], key))
-            else: 
-                ans = max(ans, (seen[key], key))
+        for key in aSum: 
+            ans = max(ans, (aSum[key], -key))
             
-        return ans[1]
+        return -ans[1]
+        
         
