@@ -3,17 +3,20 @@
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
         n = len(rooms)
-        seen = {0: True}
         
+        seen = {0}        
         stack = [0]
         
         while stack: 
-            u = stack.pop()
-            for key in rooms[u]:
-                if key not in seen: 
-                    seen[key] = True 
-                    stack.append(key)
+            x = stack.pop()
+            
+            for y in rooms[x]:
+                if y not in seen: 
+                    seen.add(y)
+                    
+                    stack.append(y)
                     
         return len(seen) == n
+        
         
         
