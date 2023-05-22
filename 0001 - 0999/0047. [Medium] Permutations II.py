@@ -2,26 +2,33 @@
 
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        def permutations(arr, elems, visited, n, exist):
+        def helper(arr):
             if len(arr) == n: 
-                aux = [str(ar) for ar in arr]               
-                key = "-".join(aux)
-                if key not in exist: 
-                    self.ans.append(list(arr))
-                    exist[key] = True
-            else:
-                for i in range(n): 
-                    if visited[i] == False: 
-                        visited[i] = True
-                        arr.append(elems[i])
-                        permutations(arr, elems, visited, n, exist)
-                        arr.pop()
+                if tuple(arr) not in seen: 
+                    seen.add(tuple(arr))
+                    
+                    ans.append(arr[: ])
+                
+            else: 
+                for (i, num) in enumerate(nums):
+                    if visited[i] == False:
+                        arr.append(num)
+                        visited[i] = True 
+                        
+                        helper(arr)
+                        
+                        arr.pop() 
                         visited[i] = False
-        
-        visited = [False for num in nums]
-        exist = {}
+                        
         n = len(nums)
-        self.ans = []
-        permutations([], nums, visited, n, exist)
         
-        return self.ans
+        visited = [False for _ in range(n)]
+        
+        seen = set()
+        
+        ans = []
+        
+        helper([])
+        
+        return ans 
+        
