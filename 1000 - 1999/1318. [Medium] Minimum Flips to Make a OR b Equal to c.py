@@ -3,19 +3,24 @@
 class Solution:
     def minFlips(self, a: int, b: int, c: int) -> int:
         ans = 0 
+        
         while a or b or c: 
-            if ((a & 1) or (b & 1)) != (c & 1):             
-                if (c & 1) == 1: 
+            unitA = a % 2
+            unitB = b % 2 
+            unitC = c % 2 
+                        
+            if (unitA or unitB) != unitC: 
+                if unitC == 1: 
                     ans += 1
-                elif (c & 1) == 0: 
-                    ans += (a & 1) + (b & 1)
-            
-            a >>= 1
-            b >>= 1
-            c >>= 1
-            
-        return ans
                     
+                else: 
+                    ans += (unitA + unitB)
+                    
+            a //= 2 
+            b //= 2 
+            c //= 2 
+            
+        return ans 
             
             
         
