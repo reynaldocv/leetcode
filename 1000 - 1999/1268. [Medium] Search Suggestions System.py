@@ -2,40 +2,67 @@
 
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
-        def helper(node):
-            if "$" in node: 
-                aux.append(node["$"])
-            for char in node: 
-                if char != "$":
-                    helper(node[char])
+        prefix = defaultdict(lambda: [])
+        
+        for product in products: 
+            prev = ""
+            
+            for char in product: 
+                prev += char 
                 
+                insort(prefix[prev], product) 
+                
+                prefix[prev] = prefix[prev][: 3]
+            
+        prev = ""
+        
+        ans = []
+        
+        for char in searchWord:
+            prev += char           
+            
+            ans.append(prefix[prev])
+            
+        return ans 
+    
+ class Solution2:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
         trie = {}
+        
         for product in products: 
             node = trie
+            
             for char in product: 
                 if char not in node: 
                     node[char] = {}
+                
+                node = node[char]
+                
+                if "$" not in node: 
+                    node["$"] = []
                     
-                node = node[char]
-            
-            node["$"] = product
-            
-        node = trie
+                insort(node["$"], product)
+                
+                node["$"] = node["$"][: 3]
+                
         ans = []
+        
+        node = trie       
+        
         for char in searchWord: 
-            if char in node:
-                aux = []
-                helper(node[char])
-                ans.append(sorted(aux)[:3])
+            
+            if char not in node: 
+                node[char] = {}
+                
+                ans.append([])
+                
                 node = node[char]
+                
             else: 
-                break  
-        n = len(ans)
-        m = len(searchWord)
-        
-        for _ in range(m - n):
-            ans.append([])
-        
-        return ans
+                node = node[char]
+                
+                ans.append(node["$"])
+                
+        return ans 
                 
         
