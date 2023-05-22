@@ -2,28 +2,19 @@
 
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
-        def recursive(arr, k, minElem, n):
+        def helper(arr, last):
             if len(arr) == k: 
-                if sum(arr) == n:
-                    self.ans.append(list(arr))
-            else:
-                for j in range(minElem + 1, 10):
-                    arr.append(j)
-                    recursive(arr, k, j, n)
-                    arr.pop()
+                if sum(arr) == n: 
+                    ans.append(arr[: ])
+                
+            else: 
+                for i in range(last, 10):
+                    helper(arr + [i], i + 1)
                     
-        self.ans = []
-        recursive([], k, 0, n)
-        
-        return self.ans
-                
-class Solution2:
-    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
-        
         ans = []
-        for comb in combinations([i for i in range(1, 10)], k):
-            if sum(comb) == n:
-                ans.append(list(comb))
-                
-        return ans
         
+        helper([], 1)
+        
+        return ans 
+                
+
