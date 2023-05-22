@@ -2,21 +2,28 @@
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        def combination(aux, letters):
-            ans = []
-            for a in aux: 
-                for i in letters: 
-                    ans.append(a + i)
-            return ans
-        
-        n = len(digits)
-        if n == 0: 
+        if digits == "":
             return []
-        else:         
-            letters = {"2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
-            ans = [i for i in letters[digits[0]]]
-            for i in range(1, n):
-                ans = combination(ans, letters[digits[i]])
-            return ans
         
+        letters = {}
+        letters["2"] = "abc"
+        letters["3"] = "def"
+        letters["4"] = "ghi"
+        letters["5"] = "jkl"
+        letters["6"] = "mno"
+        letters["7"] = "pqrs"
+        letters["8"] = "tuv"
+        letters["9"] = "wxyz"
         
+        ans = [""]
+        
+        for char in digits:             
+            tmp = []
+            
+            for sequence in ans: 
+                for letter in letters[char]:
+                    tmp.append(sequence + letter)
+                    
+            ans = tmp 
+            
+        return ans        
