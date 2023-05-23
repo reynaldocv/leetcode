@@ -8,21 +8,26 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        def paths(root, arr, targetSum):
-            if root:
-                arr.append(root.val)
-                if root.left == None and root.right == None:                     
+        def helper(node, arr):
+            if node: 
+                arr.append(node.val)
+            
+                if not node.left and not node.right: 
+                    
                     if sum(arr) == targetSum: 
-                        self.ans.append(arr.copy())
-                else: 
-                    paths(root.left, arr, targetSum)
-                    paths(root.right, arr, targetSum)
-                arr.pop()
+                        ans.append(arr[: ])
+                
+                helper(node.left, arr)
+                helper(node.right, arr)
+                
+                arr.pop() 
         
-        self.ans = []
-        paths(root, [], targetSum)
+        ans = []
         
-        return self.ans
+        helper(root, [])
+        
+        return ans 
+        
                     
         
         
