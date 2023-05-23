@@ -11,22 +11,29 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        def helper(root):
-            if root: 
-                helper(root.left)
-                inorder.append(root)
-                helper(root.right)
-            
-        inorder = []        
+        def helper(node):
+            if node: 
+                helper(node.left)
+                
+                inorder.append(node)                
+                tmp.append(node.val)
+                
+                helper(node.right)
+        
+        arr = []
+        tmp = []
+        
         helper(root)
         
-        wrongNodes = []
+        tmp.sort()
         
-        for (i, root)  in enumerate(sorted(inorder, key = lambda item: item.val)):
-            if inorder[i].val != root.val:
-                wrongNodes.append(root)
-            
-        wrongNodes[0].val, wrongNodes[1].val = wrongNodes[1].val, wrongNodes[0].val
+        n = len(arr)
+        
+        for i in range(n):
+            if inorder[i].val != tmp[i]: 
+                inorder[i].val = tmp[i]
+                
+                
         
         
         
