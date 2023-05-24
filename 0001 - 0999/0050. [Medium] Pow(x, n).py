@@ -2,13 +2,22 @@
 
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        if n == 0: return 1
+        def helper(num, n):
+            if n == 0: 
+                return 1 
+            
+            elif n == 1: 
+                return num
+            
+            elif n % 2 == 0: 
+                return helper(num**2, n//2)
+            
+            else: 
+                return num*helper(num, n - 1)
+            
         if n < 0: 
-            x = 1/x
             n *= -1
-        if n % 2 == 0: 
-            return self.myPow(x**2, n//2)
-        else: 
-            return x*self.myPow(x**2, n//2)
-        
+            x = 1/x
+            
+        return helper(x, n)
         
