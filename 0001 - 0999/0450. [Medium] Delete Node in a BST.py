@@ -8,28 +8,30 @@
 #         self.right = right
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-        def findMinNode(root):            
-            while root.left: 
-                root = root.left
-            
-            return root
-        
-        def delete(root, key):
-            if not root: 
-                return None
-            if key < root.val: 
-                root.left = delete(root.left, key)
-            elif key > root.val: 
-                root.right = delete(root.right, key)
-            else: 
-                if not root.left: 
-                    root = root.right
-                elif not root.right: 
-                    root = root.left
+        def helper(node, value):
+            if node: 
+                if node.val == value: 
+                    minElem = collaborator(node.right)
+                    
+                    if minElem != None: 
+                        node.val = minElem.val 
+                        node.right = helper(node.right, minElem.val)
+                        
+                    else: 
+                        node = node.left 
+                    
                 else: 
-                    successor = findMinNode(root.right)
-                    root.val = successor.val
-                    root.right = delete(root.right, successor.val)
-            return root
+                    node.left = helper(node.left, value)
+                    node.right = helper(node.right, value)
+                    
+                return node 
+            
+            return None            
+            
+        def collaborator(node):
+            while node and node.left: 
+                node = node.left 
+            
+            return node 
         
-        return delete(root, key)
+        return helper(root, key)
