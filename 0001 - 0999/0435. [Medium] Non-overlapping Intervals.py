@@ -6,29 +6,25 @@ class Solution:
         
         intervals.sort(key = lambda item: (item[0], -item[1]))
         
-        (s0, e0) = intervals[0]
-        
-        i = 1  
+        (start0, end0) = intervals[0]
         
         ans = 0
         
         for i in range(1, n):
-            (s1, e1) = intervals[i]
+            (start1, end1) = intervals[i]
             
-            sMax = max(s0, s1)
-            eMin = min(e0, e1)     
+            maxStart = max(start0, start1)
+            minEnd = min(end0, end1)     
             
-            if sMax < eMin: 
-                if e0 >= e1:                     
-                    s0 = s1
-                    e0 = e1  
+            if maxStart < minEnd: 
+                if end0 >= end1:                     
+                    (start0, end0) = (start1, end1)
                     
                 ans += 1
                 
-            elif e0 < e1: 
-                s0 = s1
-                e0 = e1               
-           
+            else: 
+                (start0, end0) = (start1, end1)
+                    
         return ans
                  
 class Solution2:
