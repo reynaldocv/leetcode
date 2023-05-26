@@ -8,13 +8,12 @@ class Solution:
                 return piles[start]
                 
             else: 
-                current = 0 
+                ans = 0 
                 for x in range(1, 2*M + 1):
-                    current = max(current, piles[start] - helper(start + x, max(M, x)))
+                    ans = max(ans, piles[start] - helper(start + x, max(M, x)))
                 
-                return current
+                return ans
         
-        results = {}
         n = len(piles)
         
         for i in range(n - 1):
