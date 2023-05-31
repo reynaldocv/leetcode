@@ -3,21 +3,27 @@
 class UndergroundSystem:
 
     def __init__(self):
-        self.total = defaultdict(lambda: [])
         self.checkin = {}
+        
+        self.time = defaultdict(lambda: defaultdict(lambda: 0))
+        self.counter = defaultdict(lambda: defaultdict(lambda: 0))
 
     def checkIn(self, id: int, stationName: str, t: int) -> None:
         self.checkin[id] = (stationName, t)
-
-    def checkOut(self, id: int, stationName: str, t: int) -> None:
-        (start, t0) = self.checkin[id]
-        self.checkin.pop(id)
-        self.total[(start, stationName)].append(t - t0)
-
-    def getAverageTime(self, startStation: str, endStation: str) -> float:
-        n = len(self.total[(startStation, endStation)])
-        return sum(self.total[(startStation, endStation)])/n
         
+    def checkOut(self, id: int, stationName: str, t: int) -> None:
+        if id in self.checkin: 
+            (startStation, startTime) = self.checkin.pop(id)
+            
+            self.time[startStation][stationName] += (t - startTime)
+            self.counter[startStation][stationName] += 1 
+        
+    def getAverageTime(self, startStation: str, endStation: str) -> float:
+        if startStation in self.time and endStation in self.time[startStation]:
+            return self.time[startStation][endStation]/self.counter[startStation][endStation] 
+                        
+        return 0 
+
 # Your UndergroundSystem object will be instantiated and called as such:
 # obj = UndergroundSystem()
 # obj.checkIn(id,stationName,t)
