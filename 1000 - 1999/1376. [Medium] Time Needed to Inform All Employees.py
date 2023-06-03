@@ -2,18 +2,34 @@
 
 class Solution:
     def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
+        @cache 
+        def helper(x):
+            if manager[x] == -1: 
+                return informTime[x]
+            
+            else: 
+                return informTime[x] + helper(manager[x])
+        
+        return max(helper(i) for i in range(n))
+
+class Solution2:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
         graph = defaultdict(lambda: [])
         
         for (i, chief) in enumerate(manager):
             graph[chief].append(i)
             
-        stack = [(headID, 0)]        
-        ans = 0
+        stack = [(headID, 0)]
+        
+        ans = 0 
         
         while stack: 
-            (chief, time) = stack.pop()
-            ans = max(ans, time)
-            for employee in graph[chief]:
-                stack.append((employee, informTime[chief] + time))
+            (x, time) = stack.pop(0) 
             
-        return ans
+            ans = max(ans, time)
+            
+            for y in graph[x]:
+                stack.append((y, time + informTime[x]))
+                
+        return ans 
+
