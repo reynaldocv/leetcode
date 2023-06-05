@@ -1,21 +1,25 @@
 # https://leetcode.com/problems/3sum-closest/
-
 class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
-        nums.sort()
-        n = len(nums)
-        ans = (inf, inf)
-        for i in range(n - 2):
-            j = i + 1
-            k = n - 1
-            while k - j > 0:
-                aux = nums[i] + nums[j] + nums[k]
-                ans = min(ans, (abs(aux - target), aux))               
-                if aux == target: 
-                    return target
-                elif aux < target:
-                    j += 1
-                else: 
-                    k -= 1
-        return ans[1]
+        n = len(nums) 
         
+        nums.sort() 
+        
+        ans = (inf, inf)
+        
+        for (i, num) in enumerate(nums):
+            start = i + 1
+            end = n - 1
+            
+            while start < end: 
+                aSum = num + nums[start] + nums[end]                
+                ans = min(ans, (abs(target - aSum), aSum))
+            
+                if aSum <= target: 
+                    start += 1 
+                    
+                else: 
+                    end -= 1 
+                    
+        return ans[1]
+                    
