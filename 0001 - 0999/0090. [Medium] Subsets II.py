@@ -2,26 +2,32 @@
 
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        def backtracking(arr, elems, i, n, key, visited):
-            if key not in visited: 
-                self.ans.append(arr.copy())
-                visited[key] = True
+        def helper(arr, i):
+            if i == n: 
+                if tuple(arr) not in seen: 
+                    seen.add(tuple(arr))
+                    
+                    ans.append(arr[: -1])
+                
+            else: 
                 for j in range(i, n):
-                    if counter[elems[j]] > 0:
-                        counter[elems[j]] -= 1
-                        arr.append(elems[j])
-                        backtracking(arr, elems, j, n, key + "-" + str(elems[j]), visited)
-                        arr.pop()
-                        counter[elems[j]] += 1
-                        
-        counter = {}
-        for num in nums: 
-            counter[num] = counter.get(num, 0) + 1            
-        elems = [*counter]
-        elems.sort()
-        visited = {}        
-        self.ans = []
-    
-        backtracking([], elems, 0, len(elems), "", visited)
+                    arr.append(nums[j])
+                    
+                    helper(arr, j + 1)
+                    
+                    arr.pop()
+                    
+        nums.sort()
         
-        return self.ans
+        nums.append(inf)  
+        
+        n = len(nums) 
+        
+        ans = []
+        
+        seen = set()
+        
+        helper([], 0)
+        
+        return ans 
+                
