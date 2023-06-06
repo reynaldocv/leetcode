@@ -10,7 +10,8 @@ class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
         def helper(inArr, postArr):
             if inArr: 
-                value = postArr[-1]                
+                value = postArr[-1]  
+                
                 idx = inArr.index(value)
                 
                 ans = TreeNode(value)
