@@ -2,22 +2,31 @@
 
 class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
-        minElem = inf
-        maxElem = 0 
-        seen = {}
+        arr = [0]
+        seen = set()
         
         for num in nums: 
-            if num > 0: 
-                minElem = min(minElem, num)
-                maxElem = max(maxElem, num)
-                seen[num] = True
+            if num > 0 and num not in seen: 
+                seen.add(num)
+                
+                arr.append(num)
+                
+        arr.sort()
+                
+        n = len(arr)
+            
+        start = 0         
+        end = n
         
-        if minElem >= 2: 
-            return 1
-        elif maxElem == len(seen): 
-            return maxElem + 1
-        else: 
-            for num in range(1, maxElem):
-                if num not in seen: 
-                    return num
+        while end - start > 1: 
+            middle = (end + start)//2
+            
+            if arr[middle] == middle: 
+                start = middle 
+                
+            else: 
+                end = middle 
+                
+        return end 
+        
         
