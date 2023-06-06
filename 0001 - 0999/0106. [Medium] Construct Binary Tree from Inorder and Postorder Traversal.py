@@ -21,6 +21,7 @@ class Solution:
                 
                 return ans 
             
-            return None 
+            else:             
+                return None 
         
         return helper(inorder, postorder)
