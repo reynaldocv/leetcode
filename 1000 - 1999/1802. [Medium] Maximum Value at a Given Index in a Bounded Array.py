@@ -2,28 +2,32 @@
 
 class Solution:
     def maxValue(self, n: int, index: int, maxSum: int) -> int:
-        def helper(idx, val):
-            if idx < 0: 
-                return 0 
+        def helper(value):  
+            left = max(0, value - index - 1) 
+            right = max(0, value - (n - 1 - index) - 1)
             
-            ans = val*(val + 1)//2
-            left = (val - idx - 1)
+            tmp = collaborator(left, value)
+            tmp += collaborator(right, value)
             
-            if left > 0:                 
-                ans -= left*(left + 1)//2
+            return tmp - value <= maxSum
+            
+        def collaborator(start, end):
+            return end*(end + 1)//2 - start*(start + 1)//2
+            
+        start = 0 
+        end = maxSum + 1 
+        
+        maxSum -= n 
+        
+        while end - start > 1: 
+            middle = (end + start)//2
+            
+            if helper(middle):
+                start = middle 
                 
-            return ans
-        
-        end = maxSum + 1
-        start = 0
-        maxSum -= n
-        
-        while end - start > 1:             
-            m = (end + start)//2 
-            if helper(index, m) + helper(n - index - 2, m - 1) <= maxSum: 
-                start = m
-            else:
-                end = m 
-            
+            else: 
+                end = middle
+                
         return start + 1
+            
         
