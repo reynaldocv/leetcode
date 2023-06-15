@@ -8,17 +8,19 @@
 #         self.right = right
 class Solution:
     def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
-        def route(root, level, levels):
-            if root: 
-                levels[level] = levels.get(level, [])
-                levels[level].append(root.val)
-                route(root.left, level + 1, levels)
-                route(root.right, level + 1, levels)
+        def helper(node, lvl):
+            if node: 
+                helper(node.left, lvl + 1)
+                
+                seen[lvl].append(node.val)
+                
+                helper(node.right, lvl + 1)
+                
+        seen = defaultdict(lambda: [])
         
-        levels = {}
-        route(root, 0, levels)
-        ans = []
-        for i in range(len(levels) - 1, -1, -1):
-            ans.append(levels[i])
+        helper(root, 0)
         
-        return ans
+        n = len(seen)
+        
+        return [seen[i] for i in range(n)][:: -1]
+        
