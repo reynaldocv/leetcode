@@ -8,27 +8,30 @@
 #         self.right = right
 class Solution:
     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
-        def generate(start, end, exists):
-            key = str(start) + str(end)
-            if key not in exists: 
-                if start > end: 
-                    exists[key] = [None]
-                else: 
-                    ans = []
-                    for i in range(start, end + 1):
-                        leftTrees = generate(start, i - 1, exists)
-                        rightTrees = generate(i + 1, end, exists)
-                        for left in leftTrees: 
-                            for right in rightTrees: 
-                                root = TreeNode(i)
-                                root.left = left
-                                root.right = right
-                                ans.append(root)
-                    exists[key] = ans
-            return exists[key]
-        
-        exists = {}
-        return generate(1, n, exists)
+        @cache 
+        def helper(start, end):
+            if start == end:
+                return [TreeNode(start)]
+            
+            elif end > start: 
+                ans = []
+                
+                for num in range(start, end + 1):
+                    for left in helper(start, num - 1): 
+                        for right in helper(num + 1, end):
+                            node = TreeNode(num)
+                            
+                            node.left = left
+                            node.right = right 
+                            
+                            ans.append(node)
+                            
+                return ans 
+            
+            else: 
+                return [None]
+            
+        return helper(1, n)
         
                 
             
