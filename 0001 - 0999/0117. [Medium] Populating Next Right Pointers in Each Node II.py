@@ -12,15 +12,17 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        def helper(root, lvl):
-            if root: 
-                helper(root.right, lvl + 1)
-                if lvl in level: 
-                    root.next = level[lvl]
-                level[lvl] = root
-                helper(root.left, lvl + 1)
+        def helper(node, lvl):
+            if node: 
+                helper(node.right, lvl + 1)
+            
+                node.next = seen[lvl]
+                seen[lvl] = node
+                
+                helper(node.left, lvl + 1)
+               
+        seen = defaultdict(lambda: None)
         
-        level = {}
         helper(root, 0)
         
         return root
