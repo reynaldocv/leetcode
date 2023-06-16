@@ -22,7 +22,7 @@ class Solution:
                 (left, qntLeft) = helper(node.left)
                 (right, qntRight) = helper(node.right)
                 
-                total = left*right*helper2(qntLeft + qntRight, qntLeft) 
+                total = left*right*supporter(qntLeft + qntRight, qntLeft) 
                 total %= MOD
                 
                 return (total, qntLeft + qntRight + 1)
@@ -30,7 +30,7 @@ class Solution:
             else: 
                 return (1, 0)
  
-        def helper2(a, b):
+        def supporter(a, b):
             ans = 1 
             
             for num in range(max(a - b, b) + 1, a + 1):
