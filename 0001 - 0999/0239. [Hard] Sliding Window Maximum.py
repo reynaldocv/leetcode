@@ -20,6 +20,28 @@ class Solution:
             
         return ans
             
+class Solution2:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        arr = []
+        
+        for num in nums[: k - 1]:
+            arr.append(num) 
+            
+        arr.sort() 
+        
+        ans = []
+        
+        for (i, num) in enumerate(nums[k - 1: ]):
+            insort(arr, num)
+            
+            ans.append(arr[-1])
+            
+            idx = bisect_left(arr, nums[i])
+            
+            arr.pop(idx)
+            
+        return ans 
+            
         
         
         
