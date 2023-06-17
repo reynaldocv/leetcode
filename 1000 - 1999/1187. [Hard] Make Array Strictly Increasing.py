@@ -4,23 +4,27 @@ class Solution:
     def makeArrayIncreasing(self, arr1: List[int], arr2: List[int]) -> int:
         @cache
         def helper(i, prev):
-            if i == n: 
+            if i == m: 
                 return 0 
+            
             else: 
-                ans = inf
-                if prev < arr1[i]:
-                    ans = helper(i + 1, arr1[i])
+                ans = inf 
                 
-                k = bisect_right(arr2, prev)
-                if k < m:
-                    ans = min(ans, 1 + helper(i + 1, arr2[k]))
+                if arr1[i] > prev: 
+                    ans = helper(1 + i, arr1[i])
+                    
+                idx = bisect_right(arr2, prev)
                 
+                if idx < n:
+                    ans = min(ans, 1 + helper(i + 1, arr2[idx]))
+                    
                 return ans
             
-        n, m = len(arr1), len(arr2)
+        m, n = len(arr1), len(arr2)
+        
         arr2.sort()
         
-        ans = helper(0, -inf)
+        ans =  helper(0, -1)
         
         return ans if ans < inf else -1
     
