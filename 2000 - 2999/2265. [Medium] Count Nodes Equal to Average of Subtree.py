@@ -9,18 +9,22 @@
 class Solution:
     def averageOfSubtree(self, root: Optional[TreeNode]) -> int:
         def helper(node):
-            nonlocal ans
+            nonlocal ans 
+            
             if node: 
-                (left, leftQ) = helper(node.left)
-                (right, rightQ) = helper(node.right)
+                leftSum, leftQnt = helper(node.left)
+                rightSum, rightQnt = helper(node.right)
                 
-                if (left + right + node.val)//(leftQ + rightQ + 1) == node.val:
+                aSum = leftSum + rightSum + node.val
+                qnt = leftQnt + rightQnt + 1
+                
+                if aSum//qnt == node.val: 
                     ans += 1 
-                    
-                return (left + right + node.val, leftQ + rightQ + 1)
                 
-            else:
-                return (0, 0) 
+                return aSum, qnt
+                
+            else: 
+                return 0, 0
             
         ans = 0 
         
