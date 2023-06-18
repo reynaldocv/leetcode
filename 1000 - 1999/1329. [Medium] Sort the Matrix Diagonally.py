@@ -2,19 +2,37 @@
 
 class Solution:
     def diagonalSort(self, mat: List[List[int]]) -> List[List[int]]:
-        n, m = len(mat), len(mat[0])
-        starts = [(i, 0) for i in range(n)]
-        starts.extend([(0, j) for j in range(1, m)])
+        m, n = len(mat), len(mat[0])
         
-        for (x, y) in starts: 
-            aux = []
-            r, s = x, y
-            while 0 <= r < n and 0 <= s < m: 
-                aux.append(mat[r][s])
-                r, s = r + 1, s + 1
-            aux.sort()
-            for i in range(len(aux)):
-                mat[x + i][y + i] = aux[i]
+        stack = []
         
+        for i in range(m):
+            stack.append((i, 0))
+            
+        for j in range(1, n):
+            stack.append((0, j))
+            
+        for (x, y) in stack: 
+            arr = []
+            
+            i, j = x, y
+            
+            while i < m and j < n: 
+                arr.append(mat[i][j])
+                
+                i += 1 
+                j += 1 
+                
+            arr.sort()
+            
+            i, j, idx = x, y, 0
+            
+            while i < m and j < n: 
+                mat[i][j] = arr[idx]
+                
+                i += 1 
+                j += 1 
+                idx += 1 
+                
         return mat
                 
