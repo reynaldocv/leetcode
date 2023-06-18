@@ -8,19 +8,26 @@
 #         self.right = right
 class Solution:
     def sumEvenGrandparent(self, root: TreeNode) -> int:
-        def sumEvenGrandChild(root, vetor):
-            if not(root):
-                return 0
-            else:
-                aux = 0
-                if 0 in vetor:
-                    aux = root.val
-                    del vetor[0]
-                if root.val % 2 == 0:
-                    vetor.append(2)
-                vetor = [i - 1 for i in vetor]
-                
-                aux += sumEvenGrandChild(root.left, vetor.copy())
-                aux += sumEvenGrandChild(root.right, vetor.copy())
-                return aux
-        return sumEvenGrandChild(root, [])
+        def helper(node, lvl):
+            nonlocal ans 
+            
+            if node: 
+                if lvl - 2 in seen: 
+                    ans += node.val
+                    
+                if node.val % 2 == 0: 
+                    seen.add(lvl)
+
+                helper(node.left, lvl + 1)
+                helper(node.right, lvl + 1)
+                    
+                if node.val % 2 == 0:
+                    seen.remove(lvl)
+            
+        ans = 0 
+        
+        seen = set()
+        
+        helper(root, 0)
+        
+        return ans 
