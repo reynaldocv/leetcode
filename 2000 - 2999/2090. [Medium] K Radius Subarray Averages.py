@@ -12,13 +12,14 @@ class Solution:
         
         ans += [-1]*k
         
-        aSum = sum(nums[:m])        
+        aSum = sum(nums[:m])  
+        
         ans.append(aSum//(m))
         
         for (i, num) in enumerate(nums[m: ]):            
             aSum += num - nums[i]
             ans.append(aSum//m)
             
-        ans+= [-1]*k
+        ans += [-1]*k
         
         return ans
