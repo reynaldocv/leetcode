@@ -2,18 +2,20 @@
 
 class Solution:
     def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
-        def distance(point0, point1):
-            return ((point0[0] - point1[0])**2 + (point0[1] - point1[1])**2)**.5
+        ans = []
         
-        ans = [0]*len(queries)
-        for i in range(len(queries)): 
-            (x0, y0, r) = queries[i]
-            for point in points: 
-                if distance((x0, y0), point) <= r: 
-                    ans[i] += 1
+        for (x, y, r) in queries: 
+            counter = 0 
+            
+            for (p, q) in points: 
+                if (x - p)**2 + (y - q)**2 <= r**2:
+                    counter += 1 
+            
+            ans.append(counter)
+            
+        return ans 
+            
         
-        return ans
-                
                 
         
         
