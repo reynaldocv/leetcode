@@ -8,15 +8,40 @@
 #         self.right = right
 class Solution:
     def bstToGst(self, root: TreeNode) -> TreeNode:
-        def route(root):
+        def helper(root):
             if root: 
-                route(root.right)
+                helper(root.right)
+                
                 root.val += self.aux
                 self.aux = root.val
-                route(root.left)
+                
+                helper(root.left)
         
         self.aux = 0
-        route(root)
+        
+        helper(root)
         
         return root
+
+class Solution2:
+    def bstToGst(self, root: TreeNode) -> TreeNode:
+        def helper(node):
+            if node: 
+                helper(node.left)
+                
+                arr.append(node)
+                
+                helper(node.right)
+        
+        arr = []
+        
+        helper(root)
+        
+        n = len(arr)
+        
+        for i in range(n - 2, -1, -1):
+            arr[i].val += arr[i + 1].val 
+            
+        return root
+        
         
