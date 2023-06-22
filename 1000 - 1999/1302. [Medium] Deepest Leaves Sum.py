@@ -10,15 +10,15 @@ class Solution:
     def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
         def helper(node, lvl):
             if node: 
-                accumulator[lvl] += node.val 
+                counter[lvl] += node.val 
                 
                 helper(node.left, lvl + 1)
                 helper(node.right, lvl + 1)
             
-        accumulator = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
         helper(root, 0)
         
-        n = len(accumulator)
+        n = len(counter)
         
-        return accumulator[n - 1]
+        return counter[n - 1]
