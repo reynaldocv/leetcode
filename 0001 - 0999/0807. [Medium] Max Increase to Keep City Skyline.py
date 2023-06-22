@@ -2,15 +2,27 @@
 
 class Solution:
     def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:
-        maxC = [max(i) for i in grid]
-        maxR = []
-        for R in range(len(grid[0])):
-            aux = []
-            for C in range(len(grid)):
-                 aux.append(grid[C][R])
-            maxR.append(max(aux))
-        ans = 0
-        for C in range(len(grid)):
-            for R in range(len(grid[0])):
-                 ans += min(maxC[C], maxR[R]) - grid[C][R]
-        return ans        
+        n = len(grid) 
+        
+        maxRows = []
+        maxCols = []
+        
+        for i in range(n):
+            maxRow = 0 
+            maxCol = 0 
+            
+            for j in range(n):
+                maxRow = max(maxRow, grid[i][j])
+                maxCol = max(maxCol, grid[j][i])
+            
+            maxRows.append(maxRow)
+            maxCols.append(maxCol)
+            
+        ans = 0 
+            
+        for i in range(n):
+            for j in range(n):
+                ans += min(maxRows[j], maxCols[i]) - grid[i][j]
+                
+        return ans 
+    
