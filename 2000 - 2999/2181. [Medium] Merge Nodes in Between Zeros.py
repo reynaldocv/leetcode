@@ -6,22 +6,23 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:        
-        arr = []
-        prefix = 0 
-        head = head.next
+    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        ans = cur = ListNode(0)
         
-        ans = node = ListNode(0)
+        aSum = 0 
         
         while head: 
             if head.val == 0: 
-                node.next = ListNode(prefix)
-                node = node.next
-                prefix = 0
+                if aSum != 0: 
+                    cur.next = ListNode(aSum)
+                    
+                    cur = cur.next
+                    
+                aSum = 0 
+                    
             else: 
-                prefix += head.val
+                aSum += head.val
                 
             head = head.next
-            
-        
-        return ans.next
+                
+        return ans.next 
