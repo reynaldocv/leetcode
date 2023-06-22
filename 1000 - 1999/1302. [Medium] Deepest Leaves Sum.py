@@ -7,22 +7,18 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def deepestLeavesSum(self, root: TreeNode) -> int:
-        def high(root):
-            if root:
-                return 1 + max(high(root.left), high(root.right))
-            return 0
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        def helper(node, lvl):
+            if node: 
+                accumulator[lvl] += node.val 
+                
+                helper(node.left, lvl + 1)
+                helper(node.right, lvl + 1)
             
-        def sumDeepestLeaves(root, h):
-            if root:
-                aux = 0
-                if h == 0:
-                    aux = root.val
-                else:
-                    aux += sumDeepestLeaves(root.left, h - 1)
-                    aux += sumDeepestLeaves(root.right, h - 1)
-                return aux            
-            return 0  
-            
-        h = high(root)
-        return sumDeepestLeaves(root, h - 1)
+        accumulator = defaultdict(lambda: 0)
+        
+        helper(root, 0)
+        
+        n = len(accumulator)
+        
+        return accumulator[n - 1]
