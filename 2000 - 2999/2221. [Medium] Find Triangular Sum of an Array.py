@@ -2,11 +2,19 @@
 
 class Solution:
     def triangularSum(self, nums: List[int]) -> int:
+        def helper(arr):
+            n = len(arr)
+            
+            ans = []
+            
+            for i in range(n - 1):
+                ans.append((arr[i] + arr[i + 1]) % 10)
+                
+            return ans 
+        
         n = len(nums)
-                
-        for i in range(n - 1, 0, -1):
-            aux = nums.copy()
-            for j in range(i):
-                nums[j] = (aux[j] + aux[j + 1]) % 10 
-                
+        
+        for _ in range(n - 1):
+            nums = helper(nums)
+            
         return nums[0]
