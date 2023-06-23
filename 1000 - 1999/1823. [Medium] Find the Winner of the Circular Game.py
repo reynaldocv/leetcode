@@ -2,15 +2,17 @@
 
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        start = -1
+        prev = -1 
+        
         arr = [i + 1 for i in range(n)]
         
-        while len(arr)!= 1:
-            arr.pop((start + k) % n)
-            start = (start + k - 1) % n
-            n -= 1
-            if start == n: 
-                start -= 1
-        
-        return arr[0]
+        while len(arr) > 1: 
+            idx = (prev + k) % n 
+            
+            arr.pop(idx)
+            
+            prev = idx - 1
+            n -= 1 
+            
+        return arr.pop()
         
