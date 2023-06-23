@@ -2,18 +2,25 @@
 
 class Solution:
     def garbageCollection(self, garbage: List[str], travel: List[int]) -> int:
-        times = [0]
+        n = len(travel)
         
-        for time in travel: 
-            times.append(times[-1] + time)
+        for i in range(1, n):
+            travel[i] += travel[i - 1]
             
-        last = defaultdict(lambda: 0)
+        travel.insert(0, 0)
         
-        ans = 0 
+        last = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
         for (i, word) in enumerate(garbage):
             for char in word: 
-                ans += times[i] - last[char] + 1               
-                last[char] = times[i]
+                last[char] = i 
+                
+                counter[char] += 1 
+                
+        ans = 0 
+        
+        for char in last: 
+            ans += travel[last[char]] + counter[char]
             
         return ans 
