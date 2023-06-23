@@ -3,16 +3,20 @@
 class Solution:
     def wateringPlants(self, plants: List[int], capacity: int) -> int:
         ans = 0
-        can = capacity
-         
-        for (i, water) in enumerate(plants):
-            if can >= water:
-                ans += 1
-                can -= water
-            else:                 
-                can = capacity - water
-                ans += 2*(i) + 1
-                
-        return ans
         
+        can = capacity
+        
+        for (i, plant) in enumerate(plants):
+            if plant > can:
+                ans += 2*i + 1
+                
+                can = capacity - plant 
+                
+            else: 
+                ans += 1 
+                
+                can -= plant
+                
+        return ans 
+                
         
