@@ -7,35 +7,44 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:        
-        def Inorder(root, ans):
-            if root:
-                Inorder(root.left, ans)
-                ans.append(root.val)                
-                Inorder(root.right, ans)
+    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        def helper(node, arr):
+            if node:
+                helper(node.left, arr)
+                
+                arr.append(node.val)
+                
+                helper(node.right, arr)
+                
+        arr1 = []
+        arr2 = []
         
-        arr1, arr2 = [], []
-        Inorder(root1, arr1)
-        Inorder(root2, arr2)
-
+        helper(root1, arr1)
+        helper(root2, arr2)
+        
+        m, n = len(arr1), len(arr2)
+        i, j = 0, 0
+        
         ans = []
-        if len(arr1) == 0 or len(arr2) == 0: 
-            ans.extend(arr1)
-            ans.extend(arr2)
         
-        else:            
-            i , j = 0, 0 
-            while i < len(arr1) and j < len(arr2):
-                if arr1[i] <= arr2[j]:
-                    ans.append(arr1[i])
-                    i += 1
-                else:
-                    ans.append(arr2[j])
-                    j += 1
-            ans.extend(arr1[i:])
-            ans.extend(arr2[j:])
+        while i < m or j < n: 
+            val1 = arr1[i] if i < m else inf 
+            val2 = arr2[j] if j < n else inf 
+            
+            if val1 < val2: 
+                ans.append(val1)
+                
+                i += 1 
+                
+            else: 
+                ans.append(val2)
+                
+                j += 1 
+                
+        return ans 
+                
+            
         
-        return ans
             
         
         
