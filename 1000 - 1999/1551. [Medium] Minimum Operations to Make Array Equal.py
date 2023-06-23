@@ -1,9 +1,12 @@
 # https://leetcode.com/problems/minimum-operations-to-make-array-equal/
 
 class Solution:
-    def minOperations(self, n: int) -> int:
+    def minOperations(self, n: int) -> int:        
+        m = n // 2 
+        
         if n % 2 == 0: 
-            return (n//2)**2
+            return m**2 
+        
         else: 
-            return (n//2 + 1)*(n//2)
+            return m*(m + 1)
         
