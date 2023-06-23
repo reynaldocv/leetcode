@@ -2,17 +2,18 @@
 
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
-        counterS, counterT = {}, {}
-        for l in s: 
-            counterS[l] = counterS.get(l, 0) + 1       
+        counter = defaultdict(lambda: 0)
         
-        for l in t: 
-            if l in counterS: 
-                counterT[l] = counterT.get(l, 0) + 1       
+        for char in s: 
+            counter[char] += 1 
+        
+        for char in t:
+            counter[char] -= 1 
                 
-        common = 0 
-        for key in counterT: 
-            if key in counterS: 
-                common += min(counterT[key], counterS[key])
+        ans = 0 
         
-        return len(s) - common
+        for key in counter: 
+            ans += abs(counter[key])
+            
+        return ans//2
+        
