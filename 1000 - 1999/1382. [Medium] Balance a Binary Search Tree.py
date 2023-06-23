@@ -8,24 +8,30 @@
 #         self.right = right
 class Solution:
     def balanceBST(self, root: TreeNode) -> TreeNode:
-        def inorder(root):
-            if root: 
-                inorder(root.left)
-                arr.append(root.val)
-                inorder(root.right)
-        
-        def createBST(arr):
-            if arr: 
-                n = len(arr)//2
-                root = TreeNode(arr[n])
-                root.left = createBST(arr[:n])
-                root.right = createBST(arr[n + 1:])
+        def helper(node):
+            if node: 
+                helper(node.left)
+                
+                arr.append(node.val)
+                
+                helper(node.right)
+                
+        def collaborator(nums):
+            if nums: 
+                idx = len(nums)//2
+                
+                ans = TreeNode(nums[idx])
+                
+                ans.left = collaborator(nums[: idx])
+                ans.right = collaborator(nums[idx + 1: ])
+                
+                return ans
+                
             else: 
-                root = None
-            
-            return root
+                return None 
             
         arr = []
-        inorder(root)
         
-        return createBST(arr)
+        helper(root)
+        
+        return collaborator(arr)
