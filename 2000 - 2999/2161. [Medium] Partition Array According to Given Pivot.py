@@ -2,18 +2,23 @@
 
 class Solution:
     def pivotArray(self, nums: List[int], pivot: int) -> List[int]:
-        left = []
-        middle = []
-        right = []
+        lower = []
+        greater = []        
+        equals = []
+        
         for num in nums: 
-            if num < pivot:
-                left.append(num)
-            elif num == pivot:
-                middle.append(num)
-            else:
-                right.append(num)
+            if num < pivot: 
+                lower.append(num)
                 
-        return left + middle + right
+            elif num > pivot: 
+                greater.append(num)
+                
+            else: 
+                equals.append(num)
+                
+        return lower + equals + greater
+        
+        
             
         
 
