@@ -2,28 +2,27 @@
 
 class Solution:
     def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:
-        def helper(word):
-            ans = ""
+        def helper(word1, word2):
             seen = {}
-            i = 0
-            for char in word: 
-                if char not in seen: 
-                    ans += chr(i + ord("a"))
-                    seen[char] = chr(i + ord("a"))
-                    i += 1
-                else: 
-                    ans += seen[char]
+            
+            for (i, char) in enumerate(word1):
+                if char in seen: 
+                    if seen[char] != word2[i]:
+                        return False 
                     
-            return ans
-                    
-        pattern = helper(pattern)
+                seen[char] = word2[i]
+                
+            return True 
         
         ans = []
+        
         for word in words: 
-            if pattern == helper(word):
+            if helper(word, pattern) and helper(pattern, word):
                 ans.append(word)
                 
-        return ans
+        return ans 
+                
+            
                 
         
                 
