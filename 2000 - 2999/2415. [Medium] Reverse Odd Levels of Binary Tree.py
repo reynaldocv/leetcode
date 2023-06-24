@@ -10,22 +10,23 @@ class Solution:
     def reverseOddLevels(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         def helper(node, lvl):
             if node: 
-                if lvl % 2 == 1: 
-                    levels[lvl].append(node)
-                    
                 helper(node.left, lvl + 1)
+                
+                if lvl % 2 == 1: 
+                    level[lvl].append(node)
+                    
                 helper(node.right, lvl + 1)
-
-        levels = defaultdict(lambda: [])
+                
+        level = defaultdict(lambda: [])
         
         helper(root, 0)
         
-        for key in levels:
-            n = len(levels[key])
+        for key in level: 
+            n = len(level[key])
+            
             for i in range(n//2):
-                tmp = levels[key][i].val
-                levels[key][i].val = levels[key][n - i - 1].val
-                levels[key][n - i - 1].val = tmp              
+                level[key][i].val, level[key][n - 1 - i].val = level[key][n - 1 - i].val, level[key][i].val
                 
-        return root
+        return root 
+            
                 
