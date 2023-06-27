@@ -2,14 +2,26 @@
 
 class Solution:
     def groupThePeople(self, groupSizes: List[int]) -> List[List[int]]:
-        groups = {}
-        for i in range(len(groupSizes)):
-            groups[groupSizes[i]] = groups.get(groupSizes[i], [])
-            groups[groupSizes[i]].append(i)
+        groups = defaultdict(lambda: [])
+        
+        for (i, total) in enumerate(groupSizes):
+            groups[total].append(i)
+            
         ans = []
-        for i in groups.keys():
-            for j in range(0, len(groups[i]), i):
-                ans.append(groups[i][j:j+i])
-        return ans
-    
+            
+        for key in groups:
+            arr = groups[key]
+            
+            tmp = []
+            
+            while arr: 
+                tmp.append(arr.pop(0))
+                
+                if len(tmp) == key: 
+                    ans.append(tmp)
+                    
+                    tmp = []
+                    
+        return ans 
+            
         
