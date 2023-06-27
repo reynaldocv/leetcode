@@ -2,25 +2,36 @@
 
 class Solution:
     def countBattleships(self, board: List[List[str]]) -> int:
-        def helper(x, y, val):
-            for (i, j) in [(1, 0), (0, 1)]:
-                r, s = x + i, y + j
-                if 0 <= r < n and 0 <= s < m: 
-                    if board[r][s] == "X":
-                        board[r][s] = val
-                        helper(r, s, val)
-                        
-        n, m = len(board), len(board[0])
-        
-        ans = 0
-        for i in range(n):
-            for j in range(m):
-                if board[i][j] == "X":
-                    ans += 1
-                    board[i][j] = ans
-                    helper(i, j, ans)
+        def helper(x, y):
+            board[x][y] = "."
+            
+            stack = [(x, y)]
+            
+            while stack: 
+                (x, y) = stack.pop() 
+                
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
                     
-        return ans
+                    if 0 <= p < m and 0 <= q < n: 
+                        if board[p][q] == "X":                            
+                            board[p][q] = "."
+                            
+                            stack.append((p, q))
+                            
+            return 1 
+        
+        m, n = len(board), len(board[0])
+        
+        ans = 0 
+        
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == "X":
+                    ans += helper(i, j)
+                    
+        return ans 
+        
                     
         
         
