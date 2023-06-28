@@ -2,24 +2,26 @@
 
 class Solution:
     def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
-        graph = defaultdict(lambda: [])
+        graph = defaultdict(lambda: {}) 
+        
         for (i, (u, v)) in enumerate(edges): 
-            graph[u].append((succProb[i], v))
-            graph[v].append((succProb[i], u))
+            graph[u][v] = succProb[i]
+            graph[v][u] = succProb[i]
             
-        probability = defaultdict(lambda: 0)
-        probability[start] = 1
+        maxProbability = [0 for _ in range(n)]
         
         heap = [(-1, start)]
-        ans = 0 
-        while heap:             
-            (preProb, u) = heappop(heap)
-            if u == end:                 
-                return probability[u]
-                
-            for (prob, v) in graph[u]:
-                if -preProb*prob > probability[v]:   
-                    probability[v] = -preProb*prob
-                    heappush(heap, (preProb*prob, v))
+        
+        while heap:
+            (probability, u) = heappop(heap)
             
-        return 0
+            if u == end: 
+                return -probability
+            
+            for v in graph[u]:
+                if -probability*graph[u][v] > maxProbability[v]:
+                    maxProbability[v] = -probability*graph[u][v]
+                    
+                    heappush(heap, (-maxProbability[v], v))
+            
+        return 0 
