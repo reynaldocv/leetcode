@@ -8,15 +8,17 @@
 #         self.right = right
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
-        def removeLeaf(root, target):
-            if root: 
-                root.left = removeLeaf(root.left, target)
-                root.right = removeLeaf(root.right, target)
-                if root.val == target and root.left == None and root.right == None: 
-                    root = None       
-                return root
+        def helper(node):
+            if node:                 
+                node.left = helper(node.left)
+                node.right = helper(node.right)
+                
+                if node.left == None and node.right == None and node.val == target: 
+                    return None 
+                
+                return node
+            
             else: 
                 return None
         
-        return  removeLeaf(root, target)
-        
+        return helper(root)
