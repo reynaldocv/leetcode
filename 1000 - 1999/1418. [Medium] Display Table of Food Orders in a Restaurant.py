@@ -2,26 +2,34 @@
 
 class Solution:
     def displayTable(self, orders: List[List[str]]) -> List[List[str]]:
-        dishes = {}
-        order = defaultdict(lambda: defaultdict(lambda: 0))
+        seen = defaultdict(lambda: defaultdict(lambda: 0))
         
-        for (idx, tableIdx, dish) in orders: 
-            dishes[dish] = True
-            order[tableIdx][dish] += 1
+        dishes = set()
+        tables = set()
+        
+        for (_, table, dish) in orders: 
+            seen[table][dish] += 1 
             
-        dishes = list(dishes.keys())
-        dishes.sort()
+            dishes.add(dish)
+            tables.add(table)
+            
+        dishes = [dish for dish in dishes]
+        tables = [table for table in tables]
         
-        ans = [["Table"] + dishes]
-                      
-        tablesIdx = list(order.keys())
-        tablesIdx.sort(key = lambda item: int(item))
+        dishes.sort() 
+        tables.sort(key = lambda item: int(item))
         
-        for key in tablesIdx: 
-            aux = [key]                
+        ans = [["Table"]]
+        
+        for dish in dishes: 
+            ans[0].append(dish)
+            
+        for table in tables: 
+            tmp = [str(table)]
+            
             for dish in dishes: 
-                aux.append(str(order[key][dish]))
+                tmp.append(str(seen[table][dish]))
+                
+            ans.append(tmp)
             
-            ans.append(aux)
-            
-        return ans
+        return ans 
