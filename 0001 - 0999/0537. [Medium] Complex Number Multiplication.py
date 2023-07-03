@@ -2,17 +2,29 @@
 
 class Solution:
     def complexNumberMultiply(self, num1: str, num2: str) -> str:
-        num1 = num1.split("+")
-        num2 = num2.split("+")
-        num1[1] = num1[1].replace("i", "")
-        num2[1] = num2[1].replace("i", "")
-        for i in range(2):
-            num1[i] = int(num1[i])
-            num2[i] = int(num2[i])
+        def helper(word):
+            num, cmp = 0, 0
+            
+            tmp = ""
+            
+            for char in word: 
+                if char == "+":
+                    num = int(tmp)
+                    
+                    tmp = ""
+                    
+                elif char == "i":
+                    cmp = int(tmp)
+                    
+                else: 
+                    tmp += char 
+                    
+            return num, cmp 
         
-        ans = ""
-        ans += str(num1[0]*num2[0] - num1[1]*num2[1]) + "+"
-        ans += str(num1[1]*num2[0] + num1[0]*num2[1]) + "i"
+        number1, cmp1 = helper(num1)
+        number2, cmp2 = helper(num2)
         
-        return ans
-        
+        return str(number1*number2 - cmp1*cmp2) + "+" +str(number1*cmp2 + number2*cmp1) + "i"
+                    
+            
+            
