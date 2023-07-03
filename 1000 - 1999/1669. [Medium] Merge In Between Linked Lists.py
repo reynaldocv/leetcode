@@ -28,5 +28,23 @@ class Solution:
         list2.next = end
         
         return list1
+
+class Solution2:
+    def mergeInBetween(self, list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:
+        arr = []
+        
+        while list1: 
+            arr.append(list1)
             
+            list1 = list1.next 
+            
+        arr[a - 1].next = list2
+        
+        while list2.next: 
+            list2 = list2.next 
+            
+        list2.next = arr[b + 1]
+        
+        return arr[0]
+        
         
