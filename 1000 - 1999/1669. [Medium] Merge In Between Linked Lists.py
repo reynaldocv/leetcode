@@ -6,13 +6,14 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeInBetween(self, list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:
+    def mergeInBetween(self, list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:        
+        cur = list1        
+        i = 0
         
-        cur = list1
-        i = 0 
         while cur:                 
             if i == a - 1: 
                 start = cur
+                
             elif i == b + 1: 
                 end = cur
                 
