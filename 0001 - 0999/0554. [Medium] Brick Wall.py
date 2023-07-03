@@ -2,18 +2,22 @@
 
 class Solution:
     def leastBricks(self, wall: List[List[int]]) -> int:
-        n = len(wall)
-        aux = 0        
-        counter = {}
-        for row in wall: 
-            dist = 0 
-            for i in range(len(row) - 1):
-                dist += row[i]
-                counter[dist] = counter.get(dist, 0) + 1
-                aux = max(aux, counter[dist])
+        n = len(wall) 
         
-        return n - aux
+        counter = defaultdict(lambda: 0)        
+        maxCounter = 0 
+        
+        for row in wall: 
+            prev = 0 
+            
+            for num in row[: -1]:
+                prev += num                 
+                counter[prev] += 1 
                 
+                maxCounter = max(maxCounter, counter[prev])
+        
+        return n - maxCounter
+        
                 
         
         
