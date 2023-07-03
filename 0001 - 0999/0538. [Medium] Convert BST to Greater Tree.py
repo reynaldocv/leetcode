@@ -8,16 +8,23 @@ https://leetcode.com/problems/convert-bst-to-greater-tree/
 #         self.right = right
 class Solution:
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def route(root):
-            if root: 
-                route(root.right)                
-                root.val += self.val
-                self.val = root.val 
-                route(root.left)
+        def helper(node):
+            nonlocal aSum       
+            
+            if node:                 
+                helper(node.right)                
                 
-        
-        self.val = 0
-        route(root)
+                node.val += aSum                 
+                aSum = node.val
+                
+                helper(node.left)
+                
+            else: 
+                return 0 
+            
+        aSum = 0 
+            
+        helper(root)
         
         return root
         
