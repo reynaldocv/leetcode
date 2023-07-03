@@ -2,15 +2,15 @@
 
 class Solution:
     def maximumBinaryString(self, binary: str) -> str:
-        count = [0, 0]
-        
         n = len(binary)
         
         start = 0 
         
         while start < n and binary[start] == "1":
             start += 1 
-            
+
+        count = [0, 0]
+        
         for char in binary[start: ]: 
             count[int(char)] += 1 
             
