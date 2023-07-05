@@ -2,28 +2,28 @@
 
 class Solution:
     def numWays(self, s: str) -> int:
-        MOD =  10**9 + 7
+        MOD = 10**9 + 7
+        ones = []
         
-        idx = []
-        for (i, char) in enumerate(s): 
+        for (i, char) in enumerate(s):
             if char == "1":
-                idx.append(i)
+                ones.append(i)
                 
-        if len(idx) % 3 != 0: 
-            return 0 
+        n = len(s)
         
-        n = len(idx)
+        m = len(ones)        
         
-        if n == 0: 
-            m = len(s)
-            ans = (m - 2)*(m - 1)//2
+        if m % 3 != 0: 
+            ans = 0 
         
-        else:             
-            quo = len(idx) // 3
-            ans = 1
-            for i in range(quo - 1, n - 1, quo):
-                ans *= idx[i + 1] - idx[i]
+        elif m == 0: 
+            ans = (n - 1)*(n - 2)//2
+          
+        else:
+            q = m//3 
 
-        return ans % MOD 
+            ans = (ones[q] - ones[q - 1])*(ones[2*q] - ones[2*q - 1])
+            
+        return ans % MOD
 
         
