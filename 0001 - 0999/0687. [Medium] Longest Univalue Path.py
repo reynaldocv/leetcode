@@ -8,24 +8,24 @@
 #         self.right = right
 class Solution:
     def longestUnivaluePath(self, root: Optional[TreeNode]) -> int:
-        def paths(root):
-            if root: 
-                if root.left == None and root.right == None:                     
-                    return root.val, 1 
-                else:                     
-                    Rval, Rh = paths(root.right)
-                    Lval, Lh = paths(root.left)
-                    if Rh == 0 and Lh == 0:
-                        return root.val, 1
-                    else:
-                        Lh = Lh + 1 if Lval == root.val else 1
-                        Rh = Rh + 1 if Rval == root.val else 1                       
-                        self.ans = max(self.ans, Rh + Lh - 1)                        
-                        return root.val, max(Rh, Lh) 
-                 
-            return inf, 0
+        def helper(node):
+            nonlocal ans 
+            if node: 
+                (lVal, lLength) = helper(node.left)
+                (rVal, rLength) = helper(node.right)
+
+                lLength = lLength + 1 if lVal == node.val else 1   
+                rLength = rLength + 1 if rVal == node.val else 1
+
+                ans = max(ans, rLength + lLength - 1)
+
+                return (node.val, max(rLength, lLength))
+                
+            else: 
+                return (inf, 0)
         
-        self.ans = 1
-        paths(root)            
+        ans = 1
         
-        return self.ans - 1
+        helper(root)            
+        
+        return ans - 1
