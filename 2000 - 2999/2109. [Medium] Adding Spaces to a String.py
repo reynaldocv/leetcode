@@ -2,13 +2,19 @@
 
 class Solution:
     def addSpaces(self, s: str, spaces: List[int]) -> str:
-        seen = {num: True for num in spaces}
+        n, m = len(s), len(spaces)
+        
+        j = 0 
+        
         ans = ""
-        for (i, char) in enumerate(s):
-            if i in seen: 
-                ans += " " + char
-            else: 
-                ans += char
+        
+        for i in range(n):
+            if j < m and spaces[j] == i: 
+                ans += " "
                 
-        return ans
+                j += 1 
+                
+            ans += s[i]
+            
+        return ans 
         
