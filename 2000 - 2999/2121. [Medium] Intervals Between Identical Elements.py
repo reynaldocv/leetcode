@@ -2,22 +2,25 @@
 
 class Solution:
     def getDistances(self, arr: List[int]) -> List[int]:
-        n = len(arr)
+        rightSum = defaultdict(lambda: 0)
+        rightCnt = defaultdict(lambda: 0)
         
-        index = defaultdict(lambda: [])
-        for (i, num) in enumerate(arr): 
-            index[num].append(i)
+        for (i, num) in enumerate(arr):
+            rightSum[num] += i 
+            rightCnt[num] += 1 
             
-        ans = [0 for _ in range(n)]
+        leftSum = defaultdict(lambda: 0)
+        leftCnt = defaultdict(lambda: 0)
         
-        for num in index: 
-            arr = index[num]
-            left = 0 
-            right = sum(arr)
-            m = len(arr)
-            for (i, idx) in enumerate(arr):
-                right -= arr[i]
-                ans[idx] = i*idx - left + right - (m - i - 1)*idx
-                left += arr[i]
+        ans = []
+        
+        for (i, num) in enumerate(arr):
+            rightCnt[num] -= 1 
+            rightSum[num] -= i 
             
-        return ans
+            ans.append(i*leftCnt[num] - leftSum[num] + rightSum[num] - i*rightCnt[num])
+            
+            leftCnt[num] += 1 
+            leftSum[num] += i 
+            
+        return ans 
