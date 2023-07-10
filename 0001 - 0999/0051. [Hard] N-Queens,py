@@ -2,33 +2,36 @@
 
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        
-        def colocateQueen(n, i):
-            for j in range(n):
-                if j not in col and j + i not in diag1 and j - i not in diag2: 
-                    if n - 1 == i:
-                        chess[n - 1][j] = "Q"
-                        arr = ["".join(row) for row in chess]
-                        ans.append(arr)
-                        chess[n - 1][j] = "."
-                    else:
-                        col.add(j)
-                        diag1.add(j + i)
-                        diag2.add(j - i)
-                        chess[i][j] = "Q"
-
-                        colocateQueen(n, i + 1)
-
-                        chess[i][j] = "."                    
-                        col.discard(j)
-                        diag1.discard(j + i)
-                        diag2.discard(j - i)
-
+        def helper(i):
+            if i == n: 
+                ans.append(["".join(row) for row in board])
+                
+            else: 
+                for j in range(n):
+                    if j not in vertical and i + j not in diagonal1 and i - j not in diagonal2: 
+                        vertical.add(j)
+                        diagonal1.add(i + j)
+                        diagonal2.add(i - j)
+                        
+                        board[i][j] = "Q"
+                        
+                        helper(i + 1)
+                        
+                        board[i][j] = "."
+                        
+                        vertical.remove(j)
+                        diagonal1.remove(i + j)
+                        diagonal2.remove(i - j)
+            
+        board = [["." for _ in range(n)] for _ in range(n)]
         
         ans = []
-        chess = [["." for j in range(n)] for i in range(n)]
-        col, diag1, diag2 = set(), set(), set()
         
-        colocateQueen(n, 0)
+        vertical = set()
+        diagonal1 = set() 
+        diagonal2 = set()
         
-        return ans
+        helper(0)
+        
+        return ans 
+        
