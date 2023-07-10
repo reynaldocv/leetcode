@@ -3,39 +3,47 @@
 class Solution:
     def largestVariance(self, s: str) -> int:
         def helper(a, b):
-            ans = 0 
+            ans = prev = 0
+            
             seen = set()
-            prefix = 0 
-            for char in s: 
-                if char == a: 
-                    prefix += 1 
+           
+            cntA = counter[a]
+            cntB = counter[b]
+            
+            for char in s:			
+                if char != a and char != b:
+                    continue
+
+                if prev < 0 and cntA != 0 and cntB != 0:
+                    prev = 0
+                    
+                    seen = set() 
+                    
+                if char == a:
+                    prev += 1
+                    cntA -= 1
+                    
                     seen.add(a)
-                elif char == b:
-                    prefix -= 1 
+                    
+                if char == b:
+                    prev -= 1
+                    cntB -=1
+                    
                     seen.add(b)
                     
-                if prefix < 0: 
-                    prefix = 0 
-                    seen = set()
-                    
-                if len(seen) == 2: 
-                    ans = max(ans, prefix)
-                    
-            if len(seen) == 1: 
-                ans = max(ans, prefix - 1)
+                if len(seen) == 2:
+                    ans = max(ans, prev)
                     
             return ans
-                
-        chars = set([char for char in s])
-                
-        ans = 0         
+            
+        counter = defaultdict(lambda: 0)
         
-        for char1 in chars:
-            for char2 in chars: 
-                if char1 != char2:
-                    ans = max(ans, helper(char1, char2))
-                    
-        return ans 
-                
-                
+        for char in s: 
+            counter[char] += 1 
+
+        ans = 0 
         
+        for (a, b) in permutations(counter, 2):
+            ans = max(ans, helper(a, b))
+            
+        return ans         
