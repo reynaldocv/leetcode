@@ -8,27 +8,29 @@
 #         self.right = right
 class Solution:
     def findFrequentTreeSum(self, root: Optional[TreeNode]) -> List[int]:
-        def helper(root):
-            nonlocal m
-            if root: 
-                left = helper(root.left)
-                right = helper(root.right)
-                val = root.val + left + right
-                counter[val] += 1
-                m = max(m, counter[val])
-                return val
+        def helper(node):
+            nonlocal maxFreq
+            
+            if node: 
+                left = helper(node.left)
+                right = helper(node.right)
+                
+                aSum = left + right + node.val
+                
+                counter[aSum] += 1 
+                
+                maxFreq = max(maxFreq, counter[aSum])
+                
+                return aSum
+                
             else: 
                 return 0
-            
-        counter = defaultdict(lambda: 0)        
-        m = 0
+        maxFreq = 0 
+        
+        counter = defaultdict(lambda: 0)
+        
         helper(root)
         
-        ans = []
+        return [key for key in counter if counter[key] == maxFreq]
         
-        for key in counter: 
-            if counter[key] == m: 
-                ans.append(key)
-                
-        return ans
         
