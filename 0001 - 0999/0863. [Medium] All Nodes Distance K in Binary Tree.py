@@ -7,51 +7,36 @@
 #         self.left = None
 #         self.right = None
 
-class Solution2:
+class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
-        def helper(node, arr):
-            nonlocal stack
+        def helper(parent, node):
             if node: 
-                if node == target:   
-                    arr.append(target)
-                    stack = arr[:]
-                else: 
-                    helper(node.left, arr + [node])
-                    helper(node.right, arr + [node])
-        
-        def collaborator(node, k):
-            if node:
-                if k == 0: 
-                    ans.append(node.val)
-                elif k > 0:
-                    return collaborator(node.left, k - 1) + collaborator(node.right, k - 1)
+                if parent != None: 
+                    graph[node.val].append(parent)
+                    graph[parent].append(node.val)
+                    
+                helper(node.val, node.left)
+                helper(node.val, node.right)
                 
-            return 0 
-            
-        if k == 0: 
-            return [target.val]
+        graph = defaultdict(lambda: [])
         
-        ans = [] 
-        stack = []
-        helper(root, [])
-        n = len(stack)
+        helper(None, root)
+    
+        stack = [target.val]
+        seen = {target.val}
         
-        for i in range(n - 1):
-            h = k - (n - i - 1)
-            if h >= 0: 
-                node = stack[i]
-                if h == 0: 
-                    ans.append(node.val)
-                else:
-                    if node.left != stack[i + 1]:
-                        collaborator(node.left, h - 1)            
-                    if node.right != stack[i + 1]:
-                        collaborator(node.right, h - 1)
-
+        for _ in range(k):
+            newStack = []
+            
+            for u in stack: 
+                for v in graph[u]:
+                    if v not in seen: 
+                        seen.add(v)
+                        
+                        newStack.append(v)
+                        
+            stack = newStack
+            
+        return stack 
+            
         
-        collaborator(stack[-1], k)
-        
-        return ans
-            
-            
-            
