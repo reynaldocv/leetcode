@@ -2,22 +2,19 @@
 
 class Solution:
     def findMinDifference(self, timePoints: List[str]) -> int:
-        def helper(hour1, hour2):
-            seg1 = hour1[0]*60 + hour1[1]
-            seg2 = hour2[0]*60 + hour2[1]
-            diff = abs(seg2 - seg1)
-            
-            return min(diff, 24*60 - diff)
+        def helper(word):
+            return 60*int(word[: 2])  + int(word[3: ])
         
-        n = len(timePoints)
+        n = len(timePoints) 
         
-        arr = [(int(hour[:2]), int(hour[3:])) for hour in timePoints]
-        arr.sort()
+        timePoints.sort(key = lambda item: helper(item))
         
-        ans = helper(arr[0], arr[-1])
+        ans = 60*24 - helper(timePoints[-1]) + helper(timePoints[0])
         
         for i in range(n - 1):
-            ans = min(ans, helper(arr[i], arr[i + 1]))
+            ans = min(ans, helper(timePoints[i + 1]) - helper(timePoints[i]))
         
-        return ans
+        return ans 
+        
+        
         
