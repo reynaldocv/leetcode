@@ -2,16 +2,19 @@
 
 class Solution:
     def corpFlightBookings(self, bookings: List[List[int]], n: int) -> List[int]:
-        seats = defaultdict(lambda: 0)
-        for (first, last, cnt) in bookings: 
-            seats[first] += cnt
-            seats[last + 1] -= cnt
-            
-        ans = [0 for i in range(n)]
+        counter = defaultdict(lambda: 0)
         
-        prev = 0 
-        for i in range(1, n + 1):
-            ans[i - 1] = prev + seats[i]
-            prev = ans[i - 1]
+        for (first, last, seats) in bookings: 
+            counter[first] += seats
+            counter[last + 1] -= seats
             
-        return ans
+        prev = 0 
+        
+        ans = []
+        
+        for i in range(1, n + 1):
+            prev += counter[i]
+            
+            ans.append(prev)
+            
+        return ans 
