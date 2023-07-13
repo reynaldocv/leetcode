@@ -8,58 +8,53 @@ class Solution:
                 return True 
             
             else: 
-                if u in seen: 
-                    return False 
+                seen.add(u)
                 
-                else:     
-                    seen.add(u)
+                for v in graph[u]:
+                    if v in seen or helper(v) == False: 
+                        return False 
                     
-                    for v in graph[u]:                    
-                        if helper(v) == False: 
-                            return False 
-                    
-                    seen.remove(u)
-                    
-                    return True 
+                seen.remove(u)
                 
+                return True 
+        
         graph = defaultdict(lambda: [])
         
-        for (a, b) in prerequisites: 
-            graph[a].append(b)
+        for (u, v) in prerequisites: 
+            graph[v].append(u)
+
+        seen = set() 
+        
+        for i in range(numCourses):
+            if helper(i) == False:
+                return False 
+            
+        return True 
                 
-        seen = set()
-        
-        arr = [helper(i) for i in range(numCourses)]
-        
-        return not(False in arr)
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        counter = defaultdict(lambda: 0)
+        requisites = defaultdict(lambda: 0)
         graph = defaultdict(lambda: [])
-        
-        for [a, b] in prerequisites: 
-            graph[a].append(b)
-            counter[b] += 1
+                                
+        for (u, v) in prerequisites: 
+            graph[v].append(u)
             
-        stack = [course for course in range(numCourses) if counter[course] == 0]        
-        seen = {course: True for course in range(numCourses) if counter[course] == 0}
-        
-        req = defaultdict(lambda: 0)
+            requisites[u] += 1 
+            
+        stack = [i for i in range(numCourses) if requisites[i] == 0]
+        seen = {i for i in range(numCourses) if requisites[i] == 0}
         
         while stack: 
-            v0 = stack.pop(0)
+            u = stack.pop() 
             
-            for v1 in graph[v0]:
-                if v1 not in seen: 
-                    req[v1] += 1
+            for v in graph[u]:
+                requisites[v] -= 1 
+                
+                if requisites[v] == 0 and v not in seen: 
+                    seen.add(v)
                     
-                    if req[v1] == counter[v1]:
-                        seen[v1] = True                       
-                        
-                        stack.append(v1)
-                        
+                    stack.append(v)
+                    
         return len(seen) == numCourses
-                    
-                    
                 
