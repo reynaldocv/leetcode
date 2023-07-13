@@ -8,14 +8,19 @@
 #         self.right = right
 class Solution:
     def largestValues(self, root: Optional[TreeNode]) -> List[int]:
-        def helper(root, lvl):
-            if root: 
-                seen[lvl] = max(seen.get(lvl, -inf), root.val)
-                helper(root.left, lvl + 1)
-                helper(root.right, lvl + 1)
+        def helper(node, lvl): 
+            if node: 
+                maxElem[lvl] = max(maxElem[lvl], node.val)
+                
+                helper(node.left, lvl + 1)
+                helper(node.right, lvl + 1)
+                
+        maxElem = defaultdict(lambda: -inf)
         
-        seen = {}
         helper(root, 0)
         
-        return [*seen.values()]
+        maxLvl = len(maxElem)
+        
+        return [maxElem[i] for i in range(maxLvl)]
+        
         
