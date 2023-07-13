@@ -8,19 +8,24 @@
 #         self.right = right
 class Solution:
     def pruneTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def prune(root):
-            if root: 
-                root.left = prune(root.left)
-                root.right = prune(root.right)
+        def helper(node):
+            if node: 
+                leftSum, left = helper(node.left)
+                rightSum, right = helper(node.right)
                 
-                if not root.left and not root.right and root.val == 0: 
-                    root = None
+                if leftSum + rightSum + node.val == 0: 
+                    return (0, None)
                 
-                return root
+                else: 
+                    return (leftSum + rightSum + node.val, TreeNode(node.val, left, right))
+                
+            else: 
+                return (0, None)
             
-            return None
-        
-        return prune(root)
+        return helper(root)[1]
+            
+            
+       
         
                     
                     
