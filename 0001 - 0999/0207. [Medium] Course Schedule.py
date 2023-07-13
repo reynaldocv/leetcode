@@ -31,8 +31,7 @@ class Solution:
             
         return True 
                 
-
-class Solution:
+class Solution2:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         requisites = defaultdict(lambda: 0)
         graph = defaultdict(lambda: [])
