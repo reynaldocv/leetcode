@@ -2,21 +2,32 @@
 
 class Solution:
     def pathInZigZagTree(self, label: int) -> List[int]:
-        ans = []
-        node = 1
-        lvl = 0 
+        lvl = int(log(int(label), 2))
         
-        while label >= node*2:
-            node *= 2
-            lvl += 1
+        last = label
+        
+        if lvl % 2 == 1: 
+            last = 2**lvl + (2**(lvl + 1) - 1 - label)
             
-        while lvl >= 0: 
-            ans.append(label)
-            lvlMin, lvlMax = 2**lvl, 2**(lvl + 1) - 1
-            label = (lvlMax + lvlMin - label)//2
-            lvl -= 1
+        ans = []
+        
+        while lvl > 0: 
+            value = last 
             
-        return ans[::-1]
+            if lvl % 2 == 1: 
+                value = 2**lvl + (2**(lvl + 1) - 1 - last)
+                
+            ans.insert(0, value)    
             
+            last //= 2                
+            lvl -= 1 
+            
+        ans.insert(0, 1)
+            
+        return ans 
+                
+                
+        
+        
             
          
