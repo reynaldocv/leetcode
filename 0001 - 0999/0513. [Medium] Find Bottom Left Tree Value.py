@@ -8,14 +8,18 @@
 #         self.right = right
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
-        
-        
-        def dfs(root, level, dic):
-            if root: 
-                dfs(root.right, level + 1, dic)
-                dic[level] = root.val
-                dfs(root.left, level + 1, dic)
+        def helper(node, lvl):
+            if node: 
+                helper(node.right, lvl + 1)
+
+                seen[lvl] = node.val 
                 
-        dic = {}
-        dfs(root, 0, dic)
-        return dic[len(dic) - 1]
+                helper(node.left, lvl + 1)
+        
+        seen = {}
+        
+        helper(root, 0)
+        
+        return seen[len(seen) - 1]
+        
+        
