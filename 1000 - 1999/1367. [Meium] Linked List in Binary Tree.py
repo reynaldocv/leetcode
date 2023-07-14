@@ -13,32 +13,34 @@
 #         self.right = right
 class Solution:
     def isSubPath(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
-        def helper(root, val):
-            if root: 
-                if root.val == val: 
-                    stack.append((root, 0))
-                helper(root.left, val)
-                helper(root.right, val)
+        def helper(node, val):
+            if node: 
+                if node.val == val: 
+                    stack.append((node, 0))
+                    
+                helper(node.left, val)
+                helper(node.right, val)
             
         arr = []
+        
         while head: 
             arr.append(head.val)
+            
             head = head.next
         
         n = len(arr)
         
         stack = []
+        
         helper(root, arr[0])
         
         while stack: 
-            (root, idx) = stack.pop()
+            (node, idx) = stack.pop()
             if idx == n: 
                 return True
-            elif root and root.val == arr[idx]:
-                stack.append((root.left, idx + 1))
-                stack.append((root.right, idx + 1))
+            
+            elif node and node.val == arr[idx]:
+                stack.append((node.left, idx + 1))
+                stack.append((node.right, idx + 1))
 
         return False
-        
-        
-        
