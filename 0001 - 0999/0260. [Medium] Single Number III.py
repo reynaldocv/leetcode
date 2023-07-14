@@ -2,18 +2,24 @@
 
 class Solution:
     def singleNumber(self, nums: List[int]) -> List[int]:
-        n = len(nums)        
-        auxXor = 0
-        for i in range(n):
-            auxXor = nums[i] ^ auxXor
+        prev = 0 
         
-        setbit = auxXor & (~auxXor + 1)
+        for num in nums: 
+            prev ^= num 
+            
+        bits = 0 
         
-        a, b = 0, 0
-        for i in range(n):
-            if (nums[i] & setbit):
-                a = a^nums[i]
-            else:
-                b = b^nums[i]
+        while prev % 2 == 0: 
+            prev //= 2 
+            
+            bits += 1 
         
-        return [a, b]
+        ans = [0, 0]
+        
+        for num in nums: 
+            bit = (num >> bits) % 2 
+            
+            ans[bit] ^= num
+        
+        return ans 
+        
