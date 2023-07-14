@@ -6,27 +6,37 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseEvenLengthGroups(self, head: Optional[ListNode]) -> Optional[ListNode]:        
+    def reverseEvenLengthGroups(self, head: Optional[ListNode]) -> Optional[ListNode]:
         arr = []
+        
         while head: 
             arr.append(head)
+            
             head = head.next
             
-        start, end, n = 0, 0, len(arr)
+        n = len(arr)
         
-        k = 2
-        while start < n: 
-            if (end - start + 1) % 2 == 0: 
-                arr[start: end + 1] = arr[start: end + 1][::-1]
-            start = end + 1
-            end = min(n - 1, end + k)
-            k += 1
+        start = 0 
+        lenght = 1
+        
+        even = False 
+        
+        while start < n:   
+            end = min(start + lenght, n)
             
-        for i in range(1, n):
-            arr[i - 1].next = arr[i]
+            if (end - start) % 2 == 0:
+                arr[start: end] = arr[start: end][:: -1]
+                
+            start = end 
+            lenght += 1 
             
-        arr[-1].next = None
+            even = not even
             
+        for i in range(n - 1):
+            arr[i].next = arr[i + 1]
+            
+        arr[-1].next = None 
+        
         return arr[0]
             
         
