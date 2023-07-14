@@ -2,19 +2,21 @@
 
 class Solution:
     def removeOccurrences(self, s: str, part: str) -> str:
-        m = len(part)
-        letter = part[-1]
+        n = len(part) 
+        
         stack = []
+        
         for char in s: 
             stack.append(char)
-            if char == letter: 
-                if len(stack) >= m:
-                    if "".join(stack[len(stack) - m:]) == part: 
-                        for i in range(m):
-                            stack.pop()
-        
+            
+            if len(stack) >= n and char == part[-1]: 
+                if "".join(stack[-n: ]) == part: 
+                    for _ in range(n):
+                        stack.pop()
+                        
         return "".join(stack)
-                    
+            
+        
                 
         
         
