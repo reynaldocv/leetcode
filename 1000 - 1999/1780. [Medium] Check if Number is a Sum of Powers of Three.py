@@ -2,7 +2,7 @@
 
 class Solution:
     def checkPowersOfThree(self, n: int) -> bool:
-        while n: 
+        while n > 0: 
             unit = n % 3
             
             if unit > 1: 
