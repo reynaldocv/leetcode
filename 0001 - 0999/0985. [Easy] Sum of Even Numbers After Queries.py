@@ -1,17 +1,25 @@
 # https://leetcode.com/problems/sum-of-even-numbers-after-queries/
 
 class Solution:
-    def sumEvenAfterQueries(self, A: List[int], queries: List[List[int]]) -> List[int]:
-        n = len(A)
-        ans = []
-        s = sum([x if (x % 2 == 0) else 0 for x in A])
-        for (a, b) in queries:
-            x0 = A[b]
-            A[b] += a
-            x1 = A[b]
-            if x0 % 2 == 0: 
-                s -= x0
-            if x1 % 2 == 0:
-                s += x1
-            ans.append(s)
-        return ans
+    def sumEvenAfterQueries(self, nums: List[int], queries: List[List[int]]) -> List[int]:
+        sumEven = 0 
+        for num in nums: 
+            if num % 2 == 0: 
+                sumEven += num 
+                         
+        ans = []        
+        
+        for (value, i) in queries:
+            if nums[i] % 2 == 0: 
+                sumEven -= nums[i] 
+           
+            nums[i] += value
+            
+            if nums[i] % 2 == 0: 
+                sumEven += nums[i] 
+                
+            ans.append(sumEven)
+            
+        return ans 
+            
+            
