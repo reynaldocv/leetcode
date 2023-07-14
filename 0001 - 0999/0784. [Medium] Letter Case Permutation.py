@@ -2,6 +2,33 @@
 
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
+        letters = {}
+        
+        for i in range(26):
+            lower = chr(ord("a") + i)
+            upper = chr(ord("A") + i)
+            
+            letters[lower] = [lower, upper]
+            letters[upper] = [lower, upper]
+            
+        for i in range(10):
+            letters[str(i)] = [str(i)]
+            
+        ans = [""]
+        
+        for char in s: 
+            tmp = []
+                
+            for word in ans: 
+                for letter in letters[char]:
+                    tmp.append(word + letter)
+                
+            ans = tmp 
+            
+        return ans
+                
+class Solution2:
+    def letterCasePermutation(self, s: str) -> List[str]:
         def recursive(newS, i):
             if i == n:
                 ans.append(newS)
