@@ -2,20 +2,17 @@
 
 class Solution:
     def xorQueries(self, arr: List[int], queries: List[List[int]]) -> List[int]:
-        n = len(arr)
-        accXor = [num for num in arr]
+        prefix = [0]
         
-        for i in range(1, n):
-            accXor[i] ^= accXor[i - 1]
-        
-        ans = []
-        for [start, end] in queries: 
-            aux = accXor[end]
-            if start > 0: 
-                aux ^= accXor[start - 1]
-            ans.append(aux)
+        for num in arr: 
+            prefix.append(prefix[-1] ^ num)
             
-        return ans
+        ans = []
+            
+        for (start, end) in queries: 
+            ans.append(prefix[end + 1]^prefix[start])
+            
+        return ans 
             
         
         
