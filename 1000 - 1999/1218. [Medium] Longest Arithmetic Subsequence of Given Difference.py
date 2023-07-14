@@ -2,18 +2,17 @@
 
 class Solution:
     def longestSubsequence(self, arr: List[int], difference: int) -> int:
-        if difference == 0: 
-            counter = {num: arr.count(num) for num in arr}
-            return max([*counter.values()])
-        else:
-            if difference < 0: 
-                arr = arr[::-1]
-                difference *= -1
-            counter = {}
-            for num in arr: 
-                counter[num] = counter.get(num - difference, 0) + 1
+        seen = defaultdict(lambda: 0)
+        
+        ans = 0 
+        
+        for num in arr: 
+            seen[num] = 1 + seen[num - difference]
             
-            return max([*counter.values()])
-                    
+            ans = max(ans, seen[num])
+            
+        return ans 
+            
+        
             
         
