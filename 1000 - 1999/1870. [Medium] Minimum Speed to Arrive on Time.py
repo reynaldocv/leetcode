@@ -3,25 +3,31 @@
 class Solution:
     def minSpeedOnTime(self, dist: List[int], hour: float) -> int:
         def helper(speed):
-            ans = 0 
-            for d in dist[:-1]:
-                ans += ceil(d/speed)
+            time = 0 
             
-            ans += dist[-1]/speed
+            for num in dist[: -1]: 
+                time += ceil(num/speed)
+                
+            time += dist[-1]/speed
             
-            return ans
-
-        start = 0 
-        end = 10**7
+            return time <= hour
         
-        if helper(end) > hour: 
-            return -1
+        n = len(dist)
+        
+        if hour <= n - 1:
+            return -1 
+        
+        start = 0
+        end = 10**9 + 1
         
         while end - start > 1: 
-            m = (end + start)//2
-            if helper(m) > hour: 
-                start = m
+            middle = (end + start)//2
+            
+            if helper(middle):
+                end = middle 
+            
             else: 
-                end = m 
+                start = middle 
                 
-        return end
+        return end 
+                
