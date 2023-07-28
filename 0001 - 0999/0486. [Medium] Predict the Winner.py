@@ -3,14 +3,16 @@
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
         @cache
-        def helper(start, end, turn):
+        def helper(start, end):
             if start == end: 
-                return turn*nums[start]
+                return nums[start]
+            
             else: 
-                val1 = turn*nums[start] + helper(start + 1, end, -turn)
-                val2 = turn*nums[end] + helper(start, end - 1, - turn)
+                ans = nums[start] - helper(start + 1, end)
+                ans = max(ans, nums[end] - helper(start, end - 1))
                 
-                return max(val1, val2) if turn == 1 else min(val1, val2)
-                
+                return ans 
+        
         n = len(nums)
-        return helper(0, n - 1, 1) >= 0
+        
+        return helper(0, n - 1) >= 0
