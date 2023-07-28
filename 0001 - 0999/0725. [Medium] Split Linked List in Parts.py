@@ -47,24 +47,8 @@ class Solution:
                 ans.append(None)
             
         return ans
-            
-        
-                
-                
-
-            
-            
-        
-        
-        
-        
-        
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-class Solution:
+           
+class Solution2:
     def splitListToParts(self, head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
         cur = head
         n = 0        
