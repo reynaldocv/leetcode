@@ -2,27 +2,27 @@
 
 class Solution:
     def areSentencesSimilar(self, sentence1: str, sentence2: str) -> bool:
-        if sentence1 == sentence2: 
-            return True
+        words1 = sentence1.split(" ")
+        words2 = sentence2.split(" ")
         
-        if len(sentence2) < len(sentence1):
-            sentence1, sentence2 = sentence2, sentence1
-            
-        s1 = sentence1.split(" ")
-        s2 = sentence2.split(" ")
+        m, n = len(words1), len(words2)
         
-        n, m = len(s1), len(s2)
+        start = 0
         
-        for i in range(n + 1):
-            prefix = " ".join(s1[:i])             
-            sufix = " ".join(s1[i:])
+        while start < m and start < n and words1[start] == words2[start]:
+            start += 1 
             
-            p, s = len(prefix), len(sufix)
+        start -= 1 
             
-            prefix2 = " ".join(s2[:i])
-            sufix2 = " ".join(s2[m - n + i:])
-            
-            if prefix == prefix2 and sufix == sufix2:
-                return True
-            
-        return False
+        end1 = m - 1        
+        end2 = n - 1
+        
+        while end1 >= start and end2 >= start and words1[end1] == words2[end2]:
+            end1 -= 1 
+            end2 -= 1
+   
+        return end1 <= start or end2 <= start
+        
+        
+    
+        
