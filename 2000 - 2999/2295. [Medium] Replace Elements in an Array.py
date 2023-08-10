@@ -2,18 +2,16 @@
 
 class Solution:
     def arrayChange(self, nums: List[int], operations: List[List[int]]) -> List[int]:
-        index = {}
+        index = {num: i for (i, num) in enumerate(nums)}
         
-        for (i, num) in enumerate(nums):
-            index[num] = i 
+        for (old, new) in operations: 
+            idx = index[old]            
+            index.pop(old)
             
-        for (a, b) in operations: 
-            idx = index.pop(a)
-            index[b] = idx
+            nums[idx] = new
             
-        for key in index: 
-            nums[index[key]] = key
+            index[new] = idx 
             
-        return nums    
+        return nums
         
             
