@@ -9,10 +9,12 @@ class Solution:
         else: 
             ans = inf
             
-            arr = nums[x: ]
-            arr.sort()
+            arr = []
             
             for (i, num) in enumerate(nums):
+                if i - x >= 0: 
+                    insort(arr, nums[i - x])
+                    
                 idx = bisect_left(arr, num)
                 
                 if idx < len(arr):
@@ -21,12 +23,5 @@ class Solution:
                 if idx > 0: 
                     ans = min(ans, num - arr[idx - 1])
                     
-                if i + x < n: 
-                    idx = bisect_left(arr, nums[i + x])
-                    
-                    arr.pop(idx)
-                                        
-                if i - x + 1 >= 0: 
-                    insort(arr, nums[i - x + 1])
-                    
             return ans 
+                    
