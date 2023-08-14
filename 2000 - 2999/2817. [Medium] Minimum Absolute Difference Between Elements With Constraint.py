@@ -24,4 +24,4 @@ class Solution:
                     ans = min(ans, num - arr[idx - 1])
                     
             return ans 
-                    
+             
