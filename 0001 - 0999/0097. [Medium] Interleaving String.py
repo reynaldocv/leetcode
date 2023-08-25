@@ -2,23 +2,25 @@
 
 class Solution:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
-        @cache 
-        def helper(s1, s2, s3):
-            if s1 == s2 and s2 == s3 and s1 == "":
+        @cache
+        def helper(i, j, k):
+            if i == m and j == n and k == l: 
                 return True 
             
             else: 
-                ans = False 
-                
-                if s1 and s3 and s1[0] == s3[0]:
-                    ans = ans or helper(s1[1: ], s2, s3[1: ])
+                if i < m and k < l and s1[i] == s3[k]:
+                    if helper(i + 1, j, k + 1):
+                        return True 
                     
-                if s2 and s3 and s2[0] == s3[0]:
-                    ans = ans or helper(s1, s2[1: ], s3[1: ])
+                if j < n and k < l and s2[j] == s3[k]:
+                    if helper(i, j + 1, k + 1):
+                        return True 
                     
-                return ans 
-            
-        return helper(s1, s2, s3)
+                return False 
+        
+        m, n, l = len(s1), len(s2), len(s3)
+        
+        return helper(0, 0, 0)
     
 class Solution2:
     def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
