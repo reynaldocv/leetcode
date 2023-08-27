@@ -2,28 +2,26 @@
 
 class Solution:
     def kthPalindrome(self, queries: List[int], intLength: int) -> List[int]:
-        def helper(th, n):
-            m = n//2
-            ans = 0
-            if n % 2 == 0: 
-                val = 10**(m - 1) + th - 1
-                strVal = str(val)
-                
-                ans = int(strVal + strVal[::-1])
-            else: 
-                val = 10**m + th - 1
-                strVal = str(val)
-                
-                ans = int(strVal + strVal[:-1][::-1])
-                
-            if len(str(ans)) == n: 
-                return ans 
-            else: 
-                return -1
-            
         ans = []
-        for query in queries: 
-            ans.append(helper(query, intLength))
+        
+        m = intLength//2
+
+        if intLength % 2 == 1:            
+            num = 10**m
+        
+        else: 
+            num = 10**(m - 1)
+
+        for querie in queries: 
+            tmp = num + querie - 1
             
-        return ans 
+            if len(str(tmp)) != len(str(num)):
+                ans.append(-1)
+            
+            elif intLength % 2 == 1:
+                ans.append(int(str(tmp) + str(tmp)[::-1][1: ]))
                 
+            else: 
+                ans.append(int(str(tmp) + str(tmp)[::-1]))
+                
+        return ans
