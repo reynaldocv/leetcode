@@ -5,12 +5,14 @@ class Solution:
         seen = defaultdict(lambda: 0)
         topCounter = defaultdict(lambda: 0)
         bottomCounter = defaultdict(lambda: 0)
+        
         n = len(tops)
         
         for i in range(n):
             if tops[i] != bottoms[i]:                
                 seen[tops[i]] += 1 
                 seen[bottoms[i]] += 1 
+                
             else: 
                 seen[tops[i]] += 1 
                 
@@ -18,6 +20,7 @@ class Solution:
             bottomCounter[bottoms[i]] += 1
             
         ans = inf
+        
         for key in seen: 
             if seen[key] == n: 
                 ans = min(ans, n - topCounter[key])
