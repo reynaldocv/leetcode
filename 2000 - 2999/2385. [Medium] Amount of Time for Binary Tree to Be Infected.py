@@ -10,34 +10,35 @@ class Solution:
     def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:
         def helper(parent, node):
             if node: 
-                if parent: 
-                    graph[parent.val].append(node.val)
-                    graph[node.val].append(parent.val)
+                if parent != None: 
+                    graph[parent].append(node.val)
+                    graph[node.val].append(parent)
                     
-                helper(node, node.left)
-                helper(node, node.right)
-            
+                helper(node.val, node.left)
+                helper(node.val, node.right)
+                    
         graph = defaultdict(lambda: [])
         
         helper(None, root)
         
-        stack = {start}
+        stack = [start]
         seen = {start}
         
         ans = -1
         
         while stack: 
             newStack = []
-            for u in stack: 
-                for v in graph[u]:
-                    if v not in seen: 
-                        seen.add(v)
-                        newStack.append(v)
-                   
+            
+            for x in stack: 
+                for y in graph[x]:
+                    if y not in seen: 
+                        newStack.append(y)
+                        
+                        seen.add(y)
+                     
             stack = newStack
             ans += 1 
             
-        return ans 
-                        
+        return ans  
             
         
