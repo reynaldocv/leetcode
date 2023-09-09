@@ -2,15 +2,27 @@
 
 class Solution:
     def countTriplets(self, arr: List[int]) -> int:
-        n = len(arr)
+        index = defaultdict(lambda: [])
         
-        ans = 0
-        for i in range(n - 1):
-            xor = arr[i]
-            for j in range(i + 1, n):
-                xor ^= arr[j]
-                if xor == 0: 
-                    ans += (j - i)
+        prev = 0 
+        
+        index[prev].append(-1)
+        
+        for (i, num) in enumerate(arr): 
+            prev ^= num
+            
+            index[prev].append(i)
+            
+        ans = 0 
+
+        for key in index: 
+            arr = index[key]
+            m = len(arr)
+            
+            for i in range(m - 1):
+                for j in range(i + 1, m):
+                    ans += arr[j] - arr[i] - 1
                     
-        return ans
+        return ans 
+        
         
