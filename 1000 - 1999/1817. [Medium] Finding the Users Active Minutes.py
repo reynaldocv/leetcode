@@ -2,16 +2,18 @@
 
 class Solution:
     def findingUsersActiveMinutes(self, logs: List[List[int]], k: int) -> List[int]:
-        accessed = defaultdict(lambda: {})
-        for (a, b) in logs: 
-            accessed[a][b] = True
+        counter = defaultdict(lambda: set())
+        
+        for (idx, time) in logs: 
+            counter[idx].add(time)
             
         ans = [0 for _ in range(k)]
         
-        for user in accessed: 
-            ans[len(accessed[user]) - 1] += 1 
+        for key in counter:
+            ans[len(counter[key]) - 1] += 1 
             
-        return ans
+        return ans 
+        
        
                 
                 
