@@ -1,31 +1,39 @@
 # https://leetcode.com/problems/number-of-ways-to-select-buildings/
 
 class Solution:
-    def numberOfWays(self, s: str) -> int:        
+    def numberOfWays(self, s: str) -> int:
         def helper(s):
-            ans = []
-            cnt = 0 
+            Ones, Zeros = [], []
+            cnt0, cnt1 = 0, 0
+            
             for char in s: 
-                cnt += 1 if char == "0" else 0 
-                ans.append(cnt)
-                
-            return ans
-        
-        def collaborator(s):        
-            left = helper(s)
-            right = helper(s[::-1])[::-1]
-
-            ans = 0 
-        
-            for i in range(1, n - 1):
-                if s[i] == "1":
-                    ans += left[i - 1]*right[i + 1]
+                if char == "0":
+                    cnt0 += 1 
                     
-            return ans 
+                if char == "1":
+                    cnt1 += 1 
+                    
+                Zeros.append(cnt0)
+                Ones.append(cnt1)
+                
+            return Zeros, Ones
         
-        n = len(s)
+        n = len(s) 
         
-        t = "".join([str(1 - int(char)) for char in s])
+        leftZeros, leftOnes = helper(s)
+        rightZeros, rightOnes = helper(s[:: -1])
         
-        return collaborator(s) + collaborator(t)
+        rightZeros = rightZeros[:: -1]
+        rightOnes = rightOnes[:: -1]
+        
+        ans = 0 
+        
+        for i in range(1, n - 1):
+            if s[i] == "0": 
+                ans += leftOnes[i - 1]*rightOnes[i + 1]
+                
+            else: 
+                ans += leftZeros[i - 1]*rightZeros[i + 1]
+                
+        return ans 
         
