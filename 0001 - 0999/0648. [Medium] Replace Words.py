@@ -2,13 +2,24 @@
 
 class Solution:
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
-        def replace(word):
-            for i in range(1, len(word)):
-                if word[:i] in cur: 
-                    return word[:i]
+        def helper(word):
+            tmp = ""
+            
+            for char in word: 
+                tmp += char 
+                
+                if tmp in seen: 
+                    return tmp 
                 
             return word
         
-        cur = {word: True for word in dictionary}   
+        seen = {word for word in dictionary}
         
-        return " ".join([replace(word) for word in sentence.split(" ")])
+        words = sentence.split(" ")
+        
+        ans = []
+        
+        for word in words: 
+            ans.append(helper(word))
+            
+        return " ".join(ans)
