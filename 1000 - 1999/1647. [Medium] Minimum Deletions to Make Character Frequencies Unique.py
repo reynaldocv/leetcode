@@ -3,21 +3,25 @@
 class Solution:
     def minDeletions(self, s: str) -> int:
         counter = defaultdict(lambda: 0)
+        
         for char in s: 
             counter[char] += 1
             
-        seen = {}
+        seen = set()        
         ans = 0
-        for char in counter: 
-            if counter[char] in seen: 
-                while counter[char] in seen: 
-                    counter[char] -= 1
+        
+        for key in counter: 
+            if counter[key] in seen: 
+                while counter[key] in seen: 
+                    counter[key] -= 1
+                    
                     ans += 1
                      
-                if counter[char] != 0: 
-                    seen[counter[char]] = True
+                if counter[key] != 0: 
+                    seen.add(counter[key])
+                    
             else: 
-                seen[counter[char]] = True
+                seen.add(counter[key])
         
         return ans
         
