@@ -3,7 +3,9 @@
 class Solution:
     def candy(self, ratings: List[int]) -> int:
         n = len(ratings)
-        left, right = [1]*n, [1]*n
+        
+        left = [1 for _ in range(n)]
+        right = [1 for _ in range(n)]
         
         for i in range(1, n):
             if ratings[i - 1] < ratings[i]:
