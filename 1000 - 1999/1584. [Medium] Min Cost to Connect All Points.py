@@ -2,37 +2,41 @@
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        def helper(child):
-            while child != parent[child]:
-                child = parent[child]
+        def helper(son):
+            while parent[son] != son: 
+                son = parent[son]
                 
-            return child
+            return son
         
-        def collaborator(child1, child2):
-            parent1 = helper(child1)
-            parent2 = helper(child2)
-            parent[parent1] = parent[parent2] = min(parent1 , parent2)
+        n = len(points)
         
         heap = []
-        n = len(points)
-        for i in range(1, n):
-            for j in range(i):
-                manhattan = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1])
-                heappush(heap, (manhattan, i, j))
+        
+        for i in range(n):
+            for j in range(i + 1, n):                
+                x0, y0 = points[i]
+                x1, y1 = points[j]
                 
-        edges = 0 
+                distance = abs(x0 - x1) + abs(y0 - y1)
+                
+                heappush(heap, (distance, i, j))
+                
         parent = [i for i in range(n)]
         
         ans = 0 
         
-        while edges < n - 1:
-            (distance, u, v) = heappop(heap)
-            if helper(u) != helper(v):
-                collaborator(u, v)
-                ans += distance
-                edges += 1 
+        while heap: 
+            distance, u, v = heappop(heap)
+            
+            parentU = helper(u)
+            parentV = helper(v)
+            
+            if parentU != parentV: 
+                ans += distance 
                 
-        return ans
+                parent[parentU] = parent[parentV] = min(parentU, parentV)
+                
+        return ans 
                 
             
             
