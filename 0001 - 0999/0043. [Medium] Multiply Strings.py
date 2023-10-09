@@ -1,6 +1,34 @@
 # https://leetcode.com/problems/multiply-strings/
 
 class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        if num1 == "0" or num2 == "0":
+            return "0"
+        
+        n = len(num1) + len(num2)
+        
+        ans = [0 for _ in range(n)]
+        
+        num1 = num1[:: -1]
+        num2 = num2[:: -1]
+        
+        for (i, char1) in enumerate(num1):
+            for (j, char2) in enumerate(num2):
+                numZeros = i + j
+                
+                carry = ans[numZeros]
+                
+                mul = int(char1)*int(char2) + carry
+                
+                ans[numZeros] = mul % 10                 
+                ans[numZeros + 1] += (mul//10)
+        
+        if ans[-1] == 0: 
+            ans.pop()
+            
+        return "".join(str(char) for char in ans[:: -1])
+        
+class Solution2:
     def multiply(self, num1: str, num2: str) -> str:        
         def add(num1, num2):        
             n = max(len(num1), len(num2))
