@@ -2,26 +2,32 @@
 
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        def helper(arr, aSum, i):
+            if aSum ==  0: 
+                ans.append(arr.copy())
+                
+            elif aSum > 0: 
+                for j in range(i, n):
+                    if counter[nums[j]] > 0: 
+                        counter[nums[j]] -= 1                         
+                        arr.append(nums[j])
+                        
+                        helper(arr, aSum - nums[j], j)
+                        
+                        arr.pop() 
+                        counter[nums[j]] += 1 
+                        
+        counter = defaultdict(lambda: 0)
         
-        def backtracking(arr, i, aSum):
-            if aSum == self.target: 
-                self.ans.append(arr.copy())
-            elif aSum < self.target: 
-                for j in range(i, len(self.candidates)):
-                    if self.counter[self.candidates[j]] > 0:                
-                        self.counter[self.candidates[j]] -= 1                        
-                        arr.append(self.candidates[j])
-                        backtracking(arr, j, aSum  + self.candidates[j])
-                        arr.pop()
-                        self.counter[self.candidates[j]] += 1                        
+        for num in candidates: 
+            counter[num] += 1 
+            
+        nums = [key for key in counter]
+        n = len(nums)
         
-        self.target = target 
-        self.counter = {}
-        for candidate in candidates: 
-            self.counter[candidate] = self.counter.get(candidate, 0) + 1
-        self.candidates = [*self.counter]
-        self.ans = []
-        backtracking([], 0, 0)
+        ans = []
         
-        return self.ans
+        helper([], target, 0)
+        
+        return ans 
             
