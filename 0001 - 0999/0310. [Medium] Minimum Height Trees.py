@@ -3,34 +3,34 @@
 class Solution:
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
         if n <= 2: 
-            return [i for i in range(n)]
+            return {i for i in range(n)}
         
-        neighbors = [set() for i in range(n)]
+        degree = defaultdict(lambda: 0)
+        graph = defaultdict(lambda: [])
         
         for (u, v) in edges: 
-            neighbors[u].add(v)
-            neighbors[v].add(u)
-        
-        leaves = []
-        for i in range(n):
-            if len(neighbors[i]) == 1: 
-                leaves.append(i)
-        
-        remaining_nodes = n
-        
-        while remaining_nodes > 2: 
-            remaining_nodes -= len(leaves)
+            degree[u] += 1 
+            degree[v] += 1 
             
-            newLeaves = []
+            graph[u].append(v)
+            graph[v].append(u)
             
-            while leaves: 
-                leaf = leaves.pop()
-                neighbor = neighbors[leaf].pop()
-                neighbors[neighbor].remove(leaf)
-                if len(neighbors[neighbor]) == 1: 
-                    newLeaves.append(neighbor)
+        stack = [i for i in range(n) if degree[i] == 1]    
+        nodes = {i for i in range(n) if degree[i] >= 2}
+        
+        while len(nodes) > 2: 
+            newStack = []
+            
+            for u in stack: 
+                for v in graph[u]:
+                    degree[v] -= 1 
                     
-            leaves = newLeaves
+                    if degree[v] == 1: 
+                        newStack.append(v)
+                        
+                        nodes.remove(v)
+                        
+            stack = newStack 
             
-        return leaves
+        return nodes
         
