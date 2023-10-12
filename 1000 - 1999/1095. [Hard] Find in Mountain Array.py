@@ -10,61 +10,50 @@
 
 class Solution:
     def findInMountainArray(self, target: int, mountain_arr: 'MountainArray') -> int:
-        def helper():
-            if target == mountain_arr.get(0):
-                return 0 
-
-            if target < mountain_arr.get(0):
-                return -1
-
-            start = 0 
-            end = peak + 1
-
-            while end - start > 1: 
-                m = (start + end)//2                
-                if mountain_arr.get(m) < target: 
-                    start = m 
-                else: 
-                    end = m 
-            
-            return end if target == mountain_arr.get(end) else -1
-        
-        def helper2():
-            if target < mountain_arr.get(n - 1):
-                return -1
-            
-            start = peak
-            end = n + 1
-
-            while end - start > 1: 
-                m = (start + end)//2        
-                if mountain_arr.get(m) > target: 
-                    start = m 
-                else: 
-                    end = m 
-
-            return end if mountain_arr.get(end) == target else -1
-                
         n = mountain_arr.length()
+        
         start = 0 
-        end = n
+        end = n 
+        
         while end - start > 1: 
-            m = (start + end)//2
-            if mountain_arr.get(m) < mountain_arr.get(m + 1):
-                start = m 
+            middle = (end + start)//2
+            
+            if mountain_arr.get(middle - 1) < mountain_arr.get(middle):
+                start = middle 
+                
             else: 
-                end = m
+                end = middle 
                 
-        peak = end
+        top = start
                 
-        if target > mountain_arr.get(peak):
-            return -1
+        start = -1 
+        end = top
+    
+        while end - start > 1: 
+            middle = (end + start)//2
+            
+            if mountain_arr.get(middle) < target:
+                start = middle 
+                
+            else:
+                end = middle 
+                
+        if mountain_arr.get(end) == target: 
+            return end 
         
-        if target == mountain_arr.get(peak):        
-            return end
+        start = top
+        end = n
+    
+        while end - start > 1: 
+            middle = (end + start)//2
+            
+            if mountain_arr.get(middle) < target:
+                end = middle 
+                
+            else:
+                start = middle 
+        if mountain_arr.get(start) == target:
+            return start
         
-        idx = helper()
+        return -1 
         
-        return idx if idx != -1 else helper2()
-        
- 
