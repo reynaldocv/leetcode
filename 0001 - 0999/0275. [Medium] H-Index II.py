@@ -4,21 +4,23 @@ class Solution:
     def hIndex(self, citations: List[int]) -> int:
         n = len(citations)
         
-        start = 0 
-        end = n 
-        
-        ans = min(citations[0], n)
+        start = 0
+        end = citations[-1] + 1
         
         while end - start > 1: 
-            m = (end + start)//2
-            if citations[m] > n - m: 
-                ans = max(ans, n - m)
-                end = m
-            else: 
-                ans = max(ans, citations[m])
-                start = m
+            middle = (end + start)//2
             
-        return ans
+            idx = bisect_left(citations, middle)
+            
+            qnt = n - idx
+            
+            if middle <= qnt: 
+                start = middle
+                
+            else: 
+                end = middle 
+                
+        return start
                 
             
             
