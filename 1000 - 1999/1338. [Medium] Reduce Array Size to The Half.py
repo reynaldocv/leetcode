@@ -1,21 +1,29 @@
 # https://leetcode.com/problems/reduce-array-size-to-the-half/
 
-class Solution(object):
-    def minSetSize(self, arr):
-        counter = {}
-        for num in arr:
-            counter[num] = counter.get(num, 0) + 1
-        frequency = [*counter.values()]    
-        frequency.sort(reverse = True)
+class Solution:
+    def minSetSize(self, arr: List[int]) -> int:
+        n = len(arr)
+        
+        counter = defaultdict(lambda: 0)
+        
+        for num in arr: 
+            counter[num] += 1 
+            
+        nums = [counter[key] for key in counter]
+        
+        nums.sort(key = lambda item: -item)
         
         ans = 0
-        sumFrequencies = 0
-        for i in range(len(frequency)):
-            freq = frequency[i]
-            if sumFrequencies >= len(arr)//2:
-                break
-            else:
-                ans +=1
-                sumFrequencies += freq
         
-        return ans
+        cnt = n 
+        
+        for num in nums: 
+            cnt -= num 
+            ans += 1 
+            
+            if 2*cnt <= n: 
+                break
+
+        return ans 
+            
+        
