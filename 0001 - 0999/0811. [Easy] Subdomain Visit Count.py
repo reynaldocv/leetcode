@@ -2,18 +2,20 @@
 
 class Solution:
     def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
-        dic = {}
+        counter = defaultdict(lambda: 0)
+        
         for domain in cpdomains: 
-            dom = domain.split(" ")
-            web = dom[1].split(".")
-            for i in range (len(web)):
-                aux = ".".join(web[i:])
-                dic[aux] = dic.get(aux, 0) + int(dom[0])
-        
-        ans = []
-        for k in dic: 
-            ans.append(str(dic[k]) + " " + k)
-        
-        return ans
+            num, domains = domain.split(" ")
+            
+            urls = domains.split(".")
+            
+            n = len(urls)
+            
+            for i in range(n):
+                word = ".".join(urls[i: ])
+                
+                counter[word] += int(num)
+                
+        return [str(counter[key]) + " " + key for key in counter]
                 
         
