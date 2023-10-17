@@ -2,25 +2,25 @@
 
 class Solution:
     def numSplits(self, s: str) -> int:
-        n = len(s)
-        left, right = [], []
+        right = defaultdict(lambda: 0)
         
-        counter = defaultdict(lambda: 0)
         for char in s: 
-            counter[char] += 1
-            left.append(len(counter))
-        
-        counter = defaultdict(lambda: 0)            
-        for char in s[::-1]:
-            counter[char] += 1
-            right.append(len(counter))
+            right[char] += 1 
             
-        right = right[::-1]
-        
-        ans = 0
-        for i in range(n - 1):
-            if left[i] == right[i + 1]:
-                ans += 1
+        left = defaultdict(lambda: 0) 
             
-        return ans
+        ans = 0 
+            
+        for char in s: 
+            left[char] += 1             
+            right[char] -= 1 
+            
+            if right[char] == 0: 
+                right.pop(char)
+                
+            if len(left) == len(right):
+                ans += 1 
+                
+        return ans 
+            
             
