@@ -23,5 +23,38 @@ class Solution:
                     heappush(heap, (t + time[v], v))
         
         return t
+
+class Solution2:
+    def minimumTime(self, n: int, relations: List[List[int]], time: List[int]) -> int:        
+        times = defaultdict(lambda: 0)
+        requisites = defaultdict(lambda: 0)
+        graph = defaultdict(lambda: [])
+        
+        time.insert(0, 0)
+        
+        for (u, v) in relations: 
+            graph[u].append(v)
+            
+            requisites[v] += 1 
+            
+        stack = [i for i in range(1, n + 1) if requisites[i] == 0]
+        
+        for u in stack: 
+            times[u] = time[u]            
+        
+        while stack: 
+            u = stack.pop()
+            
+            for v in graph[u]:
+                requisites[v] -= 1 
+                
+                if requisites[v] == 0: 
+                    stack.append(v)
+                    
+                times[v] = max(times[v], times[u] + time[v])
+                
+        return max(times[i] for i in range(1, n + 1))
+                    
+                    
             
             
