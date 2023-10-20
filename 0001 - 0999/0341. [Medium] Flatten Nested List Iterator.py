@@ -28,26 +28,24 @@ class NestedIterator:
             for elem in nestedList:
                 if elem.isInteger(): 
                     self.arr.append(elem.getInteger())
+                    
                 else: 
                     helper(elem.getList())
                
         self.arr = []
+        
         helper(nestedList)
+        
         self.index = 0
-        self.n = len(self.arr)
-    
+        
     def next(self) -> int:
         self.index += 1
-        return self.arr[self.index - 1]
         
+        return self.arr[self.index - 1]
     
     def hasNext(self) -> bool:
-        if self.index < self.n: 
-            return True
-        else: 
-            return False
-         
-
+        return self.index < len(self.arr)
+            
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
