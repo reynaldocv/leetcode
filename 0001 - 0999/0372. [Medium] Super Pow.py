@@ -2,19 +2,14 @@
 
 class Solution:
     def superPow(self, a: int, b: List[int]) -> int:
-        MOD, MOD2 = 190*6, 1337
-        i, n = 1, len(b)
-        exp = b[0]
-        while i < n: 
-            exp %= MOD
-            exp = exp*10 + b[i]
-            i += 1
+        MOD = 1337
         
-        exp %= MOD
+        ans = 1
         
-        return pow(a, exp, MOD2)
+        for (i, num) in enumerate(b[:: -1]):
+            ans *= pow(a, num*10**i, MOD)
             
+        return ans % MOD 
         
-      
         
         
