@@ -3,36 +3,31 @@
 class Solution:
 
     def __init__(self, nums: List[int]):
-        self.original = nums
-        self.copy = nums.copy()
+        self.n = len(nums)
         
-
+        self.nums = [num for num in nums]
+        
     def reset(self) -> List[int]:
-        """
-        Resets the array to its original configuration and return it.
-        """
-        self.copy = self.original.copy()
-        return self.original
-        
-        
+        return self.nums
 
     def shuffle(self) -> List[int]:
-        """
-        Returns a random shuffling of the array.
-        """
-        n = len(self.copy)
-        for i in range(n):
-            rdm = random.randint(0, n - 1)
-            self.copy[i], self.copy[rdm] = self.copy[rdm], self.copy[i]
+        idxs = []
+        seen = set()
         
-        return self.copy
+        while len(idxs) < self.n: 
+            idx = randint(0, self.n - 1)
             
+            while idx in seen: 
+                idx = randint(0, self.n - 1)
             
-        
+            idxs.append(idx)
+            seen.add(idx)
 
-
+        return [self.nums[idx] for idx in idxs]
+            
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(nums)
 # param_1 = obj.reset()
 # param_2 = obj.shuffle()
             
+  
