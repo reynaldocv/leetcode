@@ -6,10 +6,11 @@ class Solution:
         
         ans = 1
         
-        for (i, num) in enumerate(b[:: -1]):
-            ans *= pow(a, num*10**i, MOD)
-            
-        return ans % MOD 
+        for exp in b: 
+            ans = pow(ans, 10, MOD) * pow(a, exp, MOD)
+        
+        return ans % 1337
+
         
         
         
