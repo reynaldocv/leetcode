@@ -2,17 +2,20 @@
 
 class Solution:
     def minIncrementForUnique(self, nums: List[int]) -> int:
-        n = len(nums)
-        minElem = min(nums)
-        nums.sort()
+        nums.sort() 
+        
         ans = 0 
         
+        limit = nums[0] - 1
+        
         for num in nums: 
-            if num < minElem: 
-                ans += minElem - num
+            if limit < num: 
+                limit = num 
+                
             else: 
-                minElem = num 
-            
-            minElem += 1 
-            
-        return ans
+                limit += 1 
+                
+                ans += limit - num 
+                
+        return ans 
+        
