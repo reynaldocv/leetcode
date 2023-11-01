@@ -2,24 +2,28 @@
 
 class Solution:
     def maxValue(self, n: str, x: int) -> str:
+        sign = "" 
         
-        l = len(n)
         if n[0] == "-":
-            for i in range(1, l):
-                if n[i] <= str(x):
-                    continue
-                else: 
-                    return n[:i] + str(x) + n[i:]
+            sign = "-"
+            n = n[1: ]
+        
+        start = 0 
+        x = str(x)
+        
+        m = len(n)
+        
+        if sign == "":         
+            while start < m and  n[start] >= x:
+                start += 1 
                 
-            return n + str(x)
-            
         else: 
-            for i in range(l):
-                if n[i] >= str(x):
-                    continue
-                else: 
-                    return n[:i] + str(x) + n[i:]
+            while start < m and n[start] <= x:
+                start += 1
+        
+        return sign + n[: start] + x + n[start: ]
                 
-            return n + str(x)
+                
+
             
       
