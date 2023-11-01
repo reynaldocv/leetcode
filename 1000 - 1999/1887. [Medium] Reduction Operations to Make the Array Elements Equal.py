@@ -2,20 +2,21 @@
 
 class Solution:
     def reductionOperations(self, nums: List[int]) -> int:
-        counter = {}
+        nums.sort() 
+        
+        prev = -inf 
+        tmp = -1 
+        
+        ans = 0 
+        
         for num in nums: 
-            counter[num] = counter.get(num, 0) + 1
+            if prev != num: 
+                tmp += 1 
+                
+            ans += tmp            
+            prev = num
             
-        keys = [*counter]
-        keys.sort(reverse = True)
-        
-        ans = 0
-        
-        for i in range(len(keys) - 1): 
-            ans += counter[keys[i]]
-            counter[keys[i + 1]] += counter[keys[i]] 
-    
-        return ans
+        return ans 
             
         
         
