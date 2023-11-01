@@ -4,40 +4,42 @@ class FrontMiddleBackQueue:
 
     def __init__(self):
         self.arr = []
-        self.len = 0 
 
     def pushFront(self, val: int) -> None:
         self.arr.insert(0, val)
-        self.len += 1
 
     def pushMiddle(self, val: int) -> None:
-        self.arr.insert(self.len//2, val)
-        self.len += 1
+        n = len(self.arr)
         
+        self.arr.insert(n//2, val)
+
     def pushBack(self, val: int) -> None:
         self.arr.append(val)
-        self.len += 1
-        
+
     def popFront(self) -> int:
-        if self.len > 0: 
-            self.len -= 1
+        if self.arr:             
             return self.arr.pop(0)
+        
+        else: 
+            return -1
+        
+    def popMiddle(self) -> int:
+        n = len(self.arr)
+        
+        if n and n % 2 == 0:         
+            return self.arr.pop(n//2 - 1)
+
+        elif n and n % 2 == 1: 
+            return self.arr.pop(n//2)
         
         return -1
 
-    def popMiddle(self) -> int:
-        if self.len > 0: 
-            self.len -= 1        
-            return self.arr.pop((self.len)//2)
-        
-        return -1
-        
     def popBack(self) -> int:
-        if self.len > 0: 
-            self.len -= 1
+        if self.arr: 
             return self.arr.pop()
         
-        return -1
+        else: 
+            return -1
 
 # Your FrontMiddleBackQueue object will be instantiated and called as such:
 # obj = FrontMiddleBackQueue()
