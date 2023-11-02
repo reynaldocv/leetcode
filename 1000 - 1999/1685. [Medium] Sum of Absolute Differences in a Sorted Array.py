@@ -2,19 +2,24 @@
 
 class Solution:
     def getSumAbsoluteDifferences(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        prevSum = 0
-        postSum = sum(nums) - nums[0]
+        n = len(nums) 
         
-        ans = [0 for _ in range(n)]
-        for i in range(n):                                    
-            ans[i] = (postSum - (n - 1 - i)*nums[i]) + (i*nums[i] - prevSum)
-            prevSum += nums[i]
-            if i < n-1:
-                postSum -= nums[i + 1]
-                
-        return ans
-                
+        left = 0 
+        right = sum(nums)
+        
+        ans = []
+        
+        for (i, num) in enumerate(nums): 
+            l = num*i - left
+            r = right - num*(n - i)
+            
+            ans.append(l + r)
+            
+            left += num 
+            right -= num 
+            
+        return ans 
+            
             
             
         
