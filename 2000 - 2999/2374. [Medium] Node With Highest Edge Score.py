@@ -2,13 +2,15 @@
 
 class Solution:
     def edgeScore(self, edges: List[int]) -> int:
-        ans = (inf, inf)
+        ans = (0, 0)
+        
         counter = defaultdict(lambda: 0)
         
-        for (i, v) in enumerate(edges):
-            counter[v] -= i
+        for (u, v) in enumerate(edges): 
+            counter[v] += u 
             
-            ans = min(ans, (counter[v], v))
+            ans = max(ans, (counter[v], -v))
             
-        return ans[1]
+        return -ans[1]
+        
                                        
