@@ -1,16 +1,15 @@
 # https://leetcode.com/problems/design-linked-list/
-
 class MyLinkedList:
 
     def __init__(self):
-        self.arr = []        
+        self.arr = []
 
     def get(self, index: int) -> int:
         if index < len(self.arr):
             return self.arr[index]
-        else:
-            return -1
-
+        
+        return -1
+        
     def addAtHead(self, val: int) -> None:
         self.arr.insert(0, val)
 
@@ -23,8 +22,7 @@ class MyLinkedList:
 
     def deleteAtIndex(self, index: int) -> None:
         if index < len(self.arr):
-            del self.arr[index]
-
+            self.arr.pop(index)
 
 # Your MyLinkedList object will be instantiated and called as such:
 # obj = MyLinkedList()
