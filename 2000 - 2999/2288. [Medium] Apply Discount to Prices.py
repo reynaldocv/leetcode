@@ -2,27 +2,26 @@
 
 class Solution:
     def discountPrices(self, sentence: str, discount: int) -> str:
-        def helper(string):
-            if string[0] == "$":
-                try: 
-                    value = float(string[1:])
-                    tmp = str(round(value*(100 - discount)/100, 2))
-                    n = len(tmp)
-                    if tmp.index(".") == n - 2: 
-                        tmp += "0"
-                        
-                    return "$" + tmp
+        words = sentence.split(" ")
+        
+        for (i, word) in enumerate(words): 
+            if len(word) > 1 and word[0] == "$" and word[1: ].isdigit(): 
+                value = int(word[1: ])*(100 - discount)/100
+                
+                strVal = str(value)
+                
+                if "." in strVal: 
+                    strVal += "00"
                     
-                except: 
-                    return string
-            else: 
-                return string
+                    m = len(strVal)                    
+                    idx = strVal.index(".")
+                    
+                    strVal = strVal[: idx + 3]
+                    
+                else: 
+                    strVal += ".00"
         
-        arr = sentence.split(" ")
-        
-        n = len(arr)
-        
-        for i in range(n):
-            arr[i] = helper(arr[i])
+                words[i] = "$" + strVal 
             
-        return " ".join(arr)
+        return " ".join(words)
+                
