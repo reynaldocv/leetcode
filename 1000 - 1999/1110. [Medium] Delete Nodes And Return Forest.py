@@ -61,3 +61,35 @@ class Solution2:
                 del idx[i]
                 del ans[i]
         return ans
+
+class Solution3:
+    def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
+        def helper(node, parent, left, toAdd): 
+            if node: 
+                if node.val in toRemove: 
+                    if parent:
+                        if left: 
+                            parent.left = None 
+                        
+                        else: 
+                            parent.right = None 
+                        
+                    helper(node.left, node, True , True)
+                    helper(node.right, node, False, True)
+                    
+                else: 
+                    if toAdd: 
+                        ans.append(node)
+                        
+                    helper(node.left, node, True, False)
+                    helper(node.right, node, False, False)
+                    
+        toRemove = {elem for elem in to_delete}
+        
+        nodes = {}
+        
+        ans = []
+        
+        helper(root, None, True, True)
+        
+        return ans 
