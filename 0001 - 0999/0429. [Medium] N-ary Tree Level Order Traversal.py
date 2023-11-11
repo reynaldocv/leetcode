@@ -10,16 +10,19 @@ class Node:
 
 class Solution:
     def levelOrder(self, root: 'Node') -> List[List[int]]:
-        def helper(root, lvl):
-            if root: 
-                seen[lvl].append(root.val)
-                if root.children: 
-                    for child in root.children: 
-                        helper(child, lvl + 1)
-                        
-        seen = defaultdict(list)
+        def helper(node, lvl):
+            if node: 
+                levels[lvl].append(node.val)
+                
+                for child in node.children: 
+                    helper(child, lvl + 1)
+                    
+        levels = defaultdict(lambda: [])
+        
         helper(root, 0)
         
-        return [*seen.values()]
-                    
+        n = len(levels)
+        
+        return [levels[i] for i in range(n)]
+             
         
