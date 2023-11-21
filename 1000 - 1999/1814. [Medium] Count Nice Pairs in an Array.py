@@ -2,15 +2,17 @@
 
 class Solution:
     def countNicePairs(self, nums: List[int]) -> int:
-        count = {}
-        n = len(nums)
-        ans = 0
         MOD = 10**9 + 7
         
-        for i in range(n):
-            delta = nums[i] - int(str(nums[i])[::-1])
-            if delta in count: 
-                ans += count[delta]
-            count[delta] = count.get(delta, 0) + 1
+        counter = defaultdict(lambda: 0)
         
-        return ans % MOD
+        ans = 0
+        
+        for num in nums: 
+            delta = num - int(str(num)[::-1])
+            
+            ans = (ans + counter[delta]) % MOD 
+            
+            counter[delta] += 1
+        
+        return ans 
