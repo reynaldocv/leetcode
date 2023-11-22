@@ -2,18 +2,23 @@
 
 class Solution:
     def findDiagonalOrder(self, nums: List[List[int]]) -> List[int]:
-        n = len(nums)
-        arr = []
+        n = len(nums) 
+        
+        elems = defaultdict(lambda: [])
         
         for i in range(n):
             for (j, num) in enumerate(nums[i]):
-                ii = (i + j)*(i + j + 1)//2 + 1
-                arr.append((ii + j, num))
+                elems[i + j].insert(0, num)
                 
-        arr.sort()
-        ans = [num for (_, num) in arr]
+        m = len(elems)
         
-        return ans
+        ans = []
+        
+        for i in range(m):
+            ans.extend(elems[i])
+            
+        return ans 
+                
         
                 
             
