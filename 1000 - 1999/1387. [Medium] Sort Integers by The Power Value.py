@@ -2,24 +2,27 @@
 
 class Solution:
     def getKth(self, lo: int, hi: int, k: int) -> int:
-        def recursive(num):
-            if num in seen: 
-                return seen[num]
-            else:
-                ans = 0
-                if num % 2 == 1: 
-                    ans = 1 + recursive(num*3 + 1)                    
-                else: 
-                    ans = 1 + recursive(num // 2)
-                seen[num] = ans
-                return ans
+        def helper(num):
+            if num in power: 
+                return power[num]
             
-        seen = {1: 1} 
-        arr = []
-        for num in range(lo, hi + 1):
-            arr.append((recursive(num), num))
+            elif num % 2 == 0: 
+                return 1 + helper(num// 2)
+            
+            else: 
+                return 1 + helper(3*num + 1)
         
-        arr.sort()
+        power = {1: 1}
         
-        return arr[k - 1][1]
+        for i in range(2, 1001):
+            power[i] = helper(i)
+            
+        arr = [i for i in range(lo, hi + 1)]
+        
+        arr.sort(key = lambda item: power[item])
+        
+        return arr[k - 1]
+            
+        
+        
         
