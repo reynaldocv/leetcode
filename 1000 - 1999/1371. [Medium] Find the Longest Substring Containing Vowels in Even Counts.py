@@ -2,16 +2,26 @@
 
 class Solution:
     def findTheLongestSubstring(self, s: str) -> int:
-        idx = {char: i for (i, char) in enumerate("aeiou")}
-        mask = 0 
-        seen = {mask: -1}
+        seen = {(0, 0, 0, 0, 0): -1}
+        
+        cnt = (0, )*5
+        
+        index = {char: i for (i, char) in enumerate("aeiou")}
+        
         ans = 0 
+        
         for (i, char) in enumerate(s): 
-            if char in "aeiou":                
-                mask = mask ^ (1 << idx[char])
-            if mask in seen: 
-                ans = max(ans, i - seen[mask])
-            else: 
-                seen[mask] = i
+            if char in "aeiou":
+                idx = index[char]
                 
-        return ans
+                cnt = cnt[: idx] + ((cnt[idx] + 1) % 2, ) + cnt[idx + 1: ]
+                
+            if cnt in seen: 
+                ans = max(ans, i - seen[cnt])
+
+            else: 
+                seen[cnt] = i 
+                    
+        return ans 
+                    
+        
