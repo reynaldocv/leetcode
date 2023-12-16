@@ -29,8 +29,10 @@ class Solution2:
     def countArrangement(self, n: int) -> int:
         def helper(idx, mask):
             nonlocal ans
+            
             if idx == n:
                 ans += 1
+                
             else: 
                 for num in nums[idx]:
                     if (mask & 1 << num) >> num == 0: 
@@ -42,6 +44,7 @@ class Solution2:
             for num in range(1, n + 1):
                 if num % i == 0:
                     nums[i - 1].add(num)
+                    
                 if i % num == 0: 
                     nums[i - 1].add(num)
         
