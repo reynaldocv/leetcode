@@ -2,26 +2,36 @@
 
 class Solution:
     def findLUSlength(self, strs: List[str]) -> int:
-        def isSubsequence(subWord, word):
-            i, j = 0, 0
+        def helper(subWord, word):
             n, m = len(word), len(subWord)
+            
+            i, j = 0, 0
+            
             while i < m and j < n: 
                 if subWord[i] == word[j]:
                     i += 1
+            
                 j += 1
-            return True if i == m else False
+            
+            return i == m 
         
-        counter = {s: strs.count(s) for s in strs}
-        uniqueStrs = [*counter]
-        uniqueStrs.sort(reverse = True, key = lambda item: len(item))
+        counter = defaultdict(lambda: 0) 
+        
+        for word in strs: 
+            counter[word] += 1 
+        
+        uniqueStrs = [key for key in counter]
+        
+        uniqueStrs.sort(key = lambda item: -len(item))
+        
         seen = {}
         
         for word in uniqueStrs: 
             if counter[word] == 1:
-                if not any ([isSubsequence(word, subWord) for subWord in seen]):
+                if not any ([helper(word, subWord) for subWord in seen]):
                     return len(word)
+                
             else: 
                 seen[word] = True
         
         return -1
-        
