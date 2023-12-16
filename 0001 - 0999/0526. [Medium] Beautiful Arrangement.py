@@ -2,6 +2,31 @@
 
 class Solution:
     def countArrangement(self, n: int) -> int:
+        def helper(i):
+            nonlocal ans 
+            
+            if i == n + 1: 
+                ans += 1 
+                
+            else: 
+                for num in range(1, n + 1):
+                    if visited[num] == 0 and (num % i == 0 or i % num == 0):
+                        visited[num] = 1
+                        
+                        helper(i + 1)
+                        
+                        visited[num] = 0 
+            
+        visited = [0 for i in range(n + 1)]
+        
+        ans = 0
+        
+        helper(1)
+        
+        return ans
+        
+class Solution2:
+    def countArrangement(self, n: int) -> int:
         def helper(idx, mask):
             nonlocal ans
             if idx == n:
