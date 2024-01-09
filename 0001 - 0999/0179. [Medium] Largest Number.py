@@ -2,20 +2,20 @@
 
 class Solution:
     def largestNumber(self, nums: List[int]) -> str:
-        n = len(nums)
-        nums = [str(nums[i]) for i in range(n)]
+        n = len(nums) 
+        
+        nums = [str(num) for num in nums]
         
         for i in range(n):
-            ans = ("".join(nums[:i + 1]), i)  
-            for j in range(i - 1, -1, -1):
-                nums[j], nums[j + 1] = nums[j + 1], nums[j]
-                ans = max(ans, ("".join(nums[:i + 1]), j))
-                
-            elem = nums.pop(0)
-            nums.insert(ans[1], elem)            
+            for j in range(i + 1, n):
+                if nums[i] + nums[j] <= nums[j] + nums[i]:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    
+        if nums[0] == "0":
+            return "0"
         
-        ans = "".join(nums)        
-        return "0" if ans[0] == "0" else ans
+        else: 
+            return "".join(nums)
         
 class Solution2:
     def largestNumber(self, nums: List[int]) -> str:        
@@ -24,8 +24,13 @@ class Solution2:
                 return x + y > y + x
     
         n = len(nums)
+        
         nums = [str(nums[i]) for i in range(n)]
         
-        largest_num = ''.join(sorted(nums, key = compare))
+        nums.sort(key = compare)
         
-        return '0' if largest_num[0] == '0' else largest_num
+        if nums[0] == "0":
+            return "0"
+        
+        else: 
+            return "".join(nums)
