@@ -3,25 +3,29 @@
 class Solution:
     def diffWaysToCompute(self, expression: str) -> List[int]:
         @cache
-        def helper(expression):
-            if expression.isdigit():
-                return [int(expression)]
+        def helper(sentence):
+            if sentence.isdigit(): 
+                return [int(sentence)]
             
-            ans = []
-            for i in range(len(expression)):
-                if expression[i] in "+-*":
-                    left = helper(expression[:i])
-                    right = helper(expression[i + 1:])
-                    for l in left: 
-                        for r in right: 
-                            if expression[i] == "-":
-                                ans.append(l - r)
-                            elif expression[i] == "+":
-                                ans.append(l + r)
-                            else:
-                                ans.append(l * r)
-                                
-            return ans
-        
+            else: 
+                ans = []
+                
+                for (i, char) in enumerate(sentence):
+                    if char in "+-*":
+                        left = helper(sentence[: i])
+                        right = helper(sentence[i + 1: ])
+                        
+                        for l in left: 
+                            for r in right: 
+                                if char == "+":
+                                    ans.append(l + r)
+
+                                elif char == "-":
+                                    ans.append(l - r)
+                                    
+                                else: 
+                                    ans.append(l*r)
+                                    
+                return ans 
+            
         return helper(expression)
-        
