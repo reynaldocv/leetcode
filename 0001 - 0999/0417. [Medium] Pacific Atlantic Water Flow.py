@@ -2,101 +2,44 @@
 
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:    
-        if not heights: 
-            return []
-        
-        n, m = len(heights), len(heights[0])
-        
-        arr1 = [[0 for _ in range(m)] for _ in range(n)]
-        arr2 = [[0 for _ in range(m)] for _ in range(n)]
-        
-        seen = {}
-        stack = []
-        for i in range(n):
-            arr1[i][0] = 1
-            seen[(i, 0)] = True
-            stack.append((i, 0))
-        
-        for j in range(m):
-            arr1[0][j] = 1
-            seen[(0, j)] = True
-            stack.append((0, j))
+       def helper(stack):
+            seen = {(x, y) for (x, y) in stack}
             
-        while stack: 
-            (x, y) = stack.pop()
-            for (i, j) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                r, s = x + i, y + j
-                if 0 <= r < n and 0 <= s < m and (r, s) not in seen: 
-                    if heights[r][s] >= heights[x][y]:
-                        seen[(r,s)] = True
-                        arr1[r][s] = 1
-                        stack.append((r, s))
+            while stack: 
+                (x, y) = stack.pop()
+                
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
+                    
+                    if 0 <= p < m and 0 <= q < n: 
+                        if heights[p][q] >= heights[x][y] and (p, q) not in seen: 
+                            stack.append((p, q))
+                            
+                            seen.add((p, q))
+                            
+            return seen
         
-        seen = {}
-        stack = []
-        for i in range(n):
-            arr2[i][-1] = 1
-            seen[(i, m - 1)] = True
-            stack.append((i, m - 1))
+        m, n = len(heights), len(heights[0])
         
-        for j in range(m):
-            arr2[-1][j] = 1
-            seen[(n - 1, j)] = True
-            stack.append((n - 1, j))
+        pacific = set([])
+        atlantic = set([])
+        
+        for i in range(m):
+            pacific.add((i, 0))
+            atlantic.add((i, n - 1))
             
-        while stack: 
-            (x, y) = stack.pop()
-            for (i, j) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                r, s = x + i, y + j
-                if 0 <= r < n and 0 <= s < m and (r, s) not in seen: 
-                    if heights[r][s] >= heights[x][y]:
-                        seen[(r, s)] = True
-                        arr2[r][s] = 1
-                        stack.append((r, s))
-                        
-        ans = []
-        for i in range(n):
-            for j in range(m):
-                if arr1[i][j] + arr2[i][j] == 2: 
-                    ans.append((i, j))
-        
-        return ans
-        
-        
-class Solution2:
-    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:    
-        def helper(x, y, value): 
-            if arr[x][y] < value:                  
-                arr[x][y] += value 
-                for i, j in (1, 0), (-1, 0), (0, 1), (0, -1):
-                    r, s = x + i, y + j
-                    if 0 <= r < n and 0 <= s < m:
-                        if heights[r][s] >= heights[x][y]: 
-                            helper(r, s, value)
-       
-        if not heights: 
-            return []
-        
-        n, m = len(heights), len(heights[0])
-        
-        arr = [[0 for _ in range(m)] for _ in range(n)]
-        
-        for j in range(m): 
-            helper(0, j, 1) 
+        for j in range(n):
+            pacific.add((0, j))
+            atlantic.add((m - 1, j))
             
-        for i in range(n): 
-            helper(i, 0, 1) 
-        
-        for j in range(m): 
-            helper(n - 1, j, 2)
-            
-        for i in range(n): 
-            helper(i, m - 1, 2)
+        seen1 = helper([elem for elem in pacific])
+        seen2 = helper([elem for elem in atlantic])
         
         ans = []
-        for i in range(n):
-            for j in range(m):
-                if arr[i][j] == 3: 
-                    ans.append((i, j))
         
-        return ans
+        for i in range(m):
+            for j in range(n):
+                if (i, j) in seen1 and (i, j) in seen2: 
+                    ans.append((i, j))
+                    
+        return ans 
