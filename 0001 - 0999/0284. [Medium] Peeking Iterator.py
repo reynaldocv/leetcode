@@ -1,5 +1,3 @@
-# https://leetcode.com/problems/peeking-iterator/
-
 # Below is the interface for Iterator, which is already defined for you.
 #
 # class Iterator:
@@ -34,33 +32,28 @@ class PeekingIterator:
             
         self.index = 0
         self.n = len(self.arr)
-        
 
     def peek(self):
         """
         Returns the next element in the iteration without advancing the iterator.
         :rtype: int
         """
-        if self.index < self.n:
-            return self.arr[self.index]
+        return self.arr[self.index]
         
-
     def next(self):
         """
         :rtype: int
         """
-        if self.index < self.n:
-            self.index += 1         
-            return self.arr[self.index - 1]
-            
+        self.index += 1   
+        
+        return self.arr[self.index - 1]
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return True if self.index <= self.n - 1 else False
-        
-
+        return self.index <= self.n - 1
+            
 # Your PeekingIterator object will be instantiated and called as such:
 # iter = PeekingIterator(Iterator(nums))
 # while iter.hasNext():
