@@ -2,25 +2,33 @@
 
 class Solution:
     def isAdditiveNumber(self, num: str) -> bool:
-        def helper(prev, cur, s):
-            if cur == s: 
-                return True
-            elif cur in s: 
-                if s.index(cur) == 0:
-                    newCur = int(cur) + int(prev)
-                    return helper(cur, str(newCur), s[len(cur):])
+        def helper(first, second, word):
+            if word == "":
+                return True 
+            
+            third = str(int(first) + int(second))
+            
+            m, l = len(third), len(word)
+            
+            if m <= l: 
+                for i in range(m):
+                    if third[i] != word[i]:
+                        return False 
                     
-            return False
+                if helper(second, int(third), word[m: ]):
+                    return True 
+                
+            return False 
         
         n = len(num)
+        
         for i in range(1, n - 1):
-            for j in range(i + 1, n):                                
-                num1 = num[:i]
-                num2 = num[i: j]
-                first = (num1 == "0" or (len(num2) > 0 and num1[0]!= "0"))
-                second = (num2 == "0" or (len(num2) > 0 and num2[0]!= "0"))
-                if first and second: 
-                    if helper(num2, str(int(num1) + int(num2)), num[j:]):
-                        return True
-
+            for j in range(i + 1, n):
+                first = num[: i]
+                second = num[i: j]
+                
+                if len(str(int(first))) == len(first) and len(str(int(second))) == len(second):                
+                    if helper(first, second, num[j: ]):
+                        return True 
+                
         return False
