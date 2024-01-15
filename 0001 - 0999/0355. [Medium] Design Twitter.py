@@ -1,41 +1,39 @@
-# https://leetcode.com/problems/design-twitter/
-
-class User: 
-    def __init__(self):
-        self.followers = set()
-        self.following = set()
+# https://leetcode.com/problems/design-twitter/submissions/
 
 class Twitter:
 
     def __init__(self):
-        self.users = defaultdict(User)
-        self.tweets = []
+        self.tweets = defaultdict(lambda: [])                
+        self.count = defaultdict(lambda: 0)
+        
+        self.cnt = 1 
+        
+        self.following = defaultdict(lambda: set())
         
     def postTweet(self, userId: int, tweetId: int) -> None:
-        self.tweets.append([tweetId, userId])
+        self.tweets[userId].insert(0, tweetId)
+        
+        self.count[tweetId] = self.cnt
+        
+        self.cnt += 1 
 
     def getNewsFeed(self, userId: int) -> List[int]:
-        ans = []
+        tmp = []
+        tmp.extend(self.tweets[userId][: 10])
         
-        for i in range(len(self.tweets) -1, -1, -1):
-            if len(ans) == 10:
-                break
-            (_tweetId, _userId) = self.tweets[i]
-            if _userId in self.users[userId].following or _userId == userId:
-                ans.append(_tweetId)
-        return ans
-
+        for followee in self.following[userId]:
+            tmp.extend(self.tweets[followee])
+            
+        tmp.sort(key = lambda item: -self.count[item])
+        
+        return tmp[: 10]
+    
     def follow(self, followerId: int, followeeId: int) -> None:
-        self.users[followeeId].followers.add(followerId)
-        self.users[followerId].following.add(followeeId)
+        self.following[followerId].add(followeeId)
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
-        if followerId in self.users[followeeId].followers: 
-            self.users[followeeId].followers.remove(followerId)
-        if followeeId in self.users[followerId].following: 
-            self.users[followerId].following.remove(followeeId)
-        
-
+        if followeeId in self.following[followerId]:
+            self.following[followerId].remove(followeeId)
 
 # Your Twitter object will be instantiated and called as such:
 # obj = Twitter()
