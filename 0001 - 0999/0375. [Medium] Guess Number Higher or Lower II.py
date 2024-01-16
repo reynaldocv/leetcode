@@ -6,11 +6,13 @@ class Solution:
         def helper(start, end):
             if start >= end: 
                 return 0 
+            
             else: 
-                money = inf
-                for i in range(start, end + 1):
-                    money = min(money, i + max(helper(start, i - 1), helper(i + 1, end)))
+                ans = inf
+                
+                for num in range(start, end + 1):
+                    ans = min(ans, num + max(helper(start, num - 1), helper(num + 1, end)))
                     
-                return money
+                return ans
             
         return helper(1, n)
