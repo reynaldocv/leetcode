@@ -3,24 +3,21 @@
 class Solution:
     def wiggleSort(self, nums: List[int]) -> None:
         """
-        Do not return anything, modify nums in-place instead.
+        Do not return anything, modify nums in-place instead.        
+        
         """
         n = len(nums)
-        temp = sorted(nums, reverse=True)
         
-        middle = n//2 if n % 2 == 0 else n//2 + 1
+        arr = sorted(nums, key = lambda item: -item) 
         
-        j = 0
+        minor = n//2
+        maior = 0
         
-        for i in range(1, n, 2):
-            nums[i] = temp[j]
-            j += 1
-            if j == middle:
-                break
+        for i in range(n):
+            if i % 2 == 0: 
+                nums[i] = arr[minor]                
+                minor += 1
                 
-        for i in range(0, n, 2):
-            nums[i] = temp[j]
-            j += 1
-            if j == len(nums):
-                break
-        
+            else: 
+                nums[i] = arr[maior]                
+                maior += 1 
