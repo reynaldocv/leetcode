@@ -22,7 +22,6 @@ class Solution:
                 return ans 
                 
             else: 
-                return 0 
-            
+                return 0             
             
         return helper(root, False)        
