@@ -2,22 +2,41 @@
 
 class Solution:
     def lengthLongestPath(self, input: str) -> int:
-        arr = input.split("\n")
-        stack = []        
+        lvl = 0 
+        file = False
+        
+        s = input.replace("\n", "*")
+        s = s.replace("\t", "$")
+        
+        stack = []
+        
+        tmp = ""
         ans = 0
-        for val in arr: 
-            while stack and stack[-1].count("\t") >= val.count("\t"):
-                    stack.pop()                
-            if "." in val: 
-                aux = "/".join(stack + [val])
-                aux = aux.replace("\t","")
+        
+        for char in s + "*": 
+            if char == "*":
+                stack.append(tmp)
                 
-                ans = max(ans, len(aux))
+                if "." in tmp: 
+                    ans = max(ans, len("/".join(stack)))
+                    
+                tmp = ""
+                lvl = 0
+                
+            elif char == "$":
+                lvl += 1 
                 
             else: 
-                stack.append(val)
+                while len(stack) > lvl: 
+                    stack.pop()
+                    
+                tmp += char
+                
+        return ans 
+            
         
-        return ans
+        
+        
             
         
                 
