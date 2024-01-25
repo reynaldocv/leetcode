@@ -9,19 +9,20 @@
 class Solution:
     def rob(self, root: Optional[TreeNode]) -> int:
         @cache 
-        def helper(root, val):
-            if root: 
-                if val == True: 
-                    aux1 = root.val + helper(root.left, False) + helper(root.right, False)
-                    aux2 = helper(root.left, True) + helper(root.right, True)
+        def helper(node, visit):
+            if node: 
+                if visit: 
+                    ans = helper(node.left, False) + helper(node.right, False)
                     
-                    return max(aux1, aux2)
+                else:
+                    ans = node.val + helper(node.left, True) + helper(node.right, True)
                     
-                else: 
-                    return helper(root.left, True) + helper(root.right, True)
-            
-            else: 
-                return 0
-            
-        return max(helper(root, True), helper(root, False))
+                    ans = max(ans, helper(node.left, False) + helper(node.right, False))  
+                    
+                return ans 
                 
+            else: 
+                return 0 
+            
+            
+        return helper(root, False)        
