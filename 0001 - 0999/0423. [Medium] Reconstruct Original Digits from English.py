@@ -2,36 +2,52 @@
 
 class Solution:
     def originalDigits(self, s: str) -> str:
+        oneLetter = ["zero", "wot", "urfo", "xsi", "ghtei"]
+        twoLetters = ["oen", "three", "fvie", "sveen", "einn"]
+        
+        numbers = {"z": "0", "w": "2", "u": "4", "x": "6", "g": "8", "oe": "1", "th": "3", "fv": "5", "sv": "7", "ei": "9"}
+        
         counter = defaultdict(lambda: 0)
-        dic1 = OrderedDict()
-        dic1["g"] = ("it", 8)   
-        dic1["z"] = ("o" , 0)   
-        dic1["w"] = ("to", 2)   
-        dic1["u"] = ("fo" , 4)   
-        dic1["x"] = ("i" , 6)   
-        dic1["o"] = ("", 1)   
-        dic1["t"] = ("", 3)   
-        dic1["f"] = ("iv", 5)   
-        dic1["v"] = ("", 7)   
-        dic1["i"] = ("", 9)  
         
         for char in s: 
-            counter[char] += 1
+            counter[char] += 1 
+            
+        ans = "" 
         
-        counter2 = [0 for _ in range(10)]
-        
-        for key in dic1: 
-            quantity = counter[key]
-            if quantity > 0: 
-                counter2[dic1[key][1]] = quantity
-                for char in dic1[key][0]:
-                    counter[char] -= quantity
-
-        ans = []
-        for i in range(10):
-            ans.append(str(i)*counter2[i])
-        
-        return "".join(ans)
+        for word in oneLetter: 
+            first = word[0]    
+             
+            if first in counter:
+                cnt = counter[first]
+            
+                for char in word: 
+                    counter[char] -= cnt 
+                    
+                    if counter[char] == 0: 
+                        counter.pop(char)
+                        
+                ans += numbers[first]*cnt
+            
+        for word in twoLetters: 
+            first = word[0]            
+            second = word[1]
+            
+            if first in counter and second in counter:
+                cnt1 = counter[first]
+                cnt2 = counter[second]
+                
+                cnt = min(cnt1, cnt2)
+            
+                for char in word: 
+                    counter[char] -= cnt 
+                    
+                    if counter[char] == 0: 
+                        counter.pop(char)
+                        
+                ans += numbers[first + second]*cnt
+                
+        return "".join(sorted(ans))
+                    
         
         
                 
