@@ -2,19 +2,26 @@
 
 class Solution:
     def lastRemaining(self, n: int) -> int:
-        m = n
-        ratio = 1
-        start = 1
-        count = 1
-        while start + ratio <= n:            
-            if count == 1: 
-                start += ratio
-            else: 
-                start = start + ratio if (m % 2 == 1) else start            
-            count = (count + 1) % 2
-            ratio *= 2
-            m = m//2
+        def helper(start, end, turn, n, ratio):
+            if start == end: 
+                return start
             
-        return start
+            else: 
+                if turn: 
+                    start += ratio
+
+                    if n % 2 == 1: 
+                        end -= ratio
+                        
+                else: 
+                    if n % 2 == 1: 
+                        start += ratio
+                    
+                    end -= ratio
+                    
+                return helper(start, end, not turn, n//2, 2*ratio)
+                
+        return helper(1, n, True, n, 1)
+        
             
         
