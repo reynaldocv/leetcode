@@ -2,26 +2,35 @@
 
 class Solution:
     def validUtf8(self, data: List[int]) -> bool:
-        nBytes = 0
-        mask1 = 1 << 7
-        mask2 = 1 << 6
-        for num in data:
-            mask = 1 << 7
-            if nBytes == 0:
-                while mask & num:
-                    nBytes += 1
-                    mask = mask >> 1
-                    
-                if nBytes == 0:
-                    continue
-
-                if nBytes == 1 or nBytes > 4:
-                    return False
-            else:
-                if not (num & mask1 and not (num & mask2)):
-                    return False
+        def helper(number):
+            if (number >> 7) == 0: 
+                return 1 
             
-            nBytes -= 1
+            elif (number >> 5) == 6:
+                return 2 
             
-        return nBytes == 0    
+            elif (number >> 4) == 14:
+                return 3 
+            
+            elif (number >> 3) == 30:
+                return 4
+            
+            return 0
+            
+        cnt = 0 
         
+        for num in data: 
+            if cnt > 0: 
+                if (num >> 6 != 2):
+                    return False 
+                
+                else: 
+                    cnt -= 1 
+                    
+            else: 
+                cnt = helper(num) - 1
+                
+                if cnt < 0: 
+                    return False 
+                
+        return cnt == 0  
