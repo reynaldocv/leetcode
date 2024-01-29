@@ -2,21 +2,23 @@
 
 class Solution:
     def findNthDigit(self, n: int) -> int:
-        base, dig = 1, 1
-        while n > 9*base*dig:
-            n -= 9*base*dig          
-            base *= 10
-            dig += 1
+        start = 1        
+      
+        ratio = 1
+        lvl = 1        
         
-        quo = n // dig
-        res = n % dig      
-        
-        if res == 0:
-            quo -= 1
+        while n > 9*ratio*lvl: 
+            n -= 9*ratio*lvl
             
-        num = base + quo
+            ratio *= 10 
+            lvl += 1 
+            
+            start *= 10
+            
+        start += (n - 1)//lvl 
         
-        if res == 0: 
-            return int(str(num)[-1])
-        else: 
-            return int(str(num)[res - 1])
+        position = n % lvl
+        
+        return int(str(start)[position - 1])
+        
+        
