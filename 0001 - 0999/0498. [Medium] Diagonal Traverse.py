@@ -8,7 +8,7 @@ class Solution:
         
         for i in range(m):
             for j in range(n):
-                elems[i + j].append(mat[i][j])
+                elems[i + j].append(mat[i][j]) 
                     
         ans = []                
          
