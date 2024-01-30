@@ -2,28 +2,21 @@
 
 class Solution:
     def findDiagonalOrder(self, mat: List[List[int]]) -> List[int]:
-        n = len(mat)
-        m = len(mat[0])
-        start = [(0, 0)]
-        for i in range(1, n):
-            start.append((i, 0))
-        for j in range(1, m):
-            start.append((n - 1, j))
+        elems = defaultdict(lambda: [])
         
-        do = 1
-        ans = []
-        for (x, y) in start: 
-            arr = [] 
-            while 0 <= x < n and 0 <= y < m:
-                arr.append(mat[x][y])
-                x, y = x - 1, y + 1
-            ans.extend(arr[::do])
-            do *= -1
+        m, n = len(mat), len(mat[0])
         
-        return ans
+        for i in range(m):
+            for j in range(n):
+                elems[i + j].append(mat[i][j])
+                    
+        ans = []                
+         
+        for i in range(m + n - 1):
+            if i % 2 == 0: 
+                ans.extend(elems[i][:: -1])
                 
+            else: 
+                ans.extend(elems[i])
                 
-            
-            
-            
-        https://leetcode.com/problems/diagonal-traverse/
+        return ans 
