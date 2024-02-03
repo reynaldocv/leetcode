@@ -2,20 +2,21 @@
 
 class Solution:
     def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
-        n = len(arr)
-        dp = [0]*n
+        n = len(arr) 
         
+        dp = defaultdict(lambda: 0)
+         
         for (i, num) in enumerate(arr):
-            maxElem = 0 
-            ans = 0 
-            for j in range(i, max(-1, i - k), -1):
-                maxElem = max(maxElem, arr[j])
-                prev = 0 if j == 0 else dp[j - 1]
-                ans = max(ans, prev + maxElem*(i + 1 - j))
-                
-            dp[i] = ans
+            minNum = 0
+            tmp = 0
             
-        return dp[-1]
+            for j in range(i, max(i - k, -1), -1):
+                minNum = max(minNum, arr[j])
                 
+                tmp = max(tmp, minNum*(i - j + 1) + dp[j - 1])
+                
+            dp[i] = tmp
+            
+        return dp[n - 1]
             
                 
