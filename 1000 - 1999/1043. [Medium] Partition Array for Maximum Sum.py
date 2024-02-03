@@ -6,7 +6,7 @@ class Solution:
         
         dp = defaultdict(lambda: 0)
          
-        for (i, num) in enumerate(arr):
+        for i in range(n):
             minNum = 0
             tmp = 0
             
@@ -18,5 +18,17 @@ class Solution:
             dp[i] = tmp
             
         return dp[n - 1]
+                
+                
+            
+   
+            
             
                 
+                
+            
+        
+        
+        
+        
+          
