@@ -5,16 +5,17 @@ class Solution:
         counter = defaultdict(lambda: 0)
         
         for char in s: 
-            counter[char] += 1
-            
-        arr = [(-counter[char], char) for char in counter]
-        arr.sort()
+            counter[char] += 1 
+                    
+        tmp = sorted([key for key in counter], key = lambda item: -counter[item])
         
         ans = ""
-        for (quantity, char) in arr: 
-            ans += char*(-1*quantity)
+        
+        for char in tmp: 
+            ans += char*counter[char]
             
-        return ans
-            
+        return ans 
+        
+        
             
         
