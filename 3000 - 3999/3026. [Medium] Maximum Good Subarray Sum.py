@@ -11,13 +11,11 @@ class Solution:
         for (i, num) in enumerate(nums):
             aSum += num 
             
-            greater = num + k
-            
+            greater = num + k            
             if greater in index: 
                 ans = max(ans, aSum - index[greater])            
             
-            lower = num - k 
-            
+            lower = num - k             
             if lower in index: 
                 ans = max(ans, aSum - index[lower])            
            
