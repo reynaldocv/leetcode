@@ -2,21 +2,26 @@
 
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        seen = defaultdict(lambda: 0)
-        for (persons, origin, destiny) in trips: 
-            seen[origin] += persons
-            seen[destiny] -= persons
+        counter = defaultdict(lambda: 0)
+        
+        for (passengers, start, end) in trips: 
+            counter[start] += passengers
             
-        points = [key for key in seen]
-        points.sort()
+            counter[end] -= passengers
+            
+        arr = [key for key in counter]        
+        arr.sort() 
         
         total = 0 
-        for x in points:
-            total += seen[x]
-            if total > capacity: 
-                return False
+        
+        for num in arr: 
+            total += counter[num]
             
-        return True
+            if total > capacity: 
+                return False 
+            
+        return True 
+        
             
             
             
