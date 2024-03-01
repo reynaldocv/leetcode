@@ -3,32 +3,39 @@
 class DetectSquares:
 
     def __init__(self):
-        self.coordX = {}
+        self.abscissa = defaultdict(lambda: set([]))
+        self.counter = defaultdict(lambda: 0)
         
-
     def add(self, point: List[int]) -> None:
         (x, y) = point
         
-        self.coordX[x] = self.coordX.get(x, {})
-        self.coordX[x][y] = self.coordX[x].get(y, 0) + 1
-
-    def count(self, point: List[int]) -> int:
-        ans = 0
-        (r, s) = point
-        for x in self.coordX:
-            if s in self.coordX[x]:
-                dist = abs(x - r)
-                if dist > 0: 
-                    if s + dist in self.coordX[x] and r in self.coordX and s + dist in self.coordX[r]:
-                        ans += self.coordX[x][s] * self.coordX[x][s + dist] * self.coordX[r][s + dist]
-                    if s - dist in self.coordX[x] and r in self.coordX and s - dist in self.coordX[r]:
-                        ans += self.coordX[x][s] * self.coordX[x][s - dist] * self.coordX[r][s - dist]
-
-        return ans
-                    
-                    
+        self.abscissa[x].add(y)        
+        self.counter[(x, y)] += 1
         
+    def count(self, point: List[int]) -> int:
+        (x1, y1) = point
+        
+        ans = 0 
+        
+        for y2 in self.abscissa[x1]:
+            side = abs(y2 - y1)
+            
+            if side > 0:            
+                qnt = 1 
+                qnt *= self.counter[(x1, y2)]
+                qnt *= self.counter[(x1 + side, y1)]
+                qnt *= self.counter[(x1 + side, y2)]
 
+                ans += qnt
+
+                qnt = 1 
+                qnt *= self.counter[(x1, y2)]
+                qnt *= self.counter[(x1 - side, y1)]
+                qnt *= self.counter[(x1 - side, y2)]
+
+                ans += qnt
+
+        return ans 
 
 # Your DetectSquares object will be instantiated and called as such:
 # obj = DetectSquares()
