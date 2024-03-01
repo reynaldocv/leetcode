@@ -2,21 +2,18 @@
 
 class Solution:
     def addRungs(self, rungs: List[int], dist: int) -> int:
-        n = len(rungs)
-        
+        start = 0
+            
         ans = 0 
         
-        last = 0 
-        for i in range(n):
-            if rungs[i] - last > dist: 
-                distance = rungs[i] - last
-                quo = distance//dist
-                ans += quo - 1 if distance % dist == 0 else quo
+        for num in rungs: 
+            if start + dist < num: 
+                ans += (num - start - 1)//dist
                 
-            last = rungs[i]
-                
-        return ans
-                
+            start = num 
+            
+        return ans 
+        
         
         
             
