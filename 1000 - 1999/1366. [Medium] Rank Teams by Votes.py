@@ -3,14 +3,15 @@
 class Solution:
     def rankTeams(self, votes: List[str]) -> str:
         n = len(votes[0])
-        count = defaultdict(lambda: (0, )*n)
+        
+        counter = defaultdict(lambda: (0, )*n)
         
         for vote in votes: 
             for (i, char) in enumerate(vote):
-                count[char] = count[char][: i] + (count[char][i] - 1,) + count[char][i + 1:] 
+                counter[char] = counter[char][: i] + (counter[char][i] - 1, ) + counter[char][i + 1: ]
                 
-        ans = [key for key in count]
+        arr = [key for key in counter]
         
-        ans.sort(key = lambda item: (count[item], item))
+        arr.sort(key = lambda item: (counter[item], item))
         
-        return "".join(ans)
+        return "".join(arr)
