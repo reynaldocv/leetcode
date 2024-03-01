@@ -2,26 +2,26 @@
 
 class Solution:
     def findMinFibonacciNumbers(self, k: int) -> int:
-        @cache
-        def helper(n):
-            if n <= 1: 
-                return 1
-            else: 
-                return helper(n - 1) + helper(n - 2)
+        arr = [0, 1, 1]
+        
+        num1, num2 = 1, 1
+        
+        while num1 < 10**9: 
+            num1 = num1 + num2
+            num2 = num1 - num2
             
-        fibonacci = []    
-        i = 1
-        while helper(i) <= k:
-            fibonacci.append(helper(i))
-            i += 1
+            arr.append(num1)
             
         ans = 0 
+        
         while k > 0: 
-            idx = bisect_left(fibonacci, k)
-            if idx == len(fibonacci) or fibonacci[idx] > k:
-                idx -= 1
-            k -= fibonacci[idx]
-            ans += 1    
+            idx = bisect_right(arr, k) 
             
-        return ans
+            k -= arr[idx - 1]
+            
+            ans += 1
+        
+        return ans 
+        
+        
         
