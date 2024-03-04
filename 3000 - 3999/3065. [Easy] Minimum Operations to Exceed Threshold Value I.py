@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/distribute-elements-into-two-arrays-i/
+# https://leetcode.com/problems/minimum-operations-to-exceed-threshold-value-i/
 
 class Solution:
     def minOperations(self, nums: List[int], k: int) -> int:
