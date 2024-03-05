@@ -2,29 +2,32 @@
 
 class Solution:
     def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
-        def helper(u, turn):
-            for v in graph[u]:
-                if (v, turn) not in seen: 
-                    seen[(v, turn)] = True
-                    helper(v, not turn)
+        def helper(u, color):
+            if u in colors: 
+                return colors[u] == color
+            
+            else: 
+                colors[u] = color
+                
+                for v in graph[u]:
+                    if helper(v, 1 - color) == False:
+                        return False 
+                    
+                return True 
         
         graph = defaultdict(lambda: [])
-        vertices = {}
-        for (a, b) in dislikes: 
-            graph[a].append(b)
-            graph[b].append(a)
-            vertices[a] = a
-            vertices[b] = b
-            
-        seen = {}
-        for u in vertices: 
-            if (u, True) not in seen and (u, False) not in seen: 
-                seen[(u, False)] = True
-                helper(u, True)
-                
-        for (key, turn) in seen: 
-            if (key, not turn) in seen: 
-                return False
         
-        return True
+        for (u, v) in dislikes:
+            graph[u].append(v)
+            graph[v].append(u)
+            
+        colors = {}
+            
+        for i in range(1, n + 1):
+            if i not in colors: 
+                if helper(i, 1) == False:
+                    return False 
+                
+        return True 
+                    
         
