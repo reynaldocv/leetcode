@@ -2,34 +2,52 @@
 
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        def helper(string):            
-            ans = []
-            for (i, char) in enumerate(string):
-                ans.append(string[:i] + before[char] + string[i + 1:])
-                ans.append(string[:i] + after[char] + string[i + 1:])
-                
-            return ans 
-            
-        after = {str(i): str((i + 1) % 10) for i in range(10)}
-        before = {str(i): str((i - 1) % 10) for i in range(10)}
-        
-        deads = {word: True for word in deadends}
-        
         stack = ["0000"]
-        seen = {}
+        seen = {"0000"}
+        
+        deadends = {elem for elem in deadends}
+        
         ans = 0
         
         while stack: 
             newStack = []
-            for word in stack:     
-                if word not in seen and word not in deads: 
-                    if word == target: 
-                        return ans 
-                    
-                    seen[word] = True 
-                    for newWord in helper(word):
-                        newStack.append(newWord)
+            
+            for elem in stack: 
+                if elem == target: 
+                    return ans 
+                
+                if elem not in deadends: 
+                    for i in range(4):
+                        newUp = elem[: i] + str((int(elem[i]) + 1) % 10) + elem[i + 1: ]
+
+                        if newUp not in seen: 
+                            seen.add(newUp)
+
+                            newStack.append(newUp)
+
+                        newDown = elem[: i] + str((int(elem[i]) - 1) % 10) + elem[i + 1: ]
+
+                        if newDown not in seen: 
+                            seen.add(newDown)
+
+                            newStack.append(newDown)
+
+            stack = newStack 
             ans += 1 
-            stack = newStack
             
         return -1
+            
+            
+            
+            
+                        
+                    
+                    
+                    
+                    
+            
+        
+        
+        
+        
+        
