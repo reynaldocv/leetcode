@@ -2,29 +2,33 @@
 
 class Solution:
     def rotateTheBox(self, box: List[List[str]]) -> List[List[str]]:
+        def helper(arr):
+            cnt = 0 
+            
+            for (i, char) in enumerate(arr + ["*"]):
+                if char == "#": 
+                    cnt += 1
+                    
+                    arr[i] = "."
+                
+                elif char == "*":
+                    for idx in range(i - cnt, i):
+                        arr[idx] = "#"
+                    
+                    cnt = 0
+                        
+            return arr
+        
         m, n = len(box), len(box[0])
         
-        for i in range(m):            
-            prev = 0 
-            box[i].append("*")
-            for j in range(n + 1):
-                if box[i][j] == "#":
-                    prev += 1 
-                    box[i][j] = "."
-                if box[i][j] == "*":
-                    aux = j - 1
-                    while prev > 0: 
-                        box[i][aux] = "#"
-                        aux -= 1 
-                        prev -= 1 
-           
-        ans = []
-        
-        for j in range(n):
-            aux = []
-            for i in range(m):
-                aux.append(box[m - i - 1][j])
-                
-            ans.append(aux)
+        for (i, row) in enumerate(box): 
+            box[i] = helper(row)
             
+        ans = [[box[m - i - 1][j] for i in range(m)] for j in range(n)]
+        
         return ans
+            
+                        
+                    
+         
+            
