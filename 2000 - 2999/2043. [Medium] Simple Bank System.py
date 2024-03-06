@@ -22,8 +22,6 @@ class Bank:
             return True
         
         return False
-            
-        
 
     def withdraw(self, account: int, money: int) -> bool:
         if account in self.accounts: 
@@ -32,15 +30,7 @@ class Bank:
                 return True
         
         return False
-                
         
-        
-        
-        
-        
-        
-
-
 # Your Bank object will be instantiated and called as such:
 # obj = Bank(balance)
 # param_1 = obj.transfer(account1,account2,money)
