@@ -2,50 +2,46 @@
 
 class Solution:
     def placeWordInCrossword(self, board: List[List[str]], word: str) -> bool:
-        def compare(s1, s2):
-            for i in range(w):
-                if s1[i] != " ":
-                    if s1[i] == s2[i]:
-                        continue
-                    else: 
-                        return False                
-            return True
-        
-        n, m = len(board), len(board[0])
-        w = len(word)
-        spaces = []      
-        
-        for i in range(n):
-            prev = ""
-            for j in range(m):
-                if board[i][j] == "#":
-                    if len(prev) == w:
-                        spaces.append(prev)
-                    prev = ""
-                else: 
-                    prev += board[i][j]
-            if len(prev) == w:
-                spaces.append(prev)
+        def helper(arr):
+            tmp = ""
             
-        for j in range(m):
-            prev = ""
-            for i in range(n):
-                if board[i][j] == "#":
-                    if len(prev) == w:
-                        spaces.append(prev)
-                    prev = ""
+            for char in arr + ["#"]:
+                if char != "#":
+                    tmp += char
+                    
                 else: 
-                    prev += board[i][j]
-            if len(prev) == w:
-                spaces.append(prev)
-
-        for space in spaces: 
-            if space == " "*w:
-                return True
-            elif compare(space, word) or compare(space[::-1], word):
-                return True
+                    if len(tmp) == l: 
+                        if collaborator(tmp, word):
+                            return True 
+                        
+                        if collaborator(tmp[:: -1], word):
+                            return True 
+                    
+                    tmp = ""
+            
+            return False 
         
-        return False
-                
+        def collaborator(tmp, word):
+            for (i, char) in enumerate(tmp):
+                if char != " ":
+                    if char != word[i]:
+                        return False 
+            
+            return True 
+        
+        m, n, l = len(board), len(board[0]), len(word)
+        
+        for row in board: 
+            if helper(row):
+                return True 
+            
+        board = [[board[i][j] for i in range(m)] for j in range(n)]
+        
+        for row in board: 
+            if helper(row):
+                return True 
+            
+        return False 
+        
         
         
