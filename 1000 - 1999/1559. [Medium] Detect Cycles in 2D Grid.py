@@ -1,35 +1,34 @@
 # https://leetcode.com/problems/detect-cycles-in-2d-grid/
-
-class Solution:
+class Solution01:
     def containsCycle(self, grid: List[List[str]]) -> bool:
-        def helper(x, y):
-            val = grid[x][y]
-            prev = (-inf, -inf)
-            stack = [((x, y), prev)]
-            seen = {(x, y): True}
-            
-            while stack: 
-                ((x, y), prev) = stack.pop(0)
-                for (r, s) in [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]:
-                    if 0 <= r < n and 0 <= s < m: 
-                        if (r, s) != prev and grid[r][s] == val: 
-                            if (r, s) in seen: 
-                                return True
-                            else: 
-                                seen[(r, s)] = True
-                                stack.append(((r, s), (x, y)))
+        def helper(x, y, pX, pY): 
+            for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                p, q = x + r, y + s
+                
+                if 0 <= p < m and 0 <= q < n:
+                    if grid[x][y] == grid[p][q]:                                                
+                        if (p, q) != (pX, pY): 
+                            if (p, q) in visited: 
+                                return True 
 
-            for (r, s) in seen: 
-                grid[r][s] = "$"
-                    
+                            else:
+                                visited.add((p, q))
+
+                                if helper(p, q, x, y):
+                                    return True 
+
             return False 
-            
-        n, m = len(grid), len(grid[0])
         
-        for i in range(n):
-            for j in range(m):
-                if grid[i][j] != "$":
-                    if helper(i, j):
-                        return True
+        m, n = len(grid), len(grid[0])
+        
+        visited = set([])
+        
+        for i in range(m):
+            for j in range(n):
+                if (i, j) not in visited:                     
+                    visited.add((i, j))
                     
-        return False
+                    if helper(i, j, -1, -1):
+                        return True 
+        
+        return False 
