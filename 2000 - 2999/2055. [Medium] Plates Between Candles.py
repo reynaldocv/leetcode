@@ -3,36 +3,49 @@
 class Solution:
     def platesBetweenCandles(self, s: str, queries: List[List[int]]) -> List[int]:
         n = len(s)
-        prev = {}
-        left, right = [0]*n, [0]*n
-        idxRight, idxLeft = [-1]*n, [-1]*n
         
-        total = 0   
-        lastL = -1
-        for (i, val) in enumerate(s):
-            total += 1 if val == "*" else 0                
-            left[i] = total
-            if val == "|":
-                lastL = i
-            idxLeft[i] = lastL 
+        left = [0 for _ in range(n)]
+        right = [0 for _ in range(n)]
+        
+        last = n 
+        
+        for i in range(n - 1, -1, -1):
+            if s[i] == "|":
+                last = i 
+                
+            left[i] = last 
             
+        first = -1 
         
-        total = 0
-        lastR = -1
-        for (i, val) in enumerate(s[::-1]):
-            total += 1 if val == "*" else 0 
-            right[n - 1 - i] = total
-            if val == "|":
-                lastR = n - 1 - i
-            idxRight[n - i - 1] = lastR 
+        for i in range(n):
+            if s[i] == "|":
+                first = i 
+                
+            right[i] = first
+            
+        counter = []
+        
+        cnt = 0 
+        
+        for char in s: 
+            if char == "*":
+                cnt += 1 
+                
+            counter.append(cnt)
             
         ans = []
-        for (x, y) in queries: 
-            if idxRight[x] <= idxLeft[y]:            
-                ans.append(total - left[idxRight[x]] - right[idxLeft[y]])
+            
+        for (a, b) in queries: 
+            start = left[a]
+            end = right[b]
+            
+            if end > start: 
+                ans.append(counter[end] - counter[start])
+                
             else: 
                 ans.append(0)
-            
-        return ans
+                
+        return ans 
+        
             
         
