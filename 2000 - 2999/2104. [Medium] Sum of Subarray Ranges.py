@@ -2,15 +2,20 @@
 
 class Solution:
     def subArrayRanges(self, nums: List[int]) -> int:
-        ans = 0 
         n = len(nums)
+        
+        ans = 0 
+        
         for i in range(n):
-            maxElem = minElem = nums[i]
+            minElem = nums[i]
+            maxElem = nums[i]
+            
             for j in range(i + 1, n):
-                maxElem = max(maxElem, nums[j])
                 minElem = min(minElem, nums[j])
-                ans += abs(maxElem - minElem)
+                maxElem = max(maxElem, nums[j])
                 
-        return ans
+                ans += maxElem - minElem 
+                
+        return ans 
         
         
