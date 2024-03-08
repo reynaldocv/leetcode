@@ -2,20 +2,28 @@
 
 class Solution:
     def maxMatrixSum(self, matrix: List[List[int]]) -> int:
-        n = len(matrix)
-        totalNeg = 0
-        totalSum = 0
-        minElem = abs(matrix[0][0])
-        for i in range(n):
+        m, n = len(matrix), len(matrix[0])
+        
+        aSum = 0 
+        minElem = inf 
+        
+        counter = 0 
+        
+        for i in range(m):
             for j in range(n):
+                if matrix[i][j] < 0: 
+                    counter = (counter + 1) % 2
+                    
+                aSum += abs(matrix[i][j])
+                
                 minElem = min(minElem, abs(matrix[i][j]))
-                if matrix[i][j] < 0:
-                    totalNeg += 1
-                totalSum += abs(matrix[i][j])
+                
+        if counter == 0: 
+            return aSum 
         
-        if totalNeg % 2 == 1:
-            totalSum -= 2*minElem
+        else: 
+            return aSum - 2*minElem 
         
-        return totalSum
-            
+        
+        
         
