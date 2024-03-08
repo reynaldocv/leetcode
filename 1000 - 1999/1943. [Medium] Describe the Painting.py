@@ -2,19 +2,27 @@
 
 class Solution:
     def splitPainting(self, segments: List[List[int]]) -> List[List[int]]:
-        counter = {}
-        for (start, end, color) in segments:
-            counter[start] = counter.get(start, 0) + color
-            counter[end] = counter.get(end, 0) - color
+        counter = defaultdict(lambda: 0)
+
+        for (u, v, paint) in segments: 
+            counter[u] += paint
+            counter[v] -= paint
             
-        idx = [*counter]
-        idx.sort()
-        start = idx[0]
-        color = counter[idx[0]]
+        coord = [key for key in counter]
+        
+        coord.sort() 
+        
         ans = []
-        for i in range(1, len(idx)):
-            if color != 0:
-                ans.append((start, idx[i], color))
-            color += counter[idx[i]]
-            start = idx[i]
-        return ans
+        
+        prev = 0        
+        start = 0 
+        
+        for x in coord: 
+            if prev != 0: 
+                ans.append((start, x, prev))
+                
+            prev += counter[x]
+            start = x 
+            
+        return ans 
+        
