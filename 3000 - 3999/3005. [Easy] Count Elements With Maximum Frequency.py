@@ -3,7 +3,6 @@
 class Solution:
     def maxFrequencyElements(self, nums: List[int]) -> int:
         counter = defaultdict(lambda: 0)
-        
         maxFreq = 0 
         
         for num in nums: 
@@ -18,3 +17,4 @@ class Solution:
                 ans += 1 
                 
         return ans 
+        
