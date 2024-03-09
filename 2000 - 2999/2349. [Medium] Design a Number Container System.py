@@ -3,28 +3,30 @@
 class NumberContainers:
 
     def __init__(self):
-        self.index = defaultdict(lambda: [])
-        self.value = {}
+        self.listIdx = defaultdict(lambda: [])
+        self.number = {}
 
     def change(self, index: int, number: int) -> None:
-        if index in self.value:
-        
-            value = self.value[index]
-            idx = bisect_left(self.index[value], index)
-        
-            if idx < len(self.index[value]):
-                self.index[value].pop(idx)
+        if index in self.number:
+            num = self.number[index]
             
-        insort(self.index[number], index)
+            idx = bisect_left(self.listIdx[num], index)
+            
+            self.listIdx[num].pop(idx)     
+            
+            if len(self.listIdx[num]) == 0: 
+                self.listIdx.pop(num)
         
-        self.value[index] = number
+        self.number[index] = number 
+
+        insort(self.listIdx[number], index)
+
 
     def find(self, number: int) -> int:
-        if not self.index[number]: 
-            return -1
+        if number in self.listIdx: 
+            return self.listIdx[number][0]
         
-        else: 
-            return self.index[number][0]
+        return -1 
         
 # Your NumberContainers object will be instantiated and called as such:
 # obj = NumberContainers()
