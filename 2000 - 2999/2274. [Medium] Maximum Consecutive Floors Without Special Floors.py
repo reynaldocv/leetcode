@@ -1,17 +1,25 @@
 # https://leetcode.com/problems/maximum-consecutive-floors-without-special-floors/
-
 class Solution:
     def maxConsecutive(self, bottom: int, top: int, special: List[int]) -> int:
-        start = bottom 
+        special.extend([0, inf])
+        
+        n = len(special)
         
         special.sort() 
         
         ans = 0 
         
-        for floor in special: 
-            ans = max(ans, floor - start)
-            start = floor + 1 
+        for i in range(1, n):
+            start = special[i - 1] + 1
+            end = special[i] - 1
             
-        ans = max(ans, top - start + 1)
-        
+            if end >= start:
+                maxStart = max(start, bottom)
+                minEnd = min(end, top)
+                
+                if maxStart <= minEnd: 
+                    ans = max(ans, minEnd - maxStart + 1)
+                    
         return ans 
+        
+        
