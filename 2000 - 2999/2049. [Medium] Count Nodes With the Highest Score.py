@@ -2,37 +2,48 @@
 
 class Solution:
     def countHighestScoreNodes(self, parents: List[int]) -> int:
-        def counter(root):            
-            if root:                 
-                root.left = TreeNode(seen[root.val][0]) if len(seen[root.val]) > 0 else None
-                root.right = TreeNode(seen[root.val][1]) if len(seen[root.val]) > 1 else None
-                left = counter(root.left)
-                right = counter(root.right)
+        @cache        
+        def helper(u):
+            ans = 1 
+            
+            for v in graph[u]:
+                ans += helper(v)
                 
-                val3 = n - left - right - 1
-                
-                val1 = 1 if left == 0 else left
-                val2 = 1 if right == 0 else right
-                val3 = 1 if val3 == 0 else val3
-                
-                maxProducts[val1*val2*val3] += 1
-                
-                return 1 + left + right 
-            else: 
-                return 0 
-                
+            return ans 
+        
         n = len(parents)
-        seen = defaultdict(lambda: [])
-        for (i, parent) in enumerate(parents):
-            if parent != -1: 
-                seen[parent].append(i)
+        
+        graph = defaultdict(lambda: [])
+        
+        for (i, val) in enumerate(parents):
+            graph[val].append(i)
+            
+        scores = []   
+        maxFreq = 0 
+        
+        for u in range(n):
+            score = 1
+            nodes = 0 
+            
+            for v in graph[u]:
+                score *= helper(v)
+                nodes += helper(v)
                 
-        root = TreeNode(0)
+            remain = n - nodes - 1
+            
+            if remain > 0: 
+                score *= remain
+                
+            scores.append(score)
+            maxFreq = max(maxFreq, scores[u])
+            
+        ans = 0 
         
-        maxProducts = defaultdict(lambda: 0)    
-        
-        counter(root)
-        
-        return maxProducts[max(maxProducts)]
+        for score in scores: 
+            if score == maxFreq: 
+                ans += 1 
+                
+        return ans 
+            
             
         
