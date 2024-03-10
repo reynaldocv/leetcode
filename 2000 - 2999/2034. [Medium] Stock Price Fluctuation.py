@@ -3,32 +3,63 @@
 class StockPrice:
 
     def __init__(self):
-        self.prices = OrderedDict()
-        self.last = None
-        self.maxHeap = []
-        heapify(self.maxHeap)
-        self.minHeap = []
-        heapify(self.minHeap)
+        self.times = []
+        self.prices = []
         
+        self.counter = defaultdict(lambda: 0)
+        
+        self.maxHeap = []
+        self.minHeap = []
+
     def update(self, timestamp: int, price: int) -> None:
-        self.prices[timestamp] = price
-        self.last = max(self.last, timestamp) if self.last != None else timestamp
-        heappush(self.minHeap, (price, timestamp))
-        heappush(self.maxHeap, (-price, timestamp))
+        idx = bisect_left(self.times, timestamp)
+        
+        if idx < len(self.times):
+            if self.times[idx] == timestamp: 
+                oldPrice = self.prices[idx]                
+                self.counter[oldPrice] -= 1 
+                                                 
+                self.prices[idx] = price                
+                self.counter[price] += 1             
+                
+            else: 
+                self.times.insert(idx, timestamp)
+                self.prices.insert(idx, price)
+                
+                self.counter[price] += 1 
+                
+        else: 
+            self.times.append(timestamp)
+            self.prices.append(price)
+            
+            self.counter[price] += 1 
+            
+        heappush(self.maxHeap, -price)
+        heappush(self.minHeap, price)
 
     def current(self) -> int:
-        return self.prices[self.last]        
+        if self.prices: 
+            return self.prices[-1]
+        
+        return -1 
 
     def maximum(self) -> int:
-        while (self.prices[self.maxHeap[0][1]] != -1*self.maxHeap[0][0]):
+        while self.maxHeap and self.counter[-self.maxHeap[0]] == 0: 
             heappop(self.maxHeap)
-        return -1*self.maxHeap[0][0]
-
+            
+        if self.maxHeap: 
+            return -self.maxHeap[0]
         
+        return -1 
+    
     def minimum(self) -> int:
-        while (self.prices[self.minHeap[0][1]] != self.minHeap[0][0]):
+        while self.minHeap and self.counter[self.minHeap[0]] == 0: 
             heappop(self.minHeap)
-        return self.minHeap[0][0]
+            
+        if self.minHeap: 
+            return self.minHeap[0]
+        
+        return -1 
         
 
 
