@@ -2,19 +2,21 @@
 
 class Solution:
     def maximumImportance(self, n: int, roads: List[List[int]]) -> int:
-        counter = defaultdict(lambda: 0)
+        degree = defaultdict(lambda: 0)
         
-        for (a, b) in roads: 
-            counter[a] += 1 
-            counter[b] += 1 
+        for (u, v) in roads: 
+            degree[u] += 1 
+            degree[v] += 1 
+            
+        cities = [i for i in range(n)]
         
-        arr = [counter[i] for i in range(n)]
-        arr.sort()
+        cities.sort(key = lambda item: degree[item])
         
-        ans = 0 
+        ans = 0        
         
-        for (i, num) in enumerate(arr):
-            ans += num*(i + 1)
+        for (value, city) in enumerate(cities, 1):
+            ans += value*degree[city]
             
         return ans 
+        
         
