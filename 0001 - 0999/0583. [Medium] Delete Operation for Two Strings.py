@@ -1,26 +1,40 @@
 # https://leetcode.com/problems/delete-operation-for-two-strings/
 
-class Solution:
+class Solution1:
     def minDistance(self, word1: str, word2: str) -> int:
-        n = len(word1)
-        m = len(word2)        
-        ans = [[0 for j in range(m)] for i in range(n)]
-        
-        ans[0][0] = 1 if word1[0] == word2[0] else 0 
-        for j in range(1, m):
-            ans[0][j] = 1 if word1[0] == word2[j] else ans[0][j - 1]
+        @cache 
+        def helper(i, j):
+            if i == m or j == n: 
+                return 0 
             
-        for i in range(1, n):
-            ans[i][0] = 1 if word1[i] == word2[0] else ans[i - 1][0]
-            
-        for i in range(1, n):
-            for j in range(1, m):
+            else: 
+                ans = max(helper(i + 1, j), helper(i, j + 1))
+                
                 if word1[i] == word2[j]:
-                    ans[i][j] = ans[i - 1][j - 1] + 1
-                else: 
-                    ans[i][j] = max(ans[i - 1][j], ans[i][j - 1], ans[i - 1][j - 1])
+                    ans = max(ans, 1 + helper(i + 1, j + 1))
                     
-        return n + m - 2*ans[n - 1][m - 1]
+                return ans 
+                    
+        m, n = len(word1), len(word2)
+        
+        return m + n - 2*helper(0, 0)
+        
+class Solution2:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        
+        dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if word1[i - 1]  == word2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                    
+                else: 
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        
+        return m + n - 2*dp[-1][-1]
+        
             
         
         
