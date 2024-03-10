@@ -2,14 +2,14 @@
 
 class Solution:
     def asteroidsDestroyed(self, mass: int, asteroids: List[int]) -> bool:
-        asteroids.sort()
-        i = 0
-        n = len(asteroids)
+        asteroids.sort() 
         
-        while i < n and mass >= asteroids[i]:
-            mass += asteroids[i]
-            i += 1
+        for asteroid in asteroids: 
+            if mass < asteroid: 
+                return False 
             
-        return i == n
-        
-        
+            else: 
+                mass += asteroid
+                
+        return True 
+
