@@ -2,19 +2,28 @@
 
 class Solution:
     def largestCombination(self, candidates: List[int]) -> int:
-        counter = [0 for i in range(25)]
+        counter = defaultdict(lambda: 0)
         
         for num in candidates: 
-            i = 0 
-            while num > 0:
-                bit = num & 1
-                if bit > 0: 
-                    counter[i] += 1 
+            idx = 0 
+            
+            while num: 
+                bit = num % 2
                 
-                i += 1 
-                num //= 2 
+                if bit == 1: 
+                    counter[idx] += 1 
+                    
+                num //= 2                 
+                idx += 1 
                 
-        return max(counter)
+        ans = 0 
+        
+        for key in counter: 
+            ans = max(ans, counter[key])
+            
+        return ans 
+                
+            
         
         
         
