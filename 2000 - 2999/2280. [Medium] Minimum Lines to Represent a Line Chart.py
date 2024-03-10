@@ -4,29 +4,28 @@ class Solution:
     def minimumLines(self, stockPrices: List[List[int]]) -> int:
         n = len(stockPrices)
         
-        if n == 1: 
-            return 0 
+        stockPrices.sort() 
         
-        stockPrices.sort()
+        (dX, dY) = (0, 0)
         
-        (x1, y1) = stockPrices[1]
-        (x0, y0) = stockPrices[0]
+        ans = 0 
         
-        common = gcd(y1 - y0, x1 - x0)
-        
-        angle = ((y1 - y0)//common, (x1 - x0)//common) 
-        ans = 1 
-        
-        for i in range(2, n):
-            (x1, y1) = stockPrices[i]
+        for i in range(1, n):
             (x0, y0) = stockPrices[i - 1]
-        
-            common = gcd(y1 - y0, x1 - x0)
-        
-            newAngle = ((y1 - y0)//common, (x1 - x0)//common) 
-        
-            if newAngle != angle: 
-                ans += 1 
-                angle = newAngle
+            (x1, y1) = stockPrices[i]
             
-        return ans    
+            common = gcd(abs(x1 - x0), abs(y1 - y0))
+            
+            tmpX = (x1 - x0)//common
+            tmpY = (y1 - y0)//common
+            
+            if dX == tmpX and dY == tmpY: 
+                continue 
+                
+            else: 
+                ans += 1 
+                
+                dX = tmpX
+                dY = tmpY 
+                
+        return ans 
