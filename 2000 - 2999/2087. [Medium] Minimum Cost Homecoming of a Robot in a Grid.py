@@ -2,19 +2,17 @@
 
 class Solution:
     def minCost(self, startPos: List[int], homePos: List[int], rowCosts: List[int], colCosts: List[int]) -> int:
-        ans = 0
         minX = min(startPos[0], homePos[0])
         maxX = max(startPos[0], homePos[0])
         
         minY = min(startPos[1], homePos[1])
         maxY = max(startPos[1], homePos[1])
         
-        for i in range(minX, maxX + 1):
-            ans += rowCosts[i]
+        ans = sum(colCosts[minY: maxY + 1]) + sum(rowCosts[minX: maxX + 1])
         
-        for i in range(minY, maxY + 1):
-            ans += colCosts[i]
-            
-        return ans - rowCosts[startPos[0]] - colCosts[startPos[1]]
+        ans -= colCosts[startPos[1]] + rowCosts[startPos[0]]
+        
+        return ans 
+        
         
         
