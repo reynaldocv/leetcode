@@ -1,19 +1,31 @@
 # https://leetcode.com/problems/contains-duplicate-iii/
 
 class Solution:
-    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
-        n = len(nums)
-        arr = [(nums[i], i) for i in range(n)]
-        arr.sort(reverse = True)
+    def containsNearbyAlmostDuplicate(self, nums: List[int], indexDiff: int, valueDiff: int) -> bool:
+        arr = []
         
-        for i in range(n - 1):
-            j = i + 1
-            while j < n and arr[i][0] - arr[j][0] <= t: 
-                if abs(arr[i][1] - arr[j][1]) <= k:
-                    return True
-                j += 1
-        
-        return False
+        i = 0 
+          
+        for num in nums: 
+            idx = bisect_left(arr, num)
+            
+            if idx < len(arr):
+                if arr[idx] - num <= valueDiff: 
+                    return True 
+                
+            if 0 <= idx - 1:
+                if num - arr[idx - 1] <= valueDiff: 
+                    return True 
+                
+            if len(arr) == indexDiff: 
+                idx = bisect_left(arr, nums[i])            
+                arr.pop(idx)
+                
+                i += 1 
+            
+            insort(arr, num)
+            
+        return False 
                 
         
         
