@@ -5,6 +5,7 @@ class Solution:
         def helper(num):
             if num == 0: 
                 return []
+            
             d3 = num // 100
             d2 = (num % 100) // 10
             d1 = num % 10 
@@ -20,6 +21,7 @@ class Solution:
             else: 
                 if d2 != 0: 
                     ans.append(d[d2])
+                    
                 if d1 != 0: 
                     ans.append(u[d1])
                     
@@ -41,8 +43,10 @@ class Solution:
         ans = []
         while num != 0:
             aux = num // 10**(totalDig*3)
+            
             if aux != 0:
                 ans.extend(helper(aux))
+                
             if totalDig != 0 and aux != 0: 
                 ans.append(t[totalDig])
             
@@ -50,5 +54,4 @@ class Solution:
             totalDig -= 1
             
         return " ".join(ans)
-            
-           
+        
