@@ -30,4 +30,30 @@ class Solution:
             head = head.next
             
         return ans.next
+
+class Solution2:
+    def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        stack = [(0, ListNode(0, head))]
+        
+        seen = {0}
+        prev = 0 
+        
+        while head:             
+            prev += head.val 
+            
+            if prev in seen: 
+                while stack[-1][0] != prev: 
+                    tmp = stack.pop() 
+                    seen.remove(tmp[0])
+                    
+            else: 
+                seen.add(prev)                
+                
+                stack.append((prev, head))
+                
+            stack[-1][1].next = head.next
+            head = head.next
+                
+        return stack[0][1].next
+        
         
