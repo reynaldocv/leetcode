@@ -3,30 +3,43 @@
 class WordDictionary:
 
     def __init__(self):
-        self.dic = defaultdict(lambda:{})
-
+        self.trie = {}
+        
     def addWord(self, word: str) -> None:
-        n = len(word)
-        self.dic[n][word] = True
+        node = self.trie 
         
-    def search(self, word: str) -> bool:
-        def helper(word1, word2):
-            for i in range(n):
-                if word1[i] != ".": 
-                    if word1[i] != word2[i]:
-                        return False
-            return True 
-        
-        n = len(word)    
-        for word_ in self.dic[n]:
-            if helper(word, word_):
-                return True
+        for char in word: 
+            if char not in node: 
+                node[char] = {}
+                
+            node = node[char]
             
-        return False
-        
+        node["$"] = True 
 
+    def search(self, word: str) -> bool: 
+        def helper(node, word):            
+            if word == "": 
+                return "$" in node
+            
+            else: 
+                char = word[0]
+                
+                if char == ".":                
+                    for char in node: 
+                        if char != "$":
+                            if helper(node[char], word[1: ]):
+                                return True 
 
+                elif char in node: 
+                    if helper(node[char], word[1: ]):
+                        return True 
+                
+                return False 
+            
+        return helper(self.trie, word)
+                
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
 # obj.addWord(word)
 # param_2 = obj.search(word)
+    
