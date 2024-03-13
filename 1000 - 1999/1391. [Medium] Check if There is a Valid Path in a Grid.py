@@ -2,30 +2,38 @@
 
 class Solution:
     def hasValidPath(self, grid: List[List[int]]) -> bool:
-        nextCell = {}
-        nextCell[1] = [(0, 1), (0, -1)]
-        nextCell[2] = [(1, 0), (-1, 0)]
-        nextCell[3] = [(1, 0), (0, -1)]
-        nextCell[4] = [(0, 1), (1, 0)]
-        nextCell[5] = [(0, -1), (-1, 0)]
-        nextCell[6] = [(-1, 0), (0, 1)]
-        
         m, n = len(grid), len(grid[0])
         
-        stack = [(0, 0)]
-        seen = {(0, 0): True}
+        nextRoad = {}
+        nextRoad[1] = {(0, -1): {1, 4, 6}, (0, 1): {1, 3, 5}}
+        nextRoad[2] = {(-1, 0): {2, 3, 4}, (1, 0): {2, 5, 6}}
+        nextRoad[3] = {(1, 0): {2, 5, 6}, (0, -1): {1, 4, 6}}
+        nextRoad[4] = {(1, 0): {2, 5, 6}, (0, 1): {1, 3, 5}, }
+        nextRoad[5] = {(-1, 0): {2, 3, 4}, (0, -1): {1, 4, 6}}
+        nextRoad[6] = {(-1, 0): {2, 3, 4}, (0, 1): {1, 3, 5}}
         
-        while stack:
-            (x, y) = stack.pop()
+        stack = [(0, 0)]
+        seen = {(0, 0)}
+        
+        while stack:       
+            (x, y) = stack.pop() 
+            
             if x == m - 1 and y == n - 1: 
                 return True 
             
-            for (r, s) in nextCell[grid[x][y]]:
+            value = grid[x][y]
+            
+            for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 p, q = x + r, y + s
-                if 0 <= p < m and 0 <= q < n:                     
+                
+                if 0 <= p < m and 0 <= q < n: 
                     if (p, q) not in seen: 
-                        if (-r, -s) in nextCell[grid[p][q]]:
-                            seen[(p, q)] = True 
+                        nextValue = grid[p][q]
+                        
+                        if (r, s) in nextRoad[value] and nextValue in nextRoad[value][(r, s)]:
+                            seen.add((p, q))
+                            
                             stack.append((p, q))
-
-        return False
+                            
+        return False 
+        
