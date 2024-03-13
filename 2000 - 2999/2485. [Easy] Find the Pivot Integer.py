@@ -2,13 +2,15 @@
 
 class Solution:
     def pivotInteger(self, n: int) -> int:
-        tmp = n*(n + 1)//2
-        prev = 0 
+        left = 0 
+        right = n*(n + 1)//2
         
-        for i in range(1, n + 1):
-            prev += i 
+        for num in range(1, n + 1):
+            left += num
             
-            if 2*prev == tmp + i: 
-                return i 
+            if left == right: 
+                return num
+            
+            right -= num
             
         return -1
