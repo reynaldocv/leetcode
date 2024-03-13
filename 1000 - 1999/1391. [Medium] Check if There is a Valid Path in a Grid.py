@@ -23,17 +23,16 @@ class Solution:
             
             value = grid[x][y]
             
-            for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            for (r, s) in nextRoad[value]:
                 p, q = x + r, y + s
                 
                 if 0 <= p < m and 0 <= q < n: 
                     if (p, q) not in seen: 
                         nextValue = grid[p][q]
                         
-                        if (r, s) in nextRoad[value] and nextValue in nextRoad[value][(r, s)]:
+                        if nextValue in nextRoad[value][(r, s)]:
                             seen.add((p, q))
                             
                             stack.append((p, q))
                             
         return False 
-        
