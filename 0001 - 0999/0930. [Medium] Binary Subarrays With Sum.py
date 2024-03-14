@@ -2,21 +2,20 @@
 
 class Solution:
     def numSubarraysWithSum(self, nums: List[int], goal: int) -> int:
-        seen = defaultdict(lambda: 0)
-        seen[0] = 1
+        counter = defaultdict(lambda: 0)
         
-        ans = 0 
-        prev = 0 
+        counter[0] = 1 
         
-        for num in nums:             
+        ans = prev = 0 
+        
+        for num in nums: 
             prev += num
-            diff = prev - goal
-            if diff in seen:
-                ans += seen[diff]
             
-            seen[prev] += 1
+            ans += counter[prev - goal]
             
-        return ans
+            counter[prev] += 1 
+            
+        return ans 
             
             
             
