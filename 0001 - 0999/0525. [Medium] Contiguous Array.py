@@ -2,25 +2,23 @@
 
 class Solution:
     def findMaxLength(self, nums: List[int]) -> int:
-        seen = {0: -1}
+        last = {0: -1}
         
-        ans = 0 
-        
-        cnt = 0 
+        ans = prev = 0 
         
         for (i, num) in enumerate(nums): 
-            if num == 1: 
-                cnt += 1 
+            if num == 0: 
+                prev -= 1 
                 
-            else:
-                cnt -= 1 
-                
-            if cnt in seen: 
-                ans = max(ans, i - seen[cnt])
-            
             else: 
-                seen[cnt] = i 
-            
+                prev += 1 
+                
+            if prev in last: 
+                ans = max(ans, i - last[prev])
+                
+            else: 
+                last[prev] = i 
+                
         return ans 
         
             
