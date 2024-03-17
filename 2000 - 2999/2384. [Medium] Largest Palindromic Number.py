@@ -5,22 +5,24 @@ class Solution:
         counter = defaultdict(lambda: 0)
         
         for char in num: 
-            counter[char] += 1
+            counter[char] += 1 
+            
+        border = ""
+        center = ""
         
-        ans = ""
-        maxElem = ""
+        for char in "9876543210":
+            border += char*(counter[char]//2)
+
+            if counter[char] % 2 == 1: 
+                center = max(center, char)
+
+        while border and border[0] == "0":
+            border = border[1: ]
+            
+        ans = border + center + border[:: -1]
         
-        for num in range(9, -1, -1):
-            val = str(num)
-            if val == "0":
-                if ans != "":
-                    ans += val*(counter[val]//2)
-            else: 
-                ans += val*(counter[val]//2)
-                
-            if counter[val] % 2 == 1 and maxElem == "": 
-                maxElem = val
-                
-        ans = ans + maxElem + ans[:: -1]
+        if ans == "":
+            return "0"
         
-        return "0" if ans == "" else ans 
+        else: 
+            return ans 
