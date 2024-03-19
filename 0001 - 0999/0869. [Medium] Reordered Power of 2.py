@@ -2,18 +2,22 @@
 
 class Solution:
     def reorderedPowerOf2(self, n: int) -> bool:
-        m = len(str(n))
-        nums = [char for char in str(n)]
+        def helper(number):
+            strNum = [char for char in str(number)]
+            
+            strNum.sort(key = lambda item: item)
+            
+            return "".join(strNum)
+            
+        num = 2        
+        seen = {"1"}
         
-        seen = {str(2**i): True for i in range(31)}
-        
-        for perm in permutations(nums, m):
-            if perm != "0":
-                val = "".join(perm)
-                if val in seen: 
-                    return True 
-                
-        return False
+        while num <= 2**32: 
+            seen.add(helper(num))
+            
+            num *= 2 
+            
+        return helper(n) in seen
             
         
         
