@@ -21,6 +21,22 @@ class Solution:
         n = len(s)
             
         return helper(0) - 1
+
+class Solution2:
+    def minCut(self, s: str) -> int:
+        n = len(s)
+        
+        dp = defaultdict(lambda: inf)        
+        dp[-1] = 0 
+        
+        for end in range(n):
+            for start in range(end, -1, -1):
+                word = s[start: end + 1]
+                
+                if word == word[:: -1]:
+                    dp[end] = min(dp[end], dp[start - 1] + 1)
+    
+        return dp[n - 1] - 1
         
             
         
