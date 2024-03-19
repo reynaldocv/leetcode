@@ -2,14 +2,16 @@
 
 class Solution:
     def minimumLengthEncoding(self, words: List[str]) -> int:
-        good = set(words)
+        seen = {word for word in words}
         
         for word in words: 
-            for k in range(1, len(word)):
-                good.discard(word[k:])
+            for i in range(1, len(word)):
+                seen.discard(word[i: ])
                 
         ans = 0 
-        for word in good:
+        
+        for word in seen:
             ans += 1 + len(word)
             
         return ans
+        
