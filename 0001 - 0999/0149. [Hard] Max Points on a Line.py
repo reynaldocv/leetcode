@@ -2,58 +2,43 @@
 
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
-        def maxPointsOnALineContainingPoint(i):
-            def slopeCoPrime(x1, y1, x2, y2):
-                deltaX, deltaY = x1 - x2, y1 - y2
-
-                if deltaX == 0: 
-                    return (0, 0)
-
-                elif deltaY == 0: 
-                    return (inf, inf)
-
-                elif deltaX < 0: 
-                    deltaX, deltaY = -deltaX, -deltaY
-
-                _gcd = gcd(deltaX, deltaY)
-
-                return  (deltaX//_gcd, deltaY//_gcd)
-
-            def addLine(i, j, count, duplicates):
-                x1, y1 = points[i]
-                x2, y2 = points[j]
-
-                if x1 == x2 and y1 == y2: 
-                    duplicates += 1
-
-                elif y1 == y2: 
-                    nonlocal horizontal_lines
-                    horizontal_lines += 1
-                    count = max(horizontal_lines, count)
-
-                else: 
-                    slope = slopeCoPrime(x1, y1, x2, y2)
-                    lines[slope] = lines.get(slope, 1) + 1
-                    count = max(lines[slope], count)
-
-                return count, duplicates
-
-
-            lines, horizontal_lines = {}, 1
-            count = 1
-            duplicates = 0
-            
-            for j in range(i + 1, n):
-                count, duplicates = addLine(i, j, count, duplicates)
+        def helper(x0, y0, x1, y1):
+            if x0 != x1 and y0 != y1: 
+                dX = x1 - x0 
+                dY = y1 - y0 
                 
-            return count + duplicates
-    
-        maxCount = 1
+                common = gcd(dX, dY)
+                
+                dX //= common
+                dY //= common
+                
+            elif x0 == x1:
+                dY = 0 
+                dX = 1                
+                
+            else: 
+                dX = 0 
+                dY = 1
+                
+            return (dX, dY)
+        
+        counter = defaultdict(lambda: defaultdict(lambda: 0))
+        
         n = len(points)
         
+        ans = 0 
+        
         for i in range(n - 1):
-            maxCount = max(maxPointsOnALineContainingPoint(i), maxCount)
-            
-        return maxCount
-            
-            
+            for j in range(i + 1, n):
+                (x0, y0) = points[i]
+                (x1, y1) = points[j]
+                
+                (dX, dY) = helper(x0, y0, x1, y1)
+                
+                counter[(x0, y0)][(dX, dY)] += 1
+                counter[(x1, y1)][(-dX, -dY)] += 1
+                
+                ans = max(ans, counter[(x0, y0)][(dX, dY)], counter[(x1, y1)][(-dX, -dY)])
+                
+        return ans + 1
+                
