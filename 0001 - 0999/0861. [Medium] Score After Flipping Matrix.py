@@ -2,35 +2,23 @@
 
 class Solution:
     def matrixScore(self, grid: List[List[int]]) -> int:
-        def helper(row):
-            return [1 - bit for bit in row]
-        
-        def collaborator(row):
-            ans = 0 
-            for (i, bit) in enumerate(row[::-1]):
-                ans += bit*2**i
+        for (i, row) in enumerate(grid):
+            if row[0] == 0: 
+                grid[i] = [1 - num for num in row]
                 
-            return ans
-        
         m, n = len(grid), len(grid[0])
         
-        for (i, row) in enumerate(grid): 
-            if row[0] == 0:
-                grid[i] = helper(row)
-                
-        gridT = list(zip(*grid))
+        ans = 0 
         
-        for (i, row) in enumerate(gridT):
-            if sum(row) < (m + 1)//2:
-                gridT[i] = helper(row)
-        
-        grid = list(zip(*gridT))
-        
-        ans = 0
-        for row in grid: 
-            ans += collaborator(row)
+        for j in range(n):
+            cnt = 0 
             
-        return ans
+            for i in range(m):
+                cnt += grid[i][j]
+                    
+            ans += max(cnt, m - cnt)*2**(n - j - 1)
+            
+        return ans 
                 
         
                 
