@@ -2,34 +2,55 @@ https://leetcode.com/problems/word-ladder/
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        parts = defaultdict(lambda: [])
+        n = len(wordList[0])
+        
+        words = defaultdict(lambda: [])
+        
         for word in wordList: 
-            for part in range(len(word)):
-                key = word[:part] + "*" + word[part + 1:]
-                parts[key].append(word)
+            for i in range(n):
+                key = word[: i] + "*" + word[i + 1: ]
                 
-        n = len(beginWord)        
+                words[key].append(word)
         
-        queue = deque()
-        queue.append((beginWord, 1))
+        stack = [beginWord]
+        seen = {beginWord}
         
-        seen = defaultdict(lambda: False)
+        ans = 1 
         
-        while queue: 
-            nextQueue = deque()
-            while queue: 
-                word, cnt = queue.popleft()
+        while stack: 
+            newStack = []
+            
+            for word in stack: 
                 if word == endWord: 
-                    return cnt
+                    return ans 
+                    
                 for i in range(n):
-                    key = word[:i] + "*" + word[i + 1:]
-                    if key not in seen: 
-                        seen[key] = True
-                        
-                        for nextWord in parts[key]:
-                            if nextWord not in seen: 
-                                seen[nextWord] = True
-                                nextQueue.append((nextWord, cnt + 1))
-
-            queue = nextQueue
+                    key = word[: i] + "*" + word[i + 1: ]
+                    
+                    for newWord in words[key]:
+                        if newWord not in seen: 
+                            newStack.append(newWord)
+                            
+                            seen.add(newWord)
+                            
+            stack = newStack
+            ans += 1
+            
         return 0
+            
+                
+                
+                
+                
+        
+        
+        
+        
+        
+        
+        
+        
+                
+            
+            
+        
