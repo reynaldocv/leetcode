@@ -1,21 +1,29 @@
 # https://leetcode.com/problems/groups-of-special-equivalent-strings/
 
 class Solution:
-    def numSpecialEquivGroups(self, A: List[str]) -> int:
-        l = len(A)
-        counter = {}
-        for i in range(l):
-            odd = []
+    def numSpecialEquivGroups(self, words: List[str]) -> int:
+        def helper(string):
             even = []
-            for j in range(len(A[i])):
-                if j % 2 == 0:
-                    even.append(A[i][j])
-                else:
-                    odd.append(A[i][j])
-            even.sort()
-            odd.sort()
-            counter[(str(even), str(odd))] = counter.get((str(even), str(odd)), 0) + 1
+            odd = []
+            
+            for (i, char) in enumerate(string):
+                if i % 2 == 0: 
+                    even.append(char)
+                    
+                else: 
+                    odd.append(char)
+                    
+            even.sort() 
+            odd.sort() 
+            
+            return "".join(even) + "".join(odd)
         
-        return len(counter)
+        groups = set() 
+        
+        for word in words: 
+            groups.add(helper(word))
+            
+        return len(groups)
+        
             
             
