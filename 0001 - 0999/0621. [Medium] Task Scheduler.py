@@ -7,8 +7,10 @@ class Solution:
         
         for task in tasks: 
             counter[task] += 1 
+            
             if counter[task] > high: 
                 high = counter[task]
+                
                 cnt = 1
             
             elif counter[task] == high: 
