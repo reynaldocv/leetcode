@@ -2,23 +2,19 @@
 
 class Solution:
     def productQueries(self, n: int, queries: List[List[int]]) -> List[int]:
-        MOD = 10**9 + 7 
+        MOD = 10**9 + 7
         
-        base = 1
-        
-        while n >= base: 
-            base *= 2 
-            
-        base //= 2 
         arr = []
+        i = 0
         
         while n > 0: 
-            if n >= base: 
-                arr.insert(0, base)
+            bit = n % 2
+            
+            if bit != 0: 
+                arr.append(bit*2**i)
                 
-                n -= base
-                
-            base //= 2             
+            n //= 2
+            i += 1 
             
         mult = [1]
         
@@ -33,4 +29,5 @@ class Solution:
             ans.append((mult[end + 1]*inv) % MOD)
             
         return ans 
+            
             
