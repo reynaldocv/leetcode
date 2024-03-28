@@ -2,17 +2,21 @@
 
 class Solution:
     def flipgame(self, fronts: List[int], backs: List[int]) -> int:
-        seen = {}
         n = len(fronts)
         
+        seen = set() 
+                
         for i in range(n):
             if fronts[i] == backs[i]:
-                seen[fronts[i]] = True 
+                seen.add(fronts[i])
                 
-        ans = inf
+        ans = inf 
         
-        for val in fronts + backs: 
-            if val not in seen: 
-                ans = min(ans, val)
+        for i in range(n):
+            if fronts[i] not in seen: 
+                ans = min(ans, fronts[i])
+            
+            if backs[i] not in seen: 
+                ans = min(ans, backs[i])
                 
         return 0 if ans == inf else ans
