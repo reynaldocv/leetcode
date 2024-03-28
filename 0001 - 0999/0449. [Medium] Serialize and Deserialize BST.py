@@ -9,45 +9,49 @@
 
 class Codec:
 
-    def serialize(self, root: TreeNode) -> str:
+    def serialize(self, root: Optional[TreeNode]) -> str:
         """Encodes a tree to a single string.
         """
-        def helper(root):
-            if root: 
-                self.ans.append(str(root.val))
-                helper(root.left)
-                helper(root.right)
-            
-        if not root: 
-            return ""
-            
-        self.ans = []
+        def helper(node):
+            if node: 
+                arr.append(str(node.val))
+                
+                helper(node.left)
+                helper(node.right)
+                
+            else: 
+                arr.append("$")
+                
+        arr = []
+        
         helper(root)
         
-        return ",".join(self.ans)
-        
+        return "-".join(arr)
 
-    def deserialize(self, data: str) -> TreeNode:
+    def deserialize(self, data: str) -> Optional[TreeNode]:
         """Decodes your encoded data to tree.
         """
-        def helper(arr):
-            if arr: 
-                ans = TreeNode(arr[0])
-                left = [elem for elem in arr[1:] if elem < arr[0]]
-                right = [elem for elem in arr[1:] if elem > arr[0]]
-                ans.left = helper(left)
-                ans.right = helper(right)
-                return ans
-            else: 
-                return None
+        def helper():
+            nonlocal idx 
             
-        if data == "": 
-            return None
+            idx += 1 
             
-        arr = [int(elem) for elem in data.split(",")]
-        
-        return helper(arr)
+            if arr[idx] != "$":           
+                ans = TreeNode(arr[idx])
                 
+                ans.left = helper()
+                ans.right = helper() 
+                
+                return ans 
+            
+            else: 
+                return None 
+            
+        arr = data.split("-")
+        
+        idx = -1
+        
+        return helper()
 
 # Your Codec object will be instantiated and called as such:
 # Your Codec object will be instantiated and called as such:
