@@ -2,21 +2,27 @@
 
 class Solution:
     def minAreaRect(self, points: List[List[int]]) -> int:
-        seen = defaultdict(lambda: False)
+        seen = {(x, y) for (x, y) in points}
         
-        for (x, y) in points:             
-            seen[(x, y)] = True
+        n = len(points)
+        
+        ans = inf 
+        
+        for i in range(n - 1):
+            for j in range(i + 1, n):
+                (x0, y0) = points[i]
+                (x1, y1) = points[j]
+                
+                if (x0, y1) in seen and (x1, y0) in seen:                     
+                    dX = abs(x1 - x0)
+                    dY = abs(y1 - y0)
+                    
+                    if dX*dY > 0:                     
+                        ans = min(ans, dX*dY)
+        
+        return 0 if ans == inf else ans 
             
-        ans = inf
-        for (x1, y1) in points:
-            for (x2, y2) in points: 
-                if x1 != x2 and y1 != y2:
-                    if seen[(x1, y2)] and seen[(x2, y1)]:
-                        ans = min(ans, abs((x2 - x1)*(y2 - y1)))
-                        
-        return 0 if ans == inf else ans
-                    
-                    
+        
                     
                     
         
