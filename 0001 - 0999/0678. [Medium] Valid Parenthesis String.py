@@ -2,38 +2,25 @@
 
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        stack = []
-        for c in s:
-            if c in '(*':
-                stack.append(c)
-            elif c == ')':
-                if stack and stack[-1] == '(':
-                    stack.pop()
-                else:
-                    stack.append(c)
-
-        stars = []
-        parens = []
-
-        for (i, c) in enumerate(stack):
-            if c == "*":
-                stars.append((i, c))
-            elif c == '(':
-                parens.append((i, c))
+        n = len(s)
+        
+        left = 0 
+        right = 0 
+        
+        for i in range(n):
+            if s[i] == "(" or s[i] == "*":
+                left += 1 
+                
             else: 
-                if parens:
-                    parens.pop()
-                elif stars:
-                    stars.pop()
-                else:
-                    return False
-
-        while parens:
-            (i, c) = parens.pop()
-            if not stars:
-                return False
-            if stars[-1][0] < i:
-                return False
-            stars.pop()        
-
-        return True
+                left -= 1                
+        
+            if s[n - 1 - i] == ")" or s[n - 1 - i] =="*":
+                right += 1
+                
+            else: 
+                right -= 1 
+                
+            if left < 0 or right < 0: 
+                return False 
+            
+        return True 
