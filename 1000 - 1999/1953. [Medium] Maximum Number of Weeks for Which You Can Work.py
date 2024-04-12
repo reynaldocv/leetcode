@@ -2,11 +2,14 @@
 
 class Solution:
     def numberOfWeeks(self, milestones: List[int]) -> int:
-        maxElem = max(milestones)
         aSum = sum(milestones)
+        maxStones = max(milestones)
         
-        return aSum - max(0, 2*maxElem - aSum - 1)
-                    
-            
-                    
+        left = aSum - maxStones
+        
+        if left < maxStones: 
+            return 2*left + 1
+        
+        else: 
+            return aSum 
             
