@@ -3,22 +3,26 @@
 class Solution:
     def maxUniqueSplit(self, s: str) -> int:
         def helper(idx, seen):
-            nonlocal ans
-            if idx == n:                
-                ans = max(ans, len(seen))
-            else:
-                for i in range(idx + 1, n + 1):
-                    subS = s[idx: i]
-                    if subS not in seen:
-                        seen[subS] = True
-                        helper(i, seen)
-                        seen.pop(subS)
+            if idx == n:
+                return 0 
+            
+            else: 
+                ans = 0    
+                tmp = ""                
                 
-        seen = {}
+                for i in range(idx, n): 
+                    tmp += s[i]
+                    
+                    if tmp not in seen: 
+                        seen.add(tmp)
+                        
+                        ans = max(ans, 1 + helper(i + 1, seen))
+                        
+                        seen.remove(tmp)
+                        
+                return ans 
+            
         n = len(s)
-        ans = 0
-        
-        helper(0, seen)
-        
-        return ans
+            
+        return helper(0, set())
         
