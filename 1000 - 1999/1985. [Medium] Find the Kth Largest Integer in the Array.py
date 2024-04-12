@@ -2,8 +2,7 @@
 
 class Solution:
     def kthLargestNumber(self, nums: List[str], k: int) -> str:
-        nums.sort(reverse = True, key = lambda item: int(item))        
-        return nums[k - 1]
+        nums.sort(key = lambda item: (len(item), item))
         
-        
+        return nums[-k]
         
