@@ -1,29 +1,67 @@
 # https://leetcode.com/problems/knight-dialer/
 
 class Solution:
-    def knightDialer(self, n: int) -> int:
-        MOD = 10**9 + 7
+    def knightDialer(self, n: int) -> int:        
+        MOD = 10**9 + 7 
         
-        next = {}
-        next[1] = [6, 8]
-        next[2] = [7, 9]
-        next[3] = [4, 8]
-        next[4] = [3, 9, 0]
-        next[5] = []
-        next[6] = [0, 1, 7]
-        next[7] = [6, 2]
-        next[8] = [1, 3]
-        next[9] = [2, 4]
-        next[0] = [4, 6]
-        
+        graph = {}
+        graph[0] = [4, 6]
+        graph[1] = [6, 8]
+        graph[2] = [7, 9]
+        graph[3] = [4, 8]
+        graph[4] = [3, 9, 0]
+        graph[5] = []
+        graph[6] = [1, 7, 0]
+        graph[7] = [2, 6]
+        graph[8] = [1, 3]
+        graph[9] = [2, 4]
+                    
         dp = [1 for _ in range(10)]
         
         for _ in range(n - 1):
-            dp2 = [0 for _ in range(10)]
-            for i in range(10):
-                for k in next[i]:
-                    dp2[k] += dp[i] % MOD
+            newDp = [0 for _ in range(10)]
             
-            dp = dp2
+            for u in range(10):
+                for v in graph[u]:                
+                    newDp[v] = (newDp[v] + dp[u]) % MOD 
+                    
+            dp = newDp
             
-        return sum(dp) % MOD  
+        return sum(dp) % MOD
+
+class Solution2:
+    def knightDialer(self, n: int) -> int:
+        @cache
+        def helper(u, n):
+            if n == 1: 
+                return 1 
+            
+            else: 
+                ans = 0 
+                
+                for v in graph[u]:
+                    ans = (ans + helper(v, n - 1)) % MOD 
+                    
+                return ans 
+        
+        MOD = 10**9 + 7 
+        
+        graph = {}
+        graph[0] = [4, 6]
+        graph[1] = [6, 8]
+        graph[2] = [7, 9]
+        graph[3] = [4, 8]
+        graph[4] = [3, 9, 0]
+        graph[5] = []
+        graph[6] = [1, 7, 0]
+        graph[7] = [2, 6]
+        graph[8] = [1, 3]
+        graph[9] = [2, 4]
+                    
+        ans = 0 
+        
+        for i in range(10):
+            ans = (ans + helper(i, n)) % MOD 
+            
+        return ans 
+                
