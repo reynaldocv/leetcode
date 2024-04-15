@@ -2,22 +2,30 @@
 
 class Solution:
     def alertNames(self, keyName: List[str], keyTime: List[str]) -> List[str]:
-        def times(string):
-            return 60*int(string[:2]) + int(string[3:])
+        def helper(time):
+            return 60*int(time[: 2]) + int(time[3: ])
         
-        n = len(keyName)         
-        arr = [(keyName[i], times(keyTime[i])) for i in range(n)]
+        n = len(keyTime)
         
-        arr.sort()
-        ans = set()
+        times = defaultdict(lambda: [])
         
-        for i in range(len(arr) - 2):
-            if arr[i][0] not in ans: 
-                if arr[i + 2][0] == arr[i][0]:
-                    if arr[i + 2][1] - arr[i][1] <= 60:
-                        ans.add(arr[i + 2][0])
-
-        return sorted(ans)
+        arr = [(helper(keyTime[i]), keyName[i]) for i in range(n)]        
+        arr.sort() 
+        
+        seen = set()
+        
+        for (hour, user) in arr:
+            if len(times[user]) > 1: 
+                if hour - times[user][-2] <= 60: 
+                    seen.add(user)
+                    
+            times[user].append(hour)
+            
+        ans = sorted([elem for elem in seen])
+        
+        return ans 
+        
+        
                     
                     
         
