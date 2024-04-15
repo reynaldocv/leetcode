@@ -2,19 +2,25 @@
 
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
-        def reverse(strNum):
-            ans = ""
-            for char in strNum: 
-                ans += "1" if char == "0" else "0"
+        def helper(nth, k):            
+            if nth == 1: 
+                return 0 
             
-            return ans
-        
-        s = "0"
-        for i in range(1, n):
-            s = s + "1" + reverse(s[::-1])
+            elif 0 <= k < 2**(nth - 1):
+                return helper(nth - 1, k)
             
-        return s[k - 1]
-        
+            elif k == 2**(nth - 1): 
+                return 1 
+            
+            else: 
+                k %= (2**(nth - 1))
+                
+                k = 2**(nth - 1) - k
+                
+                return 1 - helper(nth - 1, k)
+            
+        return str(helper(n, k))
+                
         
         
                 
