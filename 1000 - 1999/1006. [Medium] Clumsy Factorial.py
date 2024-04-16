@@ -2,21 +2,31 @@
 
 class Solution:
     def clumsy(self, n: int) -> int:
-        def helper(m, k, sign):
-            if k == 4: 
-                return int(m*(m - 1)//(m - 2)) + sign*(m - 3)
-            elif k == 3: 
-                return int(m*(m - 1)//(m - 2))
-            elif k == 2: 
-                return m*(m - 1)
-            elif k == 1:
-                return m
+        def helper(sign, num):
+            if num >= 4: 
+                tmp = sign*num*(num - 1)/(num - 2) + (num - 3)
+                
+            elif num == 3: 
+                tmp = sign*num*(num - 1)/(num - 2)
+                
+            elif num == 2: 
+                tmp = sign*num*(num - 1)
+                
+            elif num == 1: 
+                tmp = sign*num 
+                
+            else:
+                tmp = 0 
+                
+            return int(tmp)
             
-        ans = helper(n, min(n, 4), 1)
+        ans = helper(1, n)
         
-        n -= 4
+        n -= 4 
+        
         while n > 0: 
-            ans -= helper(n, min(n, 4), -1)
+            ans += helper(-1, n)
+            
             n -= 4 
             
         return ans
