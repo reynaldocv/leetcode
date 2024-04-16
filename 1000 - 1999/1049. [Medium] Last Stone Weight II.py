@@ -15,3 +15,25 @@ class Solution:
         n = len(stones)
         
         return helper(0, 0, 0)
+
+class Solution2:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
+        aSum = sum(stones)
+        
+        limit = aSum//2 
+        
+        dp = [1] + [0 for _ in range(limit)]
+        
+        partial = 0 
+        
+        for stone in stones: 
+            for num in range(limit, stone - 1, -1):
+                dp[num] += dp[num - stone]
+                
+                if dp[num] > 0: 
+                    partial = max(partial, num)
+                    
+        return (aSum - partial) - partial
+                
+        
+        
