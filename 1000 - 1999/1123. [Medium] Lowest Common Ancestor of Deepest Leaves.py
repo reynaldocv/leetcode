@@ -8,19 +8,21 @@
 #         self.right = right
 class Solution:
     def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        def helper(root):
-            if not root: 
-                return Result(None, 0)
+        def helper(node):
+            if not node: 
+                return (0, None)  
+            
             else: 
-                L = helper(root.left)
-                R = helper(root.right)
-                if L.dist > R.dist: 
-                    return Result(L.node, L.dist + 1)
-                elif L.dist < R.dist:
-                    return Result(R.node, R.dist + 1)
+                (left, nodeLeft) = helper(node.left)
+                (right, nodeRight) = helper(node.right)
+                
+                if left == right: 
+                    return (1 + left, node)
+                
+                elif left > right: 
+                    return (1 + left, nodeLeft)
+                
                 else: 
-                    return Result(root, L.dist + 1)
-        
-        Result = namedtuple("Result", ("node", "dist"))
-        return helper(root).node
-       
+                    return (1 + right, nodeRight)
+                
+        return helper(root)[1]
