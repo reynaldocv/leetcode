@@ -8,21 +8,24 @@
 #         self.right = right
 class Solution:
     def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
-        def helper(root, h):
-            if h > 1:
-                if root: 
-                    root.left = helper(root.left, h - 1)
-                    root.right = helper(root.right, h - 1)               
-            elif h == 1:
-                if root: 
-                    root.left = TreeNode(val, root.left, None)
-                    root.right = TreeNode(val, None, root.right)
-            
-            return root
-            
-        newTree = TreeNode(0, root, None)
+        def helper(node, lvl):
+            if node: 
+                if lvl == depth: 
+                    node.left = TreeNode(val, node.left, None)
+                    node.right = TreeNode(val, None, node.right)
+                    
+                else: 
+                    node.left = helper(node.left, lvl + 1)
+                    node.right = helper(node.right, lvl + 1)
+                    
+                return node
+                    
+            else: 
+                return None
         
-        helper(newTree, depth)
-    
-        return newTree.left
+        if depth == 1: 
+            return TreeNode(val, root, None)
+        
+        else:         
+            return helper(root, 2)
         
