@@ -6,26 +6,26 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def smallestFromLeaf(self, root: Optional[TreeNode]) -> str:
-        def helper(root, aux):
-            nonlocal ans
-            if root: 
-                char = chr(root.val + ord("a"))
-                if not root.left and not root.right:
-                    aux += char
-                    ans = min(ans, aux[::-1])
+        def helper(node, word):
+            nonlocal ans 
+            
+            if node: 
+                char = chr(ord("a") + node.val) 
+                if not node.left and not node.right: 
+                    ans = min(ans, char + word)
+                    
+                helper(node.left, char + word)
+                helper(node.right, char + word)
                 
-                helper(root.left, aux + char)
-                helper(root.right, aux + char)
-                
-        ans = chr(255)
+        ans = chr(ord("z") + 1)
         
         helper(root, "")
         
-        return ans
-            
+        return ans 
+        
+        
             
             
             
