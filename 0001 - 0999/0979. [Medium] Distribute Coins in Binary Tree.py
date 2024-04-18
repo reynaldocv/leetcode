@@ -9,19 +9,21 @@
 class Solution:
     def distributeCoins(self, root: Optional[TreeNode]) -> int:
         def helper(node):
+            nonlocal ans 
+            
             if node: 
                 left = helper(node.left)
                 right = helper(node.right)
                 
-                self.ans += abs(left) + abs(right)
+                ans += abs(left) + abs(right) 
                 
-                return node.val + left + right -1
+                return  node.val + left + right - 1
             
             return 0 
         
-        self.ans = 0 
+        ans = 0 
         
         helper(root)
         
-        return self.ans
+        return ans 
         
