@@ -2,24 +2,34 @@
 
 class Solution:
     def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
-        @cache
-        def mcm(a, b):
-            return a*b//gcd(a, b)
+        def helper(value):
+            ans = 0 
+            
+            for i in range(1, 4):
+                for comb in combinations(arr, i):
+                    mcm = 1 
+                    
+                    for num in comb: 
+                        mcm = lcm(mcm, num)
+                    
+                    ans += (-1)**(i + 1)*(value//mcm)
+            
+            return ans 
+            
+        arr = [a, b, c]
         
-        def numberofmultiples(n, a, b, c):
-            return n//a + n//b + n//c - n//mcm(a,b) - n//mcm(b, c) - n//mcm(a, c) + n//mcm(mcm(a,b), c)       
-        
-        start = 0
-        end = n*min(a, b, c)
+        start = 0 
+        end = n*a 
         
         while end - start > 1: 
-            m = (end + start)//2
-            if numberofmultiples(m, a, b, c) < n: 
-                start = m 
+            mid = (end + start)//2
+            
+            if helper(mid) < n: 
+                start = mid 
+                
             else: 
-                end = m 
-    
-        return end
-        
+                end = mid 
+                
+        return end 
         
         
