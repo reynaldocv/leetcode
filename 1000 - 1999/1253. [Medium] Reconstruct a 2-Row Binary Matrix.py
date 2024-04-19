@@ -11,7 +11,8 @@ class Solution:
                 upper -= 1
                 lower -= 1
 
-                ans[0][i] = ans[1][i] = 1
+                ans[0][i] = 1
+                ans[1][i] = 1
                 
             elif num == 1: 
                 if upper > lower: 
