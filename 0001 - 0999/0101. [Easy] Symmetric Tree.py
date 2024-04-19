@@ -11,19 +11,16 @@ class Solution:
         def helper(node1, node2):
             if node1 and node2: 
                 if node1.val == node2.val: 
-                    left = helper(node1.left, node2.right)
-                    right = helper(node1.right, node2.left)
-                    
-                    return left and right 
-                
+                    return helper(node1.left, node2.right) and helper(node1.right, node2.left)
+
                 else: 
                     return False 
-            
+                
             elif not node1 and not node2: 
                 return True 
             
-            else:                 
+            else: 
                 return False 
             
-        return helper(root.left, root.right)
+        return helper(root.left, root.right)    
         
