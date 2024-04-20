@@ -2,28 +2,47 @@
 
 class Solution:
     def findFarmland(self, land: List[List[int]]) -> List[List[int]]:
-        def searchLimits(i, j):
-            ii, jj = i, j
-            while ii + 1 < n and land[ii + 1][j] == 1:
-                ii += 1
-            while jj + 1 < m and land[i][jj + 1] == 1: 
-                jj += 1
-            for a in range(i, ii + 1):
-                for b in range(j, jj + 1):
-                    land[a][b] = val 
-            return ii, jj
+        def helper(x, y):
+            start = (x, y)
+            
+            stack = [(x, y)]
+            land[x][y] = 0 
+            
+            end = (x, y)
+            
+            while stack: 
+                (x, y) = stack.pop() 
                 
-        n, m = len(land), len(land[0])
-        val = 0
+                end = max(end, (x, y))
+                
+                for (r, s) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    p, q = x + r, y + s
+                    
+                    if 0 <= p < m and 0 <= q < n: 
+                        if land[p][q] == 1: 
+                            land[p][q] = 0
+                            
+                            stack.append((p, q))
+                            
+            return end 
+                        
+        m, n = len(land), len(land[0])
+        
         ans = []
-        for i in range(n):
-            for j in range(m):
+        
+        for i in range(m):
+            for j in range(n):
                 if land[i][j] == 1: 
-                    k, l = searchLimits(i, j)
-                    ans.append([i, j, k, l])
+                    (r, s) = helper(i, j)
                     
-        return ans
-                    
+                    ans.append([i, j, r, s])
+                
+        return ans 
+                
+                
+                
+            
+        
    
         
             
