@@ -2,30 +2,34 @@
 
 class Solution:
     def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
+        def helper(parent, u):
+            for v in graph[u]:
+                if v != parent: 
+                    helper(u, v)
+                    
+                    count[u] += count[v]
+                    ans[u] += ans[v] + count[v]
         
-        def dfs(node, parent):
-            for child in graph[node]:
-                if child != parent: 
-                    dfs(child, node)
-                    count[node] += count[child]
-                    ans[node] += ans[child] + count[child]
-        
-        def dfs2(node, parent):
-            for child in graph[node]:
-                if child != parent: 
-                    ans[child] = ans[node] - count[child] + n - count[child]
-                    dfs2(child, node)
+        def collaborate(parent, u):
+            for v in graph[u]:
+                if v != parent: 
+                    ans[v] = ans[u] - count[v] + n - count[v]
+                    
+                    collaborate(u, v)
 
-        graph = {node: [] for node in range(n)}
+        graph = {i: [] for i in range(n)}
+        
         for (x, y) in edges: 
-            graph[x], graph[y] = graph.get(x, []), graph.get(y, [])
             graph[x].append(y)
             graph[y].append(x)
         
-        count = [1]*n
-        ans = [0]*n
+        count = [1 for _ in range(n)]
+        ans = [0 for _ in range(n)]
         
-        dfs(0, None)
-        dfs2(0, None)
+        helper(None, 0)
+        collaborate(None, 0)
         
         return ans
+            
+        
+        
