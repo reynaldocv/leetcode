@@ -16,7 +16,7 @@ class Solution:
             graph[v].append(u)
             
         stack = [i for i in range(n) if degree[i] == 1]    
-        nodes = {i for i in range(n) if degree[i] >= 2}
+        ans = {i for i in range(n) if degree[i] >= 2}
         
         while len(nodes) > 2: 
             newStack = []
@@ -28,9 +28,9 @@ class Solution:
                     if degree[v] == 1: 
                         newStack.append(v)
                         
-                        nodes.remove(v)
+                        ans.remove(v)
                         
             stack = newStack 
             
-        return nodes
+        return ans
         
