@@ -2,30 +2,40 @@
 
 class Solution:
     def kMirror(self, k: int, n: int) -> int:
-        @cache 
-        def helper(start, n):            
-            if n == 1:
+        @cache
+        def helper(start, qnt):
+            if qnt == 1: 
                 return [str(i) for i in range(start, k)]
-            if n == 2: 
+            
+            elif qnt == 2: 
                 return [str(i) + str(i) for i in range(start, k)]
+            
             else: 
-                arr = []
+                ans = []
+                
                 for elem in [str(i) for i in range(start, k)]:
-                    for center in helper(0, n - 2):
-                        arr.append(elem + center + elem[::-1])
-
-                return arr
+                    for center in helper(0, qnt - 2):
+                        newElem = elem + center + elem
+                        
+                        ans.append(newElem)
+                        
+                return ans
             
         digits = 1
         counter = 0
+        
         ans = 0 
+        
         while True:
             for num in helper(1, digits):
                 numBase = str(int(num, k))
-                if numBase == numBase[::-1]:
-                    ans += int(numBase)
-                    counter += 1
-                    if counter == n: 
-                        return ans
                 
+                if numBase == numBase[:: -1]:
+                    counter += 1 
+                    
+                    ans += int(numBase)
+                    
+                    if counter == n: 
+                        return ans 
+                    
             digits += 1  
