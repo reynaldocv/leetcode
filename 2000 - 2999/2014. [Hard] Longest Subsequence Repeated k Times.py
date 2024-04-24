@@ -34,31 +34,50 @@ class Solution:
 
 class Solution2:
     def longestSubsequenceRepeatedK(self, s: str, k: int) -> str:
-        def helper(subString, string):
-            string = iter(string)
-            return all(c in string for c in subString)
-        
+        def helper(subWord, word):
+            ans = 0 
+            
+            m, n = len(subWord), len(word)
+            
+            i, j = 0, 0
+            
+            while j < n: 
+                if subWord[i] == word[j]:
+                    i += 1 
+                
+                if i == m: 
+                    ans += 1 
+                    
+                    i = 0 
+                    
+                j += 1
+                
+            return ans 
+            
         counter = defaultdict(lambda: 0)
         
         for char in s: 
             counter[char] += 1
             
         chars = ""
+        
         for key in counter: 
             if counter[key]//k: 
                 chars += key*(counter[key]//k)
                 
         for i in range(len(chars), 0, -1):
             possibilities = set()        
+            
             for comb in combinations(chars, i):
                 for perm in permutations(comb):                    
                     subString = "".join(perm)
+                    
                     possibilities.add(subString)
                     
             possibilities = sorted(possibilities, key = lambda item: (len(item), item), reverse = True)
         
             for pos in possibilities: 
-                if helper(pos*k, s):
+                if helper(pos, s) >= k:
                     return pos
                     
         return "" 
