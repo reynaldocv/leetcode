@@ -1,21 +1,27 @@
 # https://leetcode.com/problems/longest-ideal-subsequence/
 
-index = {chr(ord("a") + i): i for i in range(26)}
-        last = defaultdict(lambda: 0)        
+class Solution:
+    def longestIdealString(self, s: str, k: int) -> int:
+        n = len(s)
         
-        ans = 0 
+        value = {chr(ord("a") + i): i for i in range(26)}
         
-        for char in s: 
-            idx = index[char]            
-            tmp = 0 
+        dp = [[0 for _ in range(26)] for _  in range(n + 1)]
+        
+        for i in range(1, n + 1):
+            val = value[s[i - 1]]
             
-            for value in range(max(0, idx - k), min(26, idx + k + 1)):
-                tmp = max(tmp, last[value % 26])
-                
-            last[idx] = tmp + 1            
-            ans = max(ans, last[idx])
-            
-        return ans 
+            for j in range(26):
+                if val == j: 
+                    for l in range(26):
+                        if abs(val - l) <= k: 
+                            dp[i][val] = max(dp[i][val], dp[i - 1][l] + 1)
+                    
+                else: 
+                    dp[i][j] = dp[i - 1][j]
+                    
+        return max(dp[-1][i] for i in range(26))
+        
         
                 
         
