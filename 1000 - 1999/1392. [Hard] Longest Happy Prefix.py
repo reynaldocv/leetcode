@@ -2,18 +2,27 @@
 
 class Solution:
     def longestPrefix(self, s: str) -> str:
-        prefix = ""
-        suffix = ""
-        n = len(s)
+        MOD = 10**9 + 7 
         
-        ans = ""
+        n = len(s) 
         
-        for (i, char) in enumerate(s[:-1]): 
-            prefix = prefix + char
-            suffix = s[n - (i + 1)] + suffix
+        value = {chr(ord("a") + i): i for i in range(26)}
+        
+        prefix = 0 
+        suffix = 0 
+        
+        power = 1
+        
+        end = -1
+        
+        for i in range(n - 1):
+            prefix = (26*prefix + value[s[i]]) % MOD 
+            suffix = (power*value[s[n - 1 - i]] + suffix) % MOD 
             
             if prefix == suffix: 
-                ans = prefix
-                
-        return ans
-          
+                if s[: i + 1] == s[n - 1 - i: ]:
+                    end = i 
+            
+            power = (power*26) % MOD 
+            
+        return s[: end + 1]
