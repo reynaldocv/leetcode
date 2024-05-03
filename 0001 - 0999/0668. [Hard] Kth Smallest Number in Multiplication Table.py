@@ -2,22 +2,27 @@
 
 class Solution:
     def findKthNumber(self, m: int, n: int, k: int) -> int:
-        def helper(x):
-            count = 0 
-            for i in range(1, m + 1):
-                count += min(x//i, n)
+        def helper(value):
+            ans = 0 
             
-            return count >= k
+            for i in range(1, m + 1):
+                ans += min(n, value//i)   
+                
+            return ans 
         
-        start, end = 1, n*m
+        start = 0 
+        end = m*n 
         
-        while end - start > 0: 
+        while end - start > 1: 
             mid = (end + start)//2
-            if not helper(mid):
-                start = mid + 1
+            
+            if helper(mid) < k: 
+                start = mid 
+                
             else: 
                 end = mid
                 
-        return start
+        return end 
+        
             
         
