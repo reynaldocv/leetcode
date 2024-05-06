@@ -7,29 +7,20 @@
 #         self.next = next
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        def helper(node):
-            ans = None 
+        stack = []
+        
+        while head: 
+            val = head.val 
             
-            while node: 
-                ans = ListNode(node.val, ans)
+            while stack and stack[-1].val < val: 
+                stack.pop() 
                 
-                node = node.next
-                
-            return ans 
-        
-        reverse = helper(head)
-        
-        prev = 0 
-        
-        ans = cur = ListNode(0)
-        
-        while reverse: 
-            if reverse.val >= prev: 
-                cur.next = ListNode(reverse.val)
-                
-                prev = reverse.val 
-                cur = cur.next
-                
-            reverse = reverse.next 
+            stack.append(head)
+            head = head.next 
             
-        return helper(ans.next)
+        m = len(stack)
+        
+        for i in range(m - 1):
+            stack[i].next = stack[i + 1]
+            
+        return stack[0]
