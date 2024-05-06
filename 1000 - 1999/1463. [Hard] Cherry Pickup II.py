@@ -3,24 +3,29 @@
 class Solution:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         @cache
-        def helper(row, col1, col2):
-            if not(0 <= col1 < n and 0 <= col2 < n):
-                return -inf 
+        def helper(lvl, i, j):
+            if lvl == m - 1: 
+                if i == j: 
+                    return grid[lvl][i] 
+                
+                else: 
+                    return grid[lvl][i] + grid[lvl][j]
+                
+            else: 
+                ans = 0
+                
+                for ii in range(i - 1, i + 2):
+                    for jj in range(j - 1, j + 2):
+                        if 0 <= ii < n and 0 <= jj < n: 
+                            if i < j:                             
+                                ans = max(ans, grid[lvl][i] + grid[lvl][j] + helper(lvl + 1, ii, jj))
+                            
+                            elif i == j: 
+                                ans = max(ans, grid[lvl][i] + helper(lvl + 1, ii, jj))
+                                
+                return ans 
             
-            ans = grid[row][col1] + grid[row][col2]
-
-            if row != m - 1:
-                aux = 0 
-                for newCol1 in [col1, col1 + 1, col1 - 1]:
-                    for newCol2 in [col2, col2 + 1, col2 - 1]:
-                        if newCol1 != newCol2:
-                            aux = max(aux, helper(row + 1, newCol1, newCol2))
-
-                ans += aux
-
-            return ans
-
         m, n = len(grid), len(grid[0])
-           
+        
         return helper(0, 0, n - 1)
                             
