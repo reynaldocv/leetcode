@@ -18,8 +18,7 @@ class Solution:
             else: 
                 ans.append(arr[k//2])
                 
-            idx = bisect_left(arr, nums[ith])
-            
+            idx = bisect_left(arr, nums[ith])            
             arr.pop(idx)
             
         return ans 
