@@ -2,21 +2,25 @@
 
 class Solution:
     def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
-        window = []
+        arr = []
+        
+        for num in nums[: k - 1]:
+            insort(arr, num)
+        
         ans = []
         
-        even = True if k % 2 == 0 else False
-        
-        for num in nums[:k - 1]:
-            insort(window, num)
-        
-        for (i, num) in enumerate(nums[k - 1: ]):
-            insort(window, num)
-            if even: 
-                ans.append((window[k//2] + window[k//2 - 1])/2)
-            else: 
-                ans.append(window[k//2])
-            idx = bisect_left(window, nums[i])
-            window.pop(idx)
+        for (ith, num) in enumerate(nums[k - 1: ]):
+            insort(arr, num)
             
-        return ans
+            if k % 2 == 0: 
+                ans.append((arr[k//2 - 1] + arr[k//2])/2)
+                
+            else: 
+                ans.append(arr[k//2])
+                
+            idx = bisect_left(arr, nums[ith])
+            
+            arr.pop(idx)
+            
+        return ans 
+        
