@@ -2,17 +2,20 @@
 
 class Solution:
     def averageWaitingTime(self, customers: List[List[int]]) -> float:
-        last = customers[0][0]
         n = len(customers)
-        ans = 0 
         
-        for i in range(n):
-            if last > customers[i][0]:
-                last += customers[i][1]
-                ans += last - customers[i][0]
-            else: 
-                last = customers[i][0] + customers[i][1]
-                ans += customers[i][1]
+        last = -inf 
+        
+        aSum = 0         
+              
+        for (arrival, time) in customers: 
+            start = max(last, arrival)
             
-        return ans/n
+            aSum += (start + time - arrival)
+            
+            last = start + time
+            
+        return aSum/n
+        
+        
         
