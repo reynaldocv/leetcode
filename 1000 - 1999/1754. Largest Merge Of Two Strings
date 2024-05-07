@@ -3,21 +3,24 @@
 class Solution:
     def largestMerge(self, word1: str, word2: str) -> str:
         ans = ""
+        
         i, j = 0, 0
+        
         m, n = len(word1), len(word2)
         
         while i < m and j < n: 
             if word1[i:] > word2[j:]: 
                 ans += word1[i]
+                
                 i += 1
+                
             else: 
                 ans += word2[j]
+                
                 j += 1
                 
         ans += word1[i:] if i < m else word2[j:]
         
         return ans
                     
-                    
-                
                 
