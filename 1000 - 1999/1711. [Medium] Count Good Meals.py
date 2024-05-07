@@ -9,17 +9,23 @@ class Solution:
         for elem in deliciousness: 
             count[elem] += 1
             
+        limit = int(log(max(deliciousness), 2)) 
+        
         ans = 0
-        for i in range(int(log(max(deliciousness), 2)) + 3):
+        
+        for i in range(limit + 3):
             val = 2**i
+            
             for key in count:
-                if (val - key) in count: 
-                    if key == val - key:
-                        ans += count[key]*(count[key] - 1)//2
-                    else: 
-                        ans += count[key]*count[val - key]/2
-            
-        return int(ans) % MOD
+                tmp = val - key
                 
+                if tmp in count: 
+                    if key == tmp:
+                        ans += count[key]*(count[key] - 1)
+                        
+                    else: 
+                        ans += count[key]*count[tmp]
             
+        return (ans//2) % MOD
+
         
