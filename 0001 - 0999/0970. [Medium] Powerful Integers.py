@@ -2,17 +2,24 @@
 
 class Solution:
     def powerfulIntegers(self, x: int, y: int, bound: int) -> List[int]:
-        if bound == 0:
-            return []
+        first = [1]
+        second = [1]
         
-        expX = 0 if x == 1 else int(log(bound, x))
-        expY = 0 if y == 1 else int(log(bound, y))
-        ans = set([])
-        for i in range(expX + 1):
-            for j in range(expY + 1):
-                aux = x**i + y**j
-                if aux <= bound: 
-                    ans.add(aux)
-                else:
-                    break
-        return ans
+        if x > 1: 
+            while first[-1] < bound: 
+                first.append(first[-1]*x) 
+        if y > 1: 
+            while second[-1] < bound: 
+                second.append(second[-1]*y) 
+
+        seen = set()
+        
+        for num1 in first: 
+            for num2 in second: 
+                if (num1 + num2 <= bound):
+                    seen.add(num1 + num2)
+                    
+                else: 
+                    break 
+                    
+        return seen
