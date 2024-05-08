@@ -2,17 +2,28 @@
 
 class Solution:
     def numTeams(self, rating: List[int]) -> int:
-        n = len(rating)
-        increasing = [0]*n
-        decreasing = [0]*n
-        ans = 0
-        for i in range(n):
-            for j in range(i):
-                if rating[i] > rating[j]:
-                    decreasing[i] += 1
-                    ans += decreasing[j]
-                else: 
-                    increasing[i] += 1
-                    ans += increasing[j]
+        def helper(arr):
+            left = []
+            right = [num for num in arr]
         
-        return ans
+            right.sort() 
+        
+            ans = 0 
+            
+            for (ith, num) in enumerate(arr):             
+                start = bisect_left(left, num)
+                end = len(right) - bisect_left(right, num + 1)
+            
+                ans += start*end
+            
+                idx = bisect_left(right, num)            
+                right.pop(idx)
+            
+                insort(left, num)
+            
+            return ans 
+        
+        return helper(rating) + helper(rating[:: -1])
+        
+        
+        
