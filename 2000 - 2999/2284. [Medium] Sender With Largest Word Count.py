@@ -4,15 +4,29 @@ class Solution:
     def largestWordCount(self, messages: List[str], senders: List[str]) -> str:
         counter = defaultdict(lambda: 0)
         
-        n = len(messages)
-        
         ans = (0, "$")
-        for i in range(n):
-            arr = messages[i].split(" ")
-            counter[senders[i]] += len(arr)
+        
+        for (ith, sender) in enumerate(senders):
+            message = messages[ith]
             
-            ans = max(ans, (counter[senders[i]], senders[i]))
+            prev = ""
+            cnt = 0 
+            
+            for char in message + " ":
+                if char == " ":
+                    if prev: 
+                        cnt += 1 
+                        
+                        prev = ""
+                        
+                else: 
+                    prev += char 
+                    
+            counter[sender] += cnt
+            
+            ans = max(ans, (counter[sender], sender))
             
         return ans[1]
-    
+                    
+            
     
