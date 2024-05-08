@@ -4,6 +4,16 @@ class Solution:
     def maximumGroups(self, grades: List[int]) -> int:
         n = len(grades)
         
-        ans = int((2*n)**.5)
+        start = 1
+        end = n 
         
-        return ans if ans*(ans + 1)//2 <= n else ans - 1
+        while end - start > 1: 
+            mid = (end + start)//2
+            
+            if mid*(mid + 1)//2 <= n: 
+                start = mid 
+                
+            else: 
+                end = mid 
+                
+        return start
