@@ -2,24 +2,26 @@
 
 class Solution:
     def minimumSize(self, nums: List[int], maxOperations: int) -> int:
-        def helper(val):
+        def helper(value):
             ans = 0 
+            
             for num in nums: 
-                if num > val: 
-                    ans += (num - 1)//val 
+                ans += (num - 1)//value 
                 
             return ans 
         
         start = 0 
-        end = max(nums) + 1
+        end = max(nums)
         
-        while end -  start > 1: 
-            m = (end + start)//2
-            if helper(m) <= maxOperations: 
-                end = m 
-            else: 
-                start = m
+        while end - start > 1: 
+            mid = (end + start)//2
+            
+            if helper(mid) <= maxOperations: 
+                end = mid 
                 
-        return end
+            else: 
+                start = mid 
+                
+        return end 
         
         
