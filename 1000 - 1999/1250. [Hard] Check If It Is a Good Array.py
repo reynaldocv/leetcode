@@ -1,10 +1,14 @@
 # https://leetcode.com/problems/check-if-it-is-a-good-array/
 
 class Solution:
-    def isGoodArray(self, nums: List[int]) -> bool:        
-        common = nums[0]
+    def isGoodArray(self, nums: List[int]) -> bool:
+        mcd = nums[0]        
         
-        for num in nums:
-            common = gcd(common, num)
+        for num in nums: 
+            mcd = gcd(mcd, num)
             
-        return True if common == 1 else False
+            if mcd == 1: 
+                return True 
+            
+        return False 
+        
