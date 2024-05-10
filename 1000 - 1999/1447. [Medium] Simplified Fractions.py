@@ -3,12 +3,12 @@
 class Solution:
     def simplifiedFractions(self, n: int) -> List[str]:
         ans = []
-        for i in range(2, n + 1):
-            for j in range(1, i):
-                if gcd(i, j) == 1: 
-                    ans.append(str(j) + "/" + str(i))
+        
+        for num in range(1, n + 1):
+            for den in range(num + 1, n + 1):
+                if gcd(num, den) == 1: 
+                    ans.append(str(num) + "/" + str(den))
                     
-        return ans
-                    
-            
+        return ans 
+        
         
