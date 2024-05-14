@@ -8,37 +8,68 @@
 #         self.right = right
 class Solution:
     def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:
-        lvl = 0
-        num = 0 
+        def helper(lvl, value):
+            node = level[lvl]
+            
+            if node.left: 
+                node.right = TreeNode(value)
+                
+                level[lvl + 1] = node.right
+                
+            else: 
+                node.left = TreeNode(value)
+                
+                level[lvl + 1] = node.left                
+        
+        cnt = 0 
+        num = "" 
+        
         arr = []
         
         for char in traversal + "-": 
-            if char.isdigit():
-                num = num*10 + int(char)
+            if char == "-":
+                if num != "":
+                    arr.append((cnt, int(num)))
+                    
+                    num = ""
+                    cnt = 1 
+                    
+                else: 
+                    cnt += 1
                 
-            elif char == "-":
-                if num != 0: 
-                    arr.append((lvl, num))
-                    lvl = 0
-                num = 0 
-                lvl += 1
-                
-        (_, elem) = arr.pop(0)
-        
-        ans = TreeNode(elem)
-        stack = [(0, ans)]
-        
-        for (lvl, num) in arr:
-            while stack[-1][0] >= lvl: 
-                stack.pop()
-            
-            if stack[-1][1].left: 
-                stack[-1][1].right = TreeNode(num)
-                stack.append((lvl, stack[-1][1].right))
             else: 
-                stack[-1][1].left = TreeNode(num)
-                stack.append((lvl, stack[-1][1].left))
+                num += char
                 
-        return ans
+        level = {}
+        
+        level[0] = TreeNode(0)
+        
+        for (lvl, num) in arr: 
+            helper(lvl, num)
+            
+        return level[0].left
+                               
+                
+                
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
             
                 
