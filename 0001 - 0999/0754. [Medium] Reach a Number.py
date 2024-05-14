@@ -2,23 +2,29 @@
 
 class Solution:
     def reachNumber(self, target: int) -> int:
-        if target == 0: 
-            return 0 
-        if target < 0: 
-            target *= -1
+        def helper(value):
+            return value*(value + 1)//2
+        
+        target = abs(target)
+        
+        start = 0 
+        end = 10**9 
+        
+        while end - start > 1: 
+            mid = (end + start)//2
             
-        steps = int((-1 + (1 + 8*target)**.5)/2)
-        
-        while steps*(steps + 1)//2 < target:
-            steps += 1
-        
-        spaces = target - steps*(steps + 1)//2
-        if spaces % 2 == 1:
-            if steps % 2 == 0: 
-                steps += 1
+            if helper(mid) < target: 
+                start = mid 
+                
             else: 
-                steps += 2
+                end = mid 
+                
+        diff = helper(end) - target
         
-        return steps
+        if diff % 2 == 0: 
+            return end
         
-        https://leetcode.com/problems/reach-a-number/
+        else: 
+            return end + 1 + (end % 2)
+        
+        
