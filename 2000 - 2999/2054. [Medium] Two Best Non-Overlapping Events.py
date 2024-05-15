@@ -2,28 +2,23 @@
 
 class Solution:
     def maxTwoEvents(self, events: List[List[int]]) -> int:
+        arr = [-1]
+        dp = [0]
         
-        n = len(events)
-        events.sort()            
-        seen = {}
-        aux = 0
+        ans = 0 
         
-        for i in range(n - 1, -1, -1):
-            aux = max(aux, events[i][2])
-            seen[events[i][0]] = aux
+        events.sort(key = lambda item: item[1])
         
-        keys = [*seen]
-        keys.sort()
-        
-        ans = max([val for (_, _, val) in events])
+        for (start, end, value) in events: 
+            idx = bisect_right(arr, start - 1) - 1
             
-        for i in range(n - 1): 
-            idx = bisect_left(keys, events[i][1] + 1)
-            if idx < len(keys):
-                ans = max(ans, events[i][2] + seen[keys[idx]])
-        
-        return ans
+            ans = max(ans, dp[idx] + value)
             
+            arr.append(end)
+            dp.append(max(dp[-1], value))
+            
+        return ans 
+        
             
         
         
