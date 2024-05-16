@@ -2,33 +2,37 @@
 
 class Solution:
     def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
-        def findGroup(i):
-            ans = group[i]
-            while ans != group[ans]:
-                ans = group[ans]
+        def helper(son):
+            while son != parent[son]:
+                son = parent[son]
                 
-            return ans
+            return son
         
         n = len(s)
-        group = [i for i in range(n)] 
         
-        for (a, b) in pairs: 
-            ga, gb = findGroup(a), findGroup(b)
-            group[ga] = group[gb] = min(ga, gb)
+        parent = [i for i in range(n)]
         
-        arr = defaultdict(lambda: [])
-        for (i, char) in enumerate(s): 
-            arr[findGroup(i)].append(char)
+        for (u, v) in pairs: 
+            parentU = helper(u)
+            parentV = helper(v)
+            
+            parent[parentU] = parent[parentV] = min(parentU, parentV)
         
-        idx = defaultdict(lambda: 0)
-        for key in arr: 
-            arr[key].sort()
-            idx[key] = 0
-    
+        letters = defaultdict(lambda: [])
+        
+        for (i, char) in enumerate(s):
+            parentI = helper(i)
+            
+            letters[parentI].append(char)
+            
+        for key in letters: 
+            letters[key].sort() 
+            
         ans = ""
+        
         for i in range(n):
-            gi = findGroup(i)
-            ans += arr[gi][idx[gi]]
-            idx[gi] += 1
-                
-        return ans
+            parentI = helper(i)
+            
+            ans += letters[parentI].pop(0)
+            
+        return ans 
