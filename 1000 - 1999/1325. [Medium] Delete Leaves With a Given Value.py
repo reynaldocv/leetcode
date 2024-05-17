@@ -9,16 +9,17 @@
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
         def helper(node):
-            if node:                 
-                node.left = helper(node.left)
-                node.right = helper(node.right)
+            if node: 
+                left = helper(node.left)
+                right = helper(node.right)
                 
-                if node.left == None and node.right == None and node.val == target: 
+                if not left and not right and node.val == target: 
                     return None 
                 
-                return node
-            
+                else: 
+                    return TreeNode(node.val, left, right)
+                
             else: 
-                return None
-        
+                return None 
+    
         return helper(root)
