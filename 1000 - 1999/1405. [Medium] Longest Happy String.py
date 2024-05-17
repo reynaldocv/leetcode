@@ -2,44 +2,49 @@
 
 class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
-        def helper(letter):
-            ans = (0, "$")
-            for key in seen: 
-                if key != letter: 
-                    ans = max(ans, (seen[key], key))
-                    
-            return ans[1]
+        heap = []
         
-        seen = {}
-        if a >= 1: 
-            seen["a"] = a
-        if b >= 1: 
-            seen["b"] = b
-        if c >= 1: 
-            seen["c"] = c
-        
+        for (char, cnt) in [("a", -a), ("b", -b), ("c", -c)]:
+            if cnt != 0: 
+                heappush(heap, (cnt, char))
+            
+        ans = ""
         
         prev = "$"
-        cnt = 1
+        counter = 1 
         
-        ans = ""
-        while seen:             
-            if cnt == 1:
-                letter = helper("$")
-            elif cnt == 2:
-                letter = helper(prev)
-                cnt = 1
-            if letter == "$":
-                break
+        while heap:             
+            (cnt1, char1) = heappop(heap)
             
-            cnt = cnt + 1 if prev == letter else cnt
+            if prev == char1 and counter == 2: 
+                if heap: 
+                    (cnt2, char2) = heappop(heap)
+                    
+                    prev = char2
+                    ans += char2 
+                    
+                    counter = 1 
+                    
+                    if cnt2 != -1: 
+                        heappush(heap, (cnt2 + 1, char2))
+                    
+                else: 
+                    break 
+                    
+                heappush(heap, (cnt1, char1))
             
-            if letter != "$":
-                seen[letter] -= 1                
-                if seen[letter] == 0: 
-                    seen.pop(letter)
+            else: 
+                if prev == char1: 
+                    counter += 1 
+                    
+                else: 
+                    countner = 1 
+                    
+                prev = char1                
+                ans += char1
+                    
+                if cnt1 != -1: 
+                    heappush(heap, (cnt1 + 1, char1))
+                
+        return ans 
             
-            prev = letter
-            ans += letter
-        
-        return ans
