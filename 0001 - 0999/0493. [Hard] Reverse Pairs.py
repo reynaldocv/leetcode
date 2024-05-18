@@ -2,12 +2,17 @@
 
 class Solution:
     def reversePairs(self, nums: List[int]) -> int:
-        arr = []
+        arr = []        
         ans = 0 
-        for num in nums: 
-            idx = bisect_right(arr, num*2)
-            ans += len(arr) - idx            
-            insort_left(arr, num)
         
-        return ans
+        for num in nums[:: -1]:
+            idx = bisect_left(arr, (num + 1)//2)
+            
+            ans += idx
+            
+            insort(arr, num)
+            
+        return ans 
+            
+            
         
