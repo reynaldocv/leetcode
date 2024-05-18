@@ -2,17 +2,33 @@
 
 class Solution:
     def largestTimeFromDigits(self, arr: List[int]) -> str:
-        ans = ""
+        times = set()
         
-        for perm in permutations(arr):
-            hours = perm[0]*10 + perm[1]
-            minutes = perm[2]*10 + perm[3]
+        for h in range(24):
+            for m in range(60):
+                hours = str(h)
+                
+                if h < 10: 
+                    hours = "0" + hours
+                    
+                minutes = str(m)
+                
+                if m < 10: 
+                    minutes = "0" + minutes
+                    
+                time = hours + ":" + minutes
+                
+                times.add(time)
+                
+        ans = aux = chr(ord("0") - 1)
+        
+        for (a, b, c, d) in permutations(arr, 4):
+            tmp = str(a) + str(b) + ":" + str(c) + str(d)
             
-            if hours < 24 and minutes < 60: 
-                strHours = "0" + str(hours) if hours < 10 else str(hours)
-                strMinutes = "0" + str(minutes) if minutes < 10 else str(minutes)
+            if tmp in times:                 
+                ans = max(ans, tmp)
                 
-                ans = max(ans, strHours + ":" + strMinutes)
+        return "" if ans == aux else ans 
+            
                 
-        return ans
         
