@@ -5,23 +5,23 @@ class Solution:
         @cache
         def helper(u):
             ans = set()
+            
             for v in graph[u]:
                 ans.add(v)
-                for w in helper(v):
-                    ans.add(w)
-            
-            return sorted(ans)
-            
+                
+                for elem in helper(v):
+                    ans.add(elem)
+                
+            return sorted(ans) 
+        
         graph = defaultdict(lambda: [])
-        for (a, b) in edges: 
-            graph[b].append(a)
-            
-        origins = [i for i in range(n) if len(graph[i]) == 0]
+        
+        for (u, v) in edges:
+            graph[v].append(u)
         
         ans = []
-        seen = {}
         
-        for i in range(n):
+        for i in range(n):            
             ans.append(helper(i))
-        
-        return ans 
+            
+        return ans
