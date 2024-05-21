@@ -3,55 +3,50 @@
 class Robot:
 
     def __init__(self, width: int, height: int):
-        self.w = width
-        self.h = height
-        self.pos = [0, 0]
+        self.ways = []
+        self.directions = []
         
-        self.arr = []
+        self.total = 2*width + 2*height - 4
+        
+        self.position = 0
+        
+        self.moves = False
         
         for i in range(width):
-            self.arr.append([i, 0])
+            self.ways.append((i, 0))            
+            self.directions.append("East")
+            
+        for j in range(1, height):
+            self.ways.append((width - 1, j))            
+            self.directions.append("North")
+            
+        for i in range(width - 2, -1, -1):
+            self.ways.append((i, height - 1))            
+            self.directions.append("West")
+            
+        for j in range(height - 2, 0, -1):
+            self.ways.append((0, j))            
+            self.directions.append("South")  
+            
+        self.directions[0] = "South"
+    
+    def step(self, num: int) -> None:
+        self.moves = True 
         
-        for i in range(1, height):
-            self.arr.append([width - 1, i])
+        self.position = (self.position + num) % self.total
         
-        for i in range(1, width):
-            self.arr.append([width - 1 - i, height - 1])
-        
-        for i in range(1, height - 1):
-            self.arr.append([0, height - 1 - i])
-        
-        self.flag = 1
-        
-
-    def move(self, num: int) -> None:
-        idx = self.arr.index(self.pos)		
-        self.pos = self.arr[(idx + num) % (self.w * 2 + self.h * 2 - 4)]		
-        self.flag = 0
-
     def getPos(self) -> List[int]:
-        return self.pos
-        
+        return self.ways[self.position]        
 
     def getDir(self) -> str:
-        if self.flag:
+        if self.position == 0 and self.moves == False:
             return "East"
         
-        if self.pos[0] == 0:
-            return "West" if self.pos[1] == self.h - 1 else "South"
-				
-        if self.pos[0] == self.w - 1:
-            return "East" if self.pos[1] == 0 else "North"
-				
-        if self.pos[1] == 0:
-            return "East"
-		
-        return "West"
+        else:
+            return self.directions[self.position]
         
-
-
 # Your Robot object will be instantiated and called as such:
 # obj = Robot(width, height)
-# obj.move(num)
+# obj.step(num)
 # param_2 = obj.getPos()
 # param_3 = obj.getDir()
