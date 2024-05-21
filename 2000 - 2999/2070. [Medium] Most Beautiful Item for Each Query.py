@@ -4,21 +4,24 @@ class Solution:
     def maximumBeauty(self, items: List[List[int]], queries: List[int]) -> List[int]:
         items.sort()
         
-        prices = [price for (price, _) in items]
-        beauties = [beauty for (_, beauty) in items]
-        n = len(items)
+        prices = [0]
+        dp = [0]
         
-        for i in range(1, n):
-            beauties[i] = max(beauties[i], beauties[i - 1])
+        maxBeauty = 0
+        
+        for (price, beauty) in items:
+            maxBeauty = max(maxBeauty, beauty)
             
+            prices.append(price)
+            dp.append(maxBeauty)
+        
         ans = []
-        for querie in queries: 
-            idx = bisect_right(prices, querie)
-            if idx == 0: 
-                ans.append(0)
-            else:
-                ans.append(beauties[idx - 1])                
             
+        for query in queries:
+            idx = bisect_right(prices, query) - 1
+            
+            ans.append(dp[idx])
+        
         return ans
             
         
