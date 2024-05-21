@@ -2,25 +2,37 @@
 
 class Solution:
     def printVertically(self, s: str) -> List[str]:
-        def removeLastSpaces(a):
-            idx = -1
-            for i in range(len(a)):
-                if a[i] != " ":
-                    idx = i
-            
-            return a[:idx + 1]
+        words = s.split(" ")
         
-        words = s.split(" ")        
-        n = len(words)
-        m = max([len(word) for word in words])
-        ans = []
-        for i in range(m):
-            aux = ""
-            for j in range(n):
-                aux += words[j][i] if i < len(words[j]) else " "
-            aux = removeLastSpaces(aux)
-            ans.append(aux)
+        m = max(len(word) for word in words)
         
-        return ans
+        counter = defaultdict(lambda: 0)
+        
+        for word in words:
+            for (ith, _) in enumerate(word):
+                counter[ith] += 1
+                
+        letters = defaultdict(lambda: "")
+        
+        for word in words:
+            for i in range(m):
+                if counter[i] > 0:
+                    if i < len(word):
+                        counter[i] -= 1
+                        
+                        char = word[i]
+                        
+                    else:
+                        char = " "
+                
+                else:
+                    char = ""
+                        
+                letters[i] += char 
+                
+        return [letters[i] for i in range(m)]
+    
+        
+        
                 
         
