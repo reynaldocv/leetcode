@@ -2,16 +2,16 @@
 
 class Solution:
     def maxWidthRamp(self, nums: List[int]) -> int:
-        arr = [(num, i) for (i,num) in enumerate(nums)]
-        arr.sort()
+        arr = [(num, ith) for (ith, num) in enumerate(nums)]        
+        arr.sort()        
         
-        ans = 0 
+        ans = 0         
+        minIdx = inf
         
-        minIdx = arr[0][1]
+        for (num, ith) in arr:
+            ans = max(ans, ith - minIdx)
         
-        for (nums, i) in arr:
-            ans = max(ans, i - minIdx)
-            minIdx = min(minIdx, i)
-        
+            minIdx = min(minIdx, ith)
+            
         return ans
         
