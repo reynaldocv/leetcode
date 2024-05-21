@@ -2,15 +2,17 @@
 
 class Solution:
     def queryString(self, s: str, n: int) -> bool:
-        m = int(math.log(n, 2)) + 1
-        l = len(s)
-        seen = {0: True}
+        l = len(s) 
+        
+        seen = set()
         
         for i in range(l):
-            prev = 0
-            for j in range(i, min(i + m + 1, l)):
-                prev = 2*prev + int(s[j])
-                if prev <= n:
-                    seen[prev] = True
+            num = 0
+            
+            for j in range(i, min(i + min(n, 32), l)):
+                num = 2*num + int(s[j])
                 
-        return n + 1 == len(seen)
+                if num != 0 and num <= n:                
+                    seen.add(num)
+              
+        return len(seen) == n
