@@ -2,21 +2,33 @@
 
 class Solution:
     def splitString(self, s: str) -> bool:
-        def recursive(s, num):
-            if s == "": 
-                return True
+        @cache 
+        def helper(prev, idx):
+            if idx == n: 
+                return True 
+            
             else: 
-                for i in range(1, len(s) + 1):
-                    aux = int(s[:i])
-                    if aux == num: 
-                        if recursive(s[i:], num - 1):
-                            return True
-                return False
+                tmp = ""
+                
+                for i in range(idx, n):
+                    tmp += s[i]
+                    
+                    if int(tmp) + 1 == prev: 
+                        if helper(prev - 1, i + 1):
+                            return True 
+                    
+                return False 
         
-        for i in range(1, len(s)):
-            num = int(s[:i])
-            if num != 0: 
-                if recursive(s[i:], num - 1):
-                    return True
+        n = len(s)
         
+        tmp = ""
+        
+        for (i, char) in enumerate(s[: n - 1]):
+            tmp += char 
+            
+            if helper(int(tmp), i + 1):
+                return True 
+            
         return False
+        
+        
