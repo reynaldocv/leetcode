@@ -2,21 +2,31 @@
 
 class Solution:
     def longestBeautifulSubstring(self, word: str) -> int:
-        index = {"a": 0, "e": 1, "i": 2, "o": 3, "u": 4}
+        cnt = 0 
+        prev = "$"
         
-        i, n = 0, len(word)
+        chars = []
+        counter = [0]
         
-        aux = ""
-        ans = 0 
-        for char in word: 
-            if aux != "" and (aux[-1] == char or index[aux[-1]] + 1 == index[char]):
-                aux += char            
-                if aux[-1] == "u": 
-                    ans = max(ans, len(aux))  
-                   
-            else: 
-                aux = "a" if char == "a" else ""
-                    
+        for char in word + "$":            
+            if prev != char:
+                if cnt > 0:
+                    chars.append(prev)
+                    counter.append(cnt)   
+            
+            cnt += 1
+            prev = char
+        
+        n = len(chars)
+        
+        ans = 0
+        
+        for i in range(n):
+            if "".join(chars[i: i + 5]) == "aeiou":
+                tmp = counter[i + 5] - counter[i]
+                
+                ans = max(ans, tmp)
+            
         return ans
                 
             
