@@ -3,22 +3,24 @@
 class Solution:
     def removeBoxes(self, boxes: List[int]) -> int:
         @cache
-        def helper(i, j, k):
-            if i > j: 
+        def helper(start, end, k):
+            if start > end: 
                 return 0
             
             cnt = 0
-            while (i + cnt) <= j and boxes[i] == boxes[i + cnt]:
+            while (start + cnt) <= end and boxes[start] == boxes[start + cnt]:
                 cnt += 1
                 
-            i2 = i + cnt
+            newStart = start + cnt
             
-            ans = helper(i2, j, 0) + (k + cnt)**2
+            ans = helper(newStart, end, 0) + (k + cnt)**2
             
-            for m in range(i2, j + 1):
-                if boxes[m] == boxes[i]:
-                    ans = max(ans, helper(i2, m - 1, 0) + helper(m, j, k + cnt))
+            for mid in range(newStart, end + 1):
+                if boxes[mid] == boxes[start]:
+                    ans = max(ans, helper(newStart, mid - 1, 0) + helper(mid, end, k + cnt))
             
             return ans
         
-        return helper(0, len(boxes) - 1, 0)
+        n = len(boxes)
+                
+        return helper(0, n - 1, 0)
