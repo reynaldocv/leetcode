@@ -15,7 +15,7 @@ class Solution:
         totalBits = len(bin(n)[2: ])
         
         for exp in range(totalBits, 0, -1):
-            start = 2 
+            start = 1 
             end = n - 1
             
             while end - start > 1: 
@@ -29,6 +29,5 @@ class Solution:
                     
             if helper(end, exp) == n: 
                 return str(end)
-                    
                     
 
