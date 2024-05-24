@@ -2,25 +2,58 @@
 
 class Solution:
     def minStickers(self, stickers: List[str], target: str) -> int:
-        def helper(t):
-            k = tuple(t.items())
+        @cache
+        def helper(counter):
+            if counter == (0, )*n:
+                return 0 
             
-            if k not in memo:
-                ans = inf                 
-                if not t: 
-                    ans = 0
-                else:                 
-                    for s in stk: 
-                        if t & s: 
-                            ans = min(ans, 1 + helper(t - s))
+            else: 
+                ans = inf 
+                
+                for cnt in counters: 
+                    diff = (0, )*n
+                    
+                    if any(counter[i] and cnt[i] for i in range(n)):
+                        
+                        for i in range(n):
+                            diff = diff[: i] + (max(0, counter[i] - cnt[i]), ) + diff[i + 1: ]
 
-                memo[k] = ans
-            
-            return memo[k]
+                        ans = min(ans, 1 + helper(diff))
 
-        if set(target) - reduce(lambda a, b: a|b, map(set,stickers)): 
-            return -1
-
-        stk, memo = list(map(Counter,stickers)), {}
+                return ans 
         
-        return helper(Counter(target))
+        def collaborator(word):
+            ans = (0, )*n
+
+            for char in word: 
+                if char in index: 
+                    idx = index[char]
+
+                    ans = ans[: idx] + (ans[idx] + 1, ) + ans[idx + 1: ]
+
+            return ans 
+        
+        index = {}
+        
+        n = 0 
+        
+        for char in target: 
+            if char not in index: 
+                index[char] = n
+                
+                n += 1 
+        
+        counters = [collaborator(sticker) for sticker in stickers]
+        
+        seen = set() 
+        
+        for sticker in stickers: 
+            for char in sticker: 
+                seen.add(char)
+
+                
+        for char in target: 
+            if char not in seen: 
+                return -1 
+            
+        return helper(collaborator(target))
