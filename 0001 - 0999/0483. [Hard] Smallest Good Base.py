@@ -2,25 +2,33 @@
 
 class Solution:
     def smallestGoodBase(self, n: str) -> str:
-        def is_valid(base):
+        def helper(value, exp):
             ans = 0 
-            for exp in range(length):
-                ans += base**exp
             
-            return n - ans
-
-        n = int(n)
-        N = len(bin(n)[2:])
+            for i in range(exp + 1):
+                ans += value**i
+                
+            return ans 
         
-        for length in range(N, 0, -1):
-            start = 2
+        n = int(n)
+        
+        totalBits = len(bin(n)[2: ])
+        
+        for exp in range(totalBits, 0, -1):
+            start = 2 
             end = n - 1
-            while end - start >= 0:
-                mid = (end + start) // 2
-                v = is_valid(mid)
-                if v < 0:
-                    end = mid - 1
-                elif v > 0:
-                    start = mid + 1
-                else:
-                    return str(mid)
+            
+            while end - start > 1: 
+                mid = (end + start)//2
+                
+                if helper(mid, exp) < n: 
+                    start = mid 
+                    
+                else: 
+                    end = mid 
+                    
+            if helper(end, exp) == n: 
+                return str(end)
+                    
+                    
+
