@@ -3,33 +3,38 @@
 class Solution:
 
     def __init__(self, n: int, blacklist: List[int]):
-        self.n = n
-        self.k = n - len(blacklist)
-        self.blacklist = blacklist
-        self.blacklist.sort()
+        self.arr = sorted(blacklist)
+        
+        self.n = n        
+        self.elems = n - len(blacklist)
 
     def pick(self) -> int:
-        def helper(val):
-            idx = bisect_left(self.blacklist, val)
-            if idx == len(self.blacklist) or self.blacklist[idx] != val: 
-                idx -= 1
+        def helper(value):
+            idx = bisect_left(self.arr, value)
+            
+            ans = value - idx + 1
+            
+            if idx < len(self.arr) and self.arr[idx] == value:
+                ans -= 1 
                 
-            return val - idx
+            return ans 
         
-        random = randint(1, self.k)
+        ith = randint(1, self.elems)
         
-        start = -1
-        end = self.n - 1
+        start = -1 
+        end = self.n 
         
-        while end - start > 1:
-            m = (end + start) // 2            
-            if helper(m) < random: 
-                start = m
+        while end - start > 1: 
+            mid = (end + start)//2 
+            
+            if helper(mid) < ith:
+                start = mid 
+                
             else: 
-                end = m
+                end = mid 
                 
-        return end
-    
+        return end                 
+
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(n, blacklist)
 # param_1 = obj.pick()
