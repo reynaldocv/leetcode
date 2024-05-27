@@ -2,14 +2,27 @@
 
 class Solution:
     def minimizedMaximum(self, n: int, quantities: List[int]) -> int:
-        start, end = 1, sum(quantities)
-        while end - start > 0: 
-            m = (end + start)//2
-            if sum(ceil(qty/m) for qty in quantities) <= n: 
-                end = m
-            else: 
-                start = m + 1
+        def helper(value):
+            ans = 0 
+            
+            for quantity in quantities: 
+                ans += ceil(quantity/value)
                 
-        return start
+            return ans 
+        
+        start = 0 
+        end = max(quantities)
+        
+        while end - start > 1: 
+            mid = (end + start)//2 
+            
+            if helper(mid) > n: 
+                start = mid 
+                
+            else: 
+                end = mid
+                
+        return end 
+            
             
         
