@@ -21,8 +21,7 @@ class Solution:
                             if value not in seen: 
                                 seen.add(value)
                             
-                                newStack.append(value)
-            
+                                newStack.append(value)            
                             
             ans += 1             
             stack = newStack
