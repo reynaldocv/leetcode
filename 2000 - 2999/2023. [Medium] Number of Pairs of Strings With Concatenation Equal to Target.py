@@ -2,27 +2,26 @@
 
 class Solution:
     def numOfPairs(self, nums: List[str], target: str) -> int:
-        nums.sort(key = lambda item: len(item))
-        n = len(nums)
-        t = len(target)
+        n = len(target)
         
-        ans = 0
-        start = defaultdict(lambda: 0)
-        end = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
-        for (i, val) in enumerate(nums):
-            if len(val) not in start: 
-                start[len(val)] = i
-            end[len(val)] = i
+        for num in nums: 
+            counter[num] += 1 
             
-        for (i, num) in enumerate(nums): 
-            k = t - len(num)
-            for idx in range(start[k], end[k] + 1):
-                if idx != i:
-                    if num + nums[idx] == target: 
-                        ans += 1
+        ans = 0 
+            
+        for i in range(1, n):
+            prefix = target[: i]
+            suffix = target[i: ]
+            
+            if prefix != suffix:             
+                ans += counter[prefix]*counter[suffix]
+                
+            else: 
+                ans += (counter[prefix] - 1)*counter[prefix]
+            
+        return ans 
         
-        return ans
-    
         
             
