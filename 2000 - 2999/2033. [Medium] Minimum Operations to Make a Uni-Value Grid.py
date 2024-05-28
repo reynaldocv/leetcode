@@ -2,23 +2,34 @@
 
 class Solution:
     def minOperations(self, grid: List[List[int]], x: int) -> int:
-        nums = [num for row in grid for num in row]
-        
-        minNum = min(nums)
-        
-        for num in nums: 
-            if (num - minNum) % x != 0: 
-                return -1
-    
-        n = len(nums)
-        nums.sort()
-        middle = nums[n//2]
-        
-        ans = 0 
-        for num in nums: 
-            ans += abs(num - middle)//x
+        def helper(arr, value):
+            ans = 0 
             
-        return ans
+            for num in arr: 
+                diff = abs(num - value)
+                
+                if diff % x == 0: 
+                    ans += diff//x 
+                    
+                else: 
+                    return inf 
+                
+            return ans 
+            
+        m, n = len(grid), len(grid[0])
+        
+        arr = [grid[i][j] for i in range(m) for j in range(n)]
+        
+        arr.sort() 
+        
+        if m*n % 2 == 1:
+            ans = helper(arr, arr[m*n//2])
+        
+        else: 
+            ans = min(helper(arr, arr[m*n//2]), helper(arr, arr[m*n//2 - 1]))
+        
+        return -1 if ans == inf else ans 
+        
         
  
         
