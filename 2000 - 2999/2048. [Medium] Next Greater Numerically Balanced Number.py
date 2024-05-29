@@ -2,21 +2,27 @@
 
 class Solution:
     def nextBeautifulNumber(self, n: int) -> int:
-        def helper(num):
-            counter = defaultdict(lambda: 0)
-            for char in num: 
-                counter[char] += 1
-       
-            for key in counter: 
-                if key != str(counter[key]):
-                    return False
-            
-            return True
+        possible = [[1], [2], [1, 2], [3], [1, 3], [4], [1, 4], [5], [2, 3], [6], [1, 2, 3], [1, 5], [2, 4], [7], [1, 6], [2, 4],[1, 2, 4], [3, 4]]
         
-        ans = n + 1
-        while helper(str(ans)) == False:
-            ans += 1
+        ans = inf
         
-        return ans
+        for arr in possible: 
+            tmp = []
             
+            for elem in arr: 
+                tmp.extend([elem for _ in range(elem)])
+                
+            for perm in permutations(tmp, len(tmp)):
+                aux = ""
+                
+                for elem in perm: 
+                    aux += str(elem)
+                    
+                intAux = int(aux)
+                
+                if intAux > n: 
+                    ans = min(ans, intAux)
+                    
+        return ans 
+        
         
