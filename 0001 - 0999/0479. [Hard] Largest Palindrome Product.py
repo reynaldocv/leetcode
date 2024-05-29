@@ -1,12 +1,13 @@
 # https://leetcode.com/problems/largest-palindrome-product/
 
 class Solution:
-    def largestPalindrome(self, n: int) -> int:                    
+    def largestPalindrome(self, n: int) -> int:
         MOD = 1337
         if n == 1: 
             return 9 
         
         ans = 0 
+        
         for numA in range(10**n - 1, 10**(n - 1), -2):
             if numA*numA < ans: 
                 break
@@ -19,5 +20,3 @@ class Solution:
                         ans = max(ans, product)
                         
         return ans % MOD
-        
-        
