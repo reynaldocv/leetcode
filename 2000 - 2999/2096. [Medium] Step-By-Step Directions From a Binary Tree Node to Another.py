@@ -41,38 +41,59 @@ class Solution:
         path2 = paths(node, destValue)
         
         return "U"*len(path1) + path2
-        
+
 class Solution2:
-    def getDirections(self, root: Optional[TreeNode], p: int, q: int) -> str:
-        def firstCommonParent(root, p, q):
-            if not root:
-                return None
-            if root.val in (p, q):
-                return root
-            
-            left  = firstCommonParent(root.left, p, q)
-            right = firstCommonParent(root.right, p, q)
-            
-            if left and right: 
-                return root
+    def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
+        def helper(node):
+            if node: 
+                if node.val == startValue or node.val == destValue: 
+                    return node
+                
+                else: 
+                    left = helper(node.left)
+                    right = helper(node.right)
+                    
+                    if left and right: 
+                        return node 
+                    
+                    elif left: 
+                        return left 
+                    
+                    else: 
+                        return right 
+                    
             else: 
-                return left if left else right
-        
-        def helper(root, p):
-            if root: 
-                if root.val == p: 
+                return None 
+            
+        def collaborator(node, value):
+            if node: 
+                if node.val == value: 
                     return "*"
                 
-                left = helper(root.left, p)
-                right = helper(root.right, p)
-                if left or right:                 
-                    return "L" + left if left else "R" + right
-                
-            return ""
+                else: 
+                    left = collaborator(node.left, value)
+                    right = collaborator(node.right, value)
+                    
+                    if left or right:
+                        if left: 
+                            return "L" + left
+                    
+                        else: 
+                            return "R" + right
+                        
+                    else: 
+                        return ""
+                    
+            else: 
+                return ""                    
         
-        node = firstCommonParent(root, p, q)
-        path1 = helper(node, p)
-        path2 = helper(node, q)
+        parent = helper(root)
         
-        return "U"*(len(path1) - 1) + path2[:-1]
+        prefix = collaborator(parent, startValue)[: -1]        
+        prefix = "U"*len(prefix)
+        
+        suffix = collaborator(parent, destValue)[: -1]
+        
+        return prefix + suffix
+            
         
