@@ -2,30 +2,43 @@
 
 class Solution:
     def prisonAfterNDays(self, cells: List[int], n: int) -> List[int]:
-        start = tuple(cells)
-        seen = {}        
-        day = 0 
-        cycle = []
-        
-        while start not in seen: 
-            seen[start] = day
-            cycle.append(start)
+        def helper(prison): 
+            ans = [0 for _ in range(8)]
             
-            aux = [0 for i in range(8)]
             for i in range(1, 7):
-                aux[i] = 1 if start[i - 1] == start[i + 1] else 0 
-                
-            start = tuple(aux)
-                       
-            if day + 1 == n: 
-                return start
-              
-            day += 1
+                if prison[i - 1] == prison[i + 1]:
+                    ans[i] = 1 
+                    
+            return tuple(ans)
+        
+        status = tuple(cells)
+        
+        indexs = {}
+        tuples = {}
+        
+        ith = 0 
+        
+        while status not in indexs:
+            indexs[status] = ith
+            tuples[ith] = status
             
-        n -= seen[start]
-        cycle = cycle[seen[start]: ]
+            ith +=1  
+            
+            status = helper(status) 
+            
+        idx = n 
         
-        m = len(cycle)
-        n = n % m 
+        if  n not in tuples: 
+            start = indexs[status]  
+            cycle = ith - start
+            
+            idx = ((n - start) % cycle) + start
+            
+        return tuples[idx]
+            
+            
+            
+            
         
-        return cycle[n]
+            
+        
