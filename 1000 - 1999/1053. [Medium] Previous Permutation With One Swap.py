@@ -2,24 +2,32 @@
 
 class Solution:
     def prevPermOpt1(self, arr: List[int]) -> List[int]:
-        prev = inf
-        aux = []
-        n = len(arr) 
-        idx = n - 1
+        n = len(arr)
         
-        while idx >= 0 and arr[idx] <= prev:
-            prev = arr[idx]
-            idx -= 1 
+        end = n - 2
+        last = arr[-1]
+        
+        while end >= 0 and arr[end] <= arr[end + 1]:
+            end -= 1 
             
-        if idx >= 0:                        
-            idx2 = idx + 1 
-            minIdx2 = (inf, idx + 1)
-            while idx2 < n and arr[idx2] < arr[idx]:
-                minIdx2 = min(minIdx2, (arr[idx] - arr[idx2], idx2))
-                idx2 += 1
+        if end == -1:
+            return arr 
+        
+        left = end 
+        
+        i = end + 1 
+        
+        end = (inf, i)
+        
+        while i < n and arr[left] > arr[i]:
+            end = min(end, (arr[left] - arr[i], i))
             
-            idx2 = minIdx2[1]
+            i += 1 
             
-            arr[idx], arr[idx2] = arr[idx2], arr[idx]
+        right = end[1]
+            
+        arr[left], arr[right] = arr[right], arr[left]
         
         return arr
+        
+        
