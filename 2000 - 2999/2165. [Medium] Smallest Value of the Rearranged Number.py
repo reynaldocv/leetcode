@@ -5,19 +5,24 @@ class Solution:
         if num == 0: 
             return 0 
         
-        sign = 1 if num >= 0 else -1
-        num = -num if num < 0 else num
-        
-        digits = [char for char in str(num) if char != "0"]
-        zeros = sum(1 for char in str(num) if char == "0")
+        elif num > 0: 
+            arr = sorted([char for char in str(num)])
             
-        if sign < 0: 
-            arr =  sorted(digits, reverse = True) + ["0"]*zeros
-        else:
-            digits.sort()
-            if zeros == 0: 
-                arr =  digits
-            else: 
-                arr = [digits[0]] + ["0"]*zeros + digits[1:]
+            idx = 0 
+            
+            while idx >= 0 and arr[idx] == "0":
+                idx += 1 
+                
+            first = arr.pop(idx)
+            
+            return int(first + "".join(arr))
+            
+            
+            
+        else: 
+            num = abs(num)
+            
+            arr = sorted([char for char in str(num)])
+            
+            return -1*int("".join(arr[:: -1]))
         
-        return sign*int("".join(arr))
