@@ -2,25 +2,32 @@
 
 class Solution:
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
-        n = len(hand)
+        counter = defaultdict(lambda: 0)
         
-        if n % groupSize != 0: 
-            return False
+        for num in hand: 
+            counter[num] += 1 
         
-        hand.sort()
+        nums = sorted(key for key in counter)
         
-        while hand:
-            minElem = hand[0]
-            for k in range(groupSize):
-                idx = bisect_left(hand, minElem)
-                if idx != len(hand):
-                    if hand[idx] == minElem: 
-                        minElem += 1
-                        hand.pop(idx)
+        m = len(nums)
+        
+        for i in range(m - groupSize + 1):
+            num = nums[i]            
+            
+            if num in counter:             
+                times = counter[num]
+            
+                for j in range(groupSize):
+                    if num + j == nums[i + j] and nums[i + j] in counter and counter[nums[i + j]] >= times: 
+                        counter[num + j] -= times
+                        
+                        if counter[num + j] == 0: 
+                            counter.pop(num + j)
+                        
                     else: 
-                        return False
-                else: 
-                    return False
-                
-        return True
+                        return False 
+        
+        return len(counter) == 0
+        
+        
         
