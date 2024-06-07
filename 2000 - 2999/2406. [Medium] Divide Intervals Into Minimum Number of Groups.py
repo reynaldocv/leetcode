@@ -2,20 +2,19 @@
 
 class Solution:
     def minGroups(self, intervals: List[List[int]]) -> int:
-        seen = defaultdict(lambda: 0)
+        counter = defaultdict(lambda: 0)
         
         for (start, end) in intervals: 
-            seen[start] += 1 
-            seen[end + 1] -= 1 
+            counter[start] += 1 
+            counter[end + 1] -= 1 
             
-        coordX = [key for key in seen]
-        coordX.sort() 
+        arr = sorted([key for key in counter])
+
+        ans = prev = 0 
         
-        prev = 0 
-        ans = 0 
-        
-        for x in coordX: 
-            prev += seen[x]
+        for x in arr: 
+            prev += counter[x]
+            
             ans = max(ans, prev)
-        
+            
         return ans 
