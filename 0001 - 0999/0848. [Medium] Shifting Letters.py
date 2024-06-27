@@ -2,15 +2,20 @@
 
 class Solution:
     def shiftingLetters(self, s: str, shifts: List[int]) -> str:
-        n = len(shifts)
+        n = len(s)
+        
         for i in range(n - 2, -1, -1):
-            shifts[i] += shifts[i + 1]
+            shifts[i] = (shifts[i] + shifts[i + 1]) % 26
+            
+        index = {chr(ord("a") + i): i for i in range(26)}
+        chars = {i: chr(ord("a") + i) for i in range(26)}
         
-        ans  = ""
+        ans = ""
+        
         for i in range(n):
-            ans += chr((((ord(s[i]) - ord("a")) + shifts[i]) % 26) + ord("a"))
-        
-        return ans
+            ans += chars[(index[s[i]] + shifts[i]) % 26]
+            
+        return ans 
         
         
         
