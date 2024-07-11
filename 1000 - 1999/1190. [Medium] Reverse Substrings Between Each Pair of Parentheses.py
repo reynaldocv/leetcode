@@ -3,25 +3,32 @@
 class Solution:
     def reverseParentheses(self, s: str) -> str:
         stack = []
+        
         word = ""
-        for char in s + "$": 
-            if char.isalpha():
-                word += char
-            elif char == "(":
+        
+        for char in s: 
+            if char == "(":
                 stack.append(word)
                 stack.append("(")
-                word = ""
-            elif char == ")":
-                aux = word
-                while stack and stack[-1] != "(":
-                    aux = stack.pop() + aux
+                               
+            elif char == ")": 
+                tmp = ""
                 
-                stack.pop()
-                stack.append(aux[::-1])
-                word = ""
-            else: 
-                stack.append(word)
-            
-        return "".join(stack)
+                while stack and stack[-1] != "(":
+                    tmp = stack.pop() + tmp
                     
+                stack.pop() 
+                
+                stack.append(tmp[:: -1])
+                
+            else: 
+                if stack and stack[-1] != "(":
+                    stack[-1] += char
+                
+                else: 
+                    stack.append(char)
+                
+        return "".join(stack)
+                
+               
             
