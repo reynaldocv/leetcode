@@ -7,17 +7,23 @@ class Solution:
         if m == n:
             return m
         
-        dp = [0 for _ in range(n + 2)]        
-        ans = -1
+        dp = [0 for _ in range(n + 2)]     
         
-        for i , a in enumerate(arr):            
-            left , right = dp[a - 1] , dp[a + 1]                         
-            if left == m or right == m:
-                ans = i
-                
-            dp[a - left] = dp[a + right] = left + right + 1
+        ans = -1 
+        
+        for (ith, num) in enumerate(arr):
+            left = dp[num - 1]
+            right = dp[num + 1]
             
-        return ans
+            if left == m or right == m: 
+                ans = ith 
+                
+            total = left + 1 + right            
+                
+            dp[num - left] = total
+            dp[num + right] = total
+            
+        return ans 
         
 class Solution2:
     def findLatestStep(self, arr: List[int], m: int) -> int:
