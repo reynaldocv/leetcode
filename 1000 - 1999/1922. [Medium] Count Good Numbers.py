@@ -2,11 +2,16 @@
 
 class Solution:
     def countGoodNumbers(self, n: int) -> int:
-        MOD = 10**9 + 7        
-        m = n//2        
-        ans = pow(20, m, MOD)
+        MOD = 10**9 + 7 
         
-        if n % 2 != 0: 
-            ans *= 5
+        middle = n//2 
+        
+        first = pow(5, middle, MOD)
+        second = pow(4, middle, MOD)
+        
+        ans = (first*second) % MOD
             
-        return ans % MOD
+        if n % 2 == 1: 
+            ans = (5*ans) % MOD 
+            
+        return ans
