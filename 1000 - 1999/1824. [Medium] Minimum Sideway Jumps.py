@@ -2,26 +2,26 @@
 
 class Solution:
     def minSideJumps(self, obstacles: List[int]) -> int:
-        sidejump = 0
-        cur_lane = 2
-        backup_lane = None
-        ob_last = 0
-        for ob in obstacles[1:]:
-            if backup_lane != None and ob == backup_lane:
-                backup_lane = None
-            if ob == cur_lane:
-                if backup_lane != None:
-                    cur_lane = backup_lane
-                    backup_lane = None
-                elif ob_last == 0:
-                    sidejump += 1
-                    cur_lane = cur_lane + 1 if cur_lane < 3 else 1
-                    backup_lane = cur_lane + 1 if cur_lane < 3 else 1
-                else:
-                    sidejump += 1
-                    cur_lane = cur_lane + 1 if cur_lane < 3 else 1
-                    cur_lane = cur_lane + 1 if cur_lane == ob_last else cur_lane
-                    cur_lane = 1 if cur_lane > 3 else cur_lane
-            ob_last = ob
+        n = len(obstacles) 
+        
+        dp = defaultdict(lambda: [inf, 0, 0, 0])
+        
+        dp[0] = [inf, 1, 0, 1]
+        
+        for i in range(1, n):
+            if obstacles[i] == 0:                             
+                dp[i][1] = min(dp[i - 1][1], dp[i - 1][2] + 1, dp[i - 1][3] + 1)
+                dp[i][2] = min(dp[i - 1][2], dp[i - 1][1] + 1, dp[i - 1][3] + 1)
+                dp[i][3] = min(dp[i - 1][3], dp[i - 1][1] + 1, dp[i - 1][2] + 1)
                 
-        return sidejump
+            else: 
+                j = obstacles[i]
+                    
+                dp[i][j] = inf 
+                    
+                for k in range(1, 4):
+                    if k != j:
+                        dp[i][k] = min(dp[i - 1][k], dp[i - 1][6 - k - j] + 1)
+                        
+        return min(dp[n - 1])
+        
