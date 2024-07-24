@@ -2,15 +2,18 @@
 
 class Solution:
     def sortJumbled(self, mapping: List[int], nums: List[int]) -> List[int]:
-        def helper(string):
-            ans = ""
-            for char in string: 
-                ans += newStr[char]
-                
-            return int(ans)
+        @cache 
+        def helper(word):
+            strWord = str(word)
+            
+            return int("".join([value[char] for char in strWord]))
         
-        newStr = {str(i): str(val) for (i, val) in enumerate(mapping)}
-                  
-        nums.sort(key = lambda item: helper(str(item)))
-                  
-        return nums
+        value = {str(ith): str(val) for (ith, val) in enumerate(mapping)}
+        
+        arr = [(num, ith) for (ith, num) in enumerate(nums)]
+        
+        arr.sort(key = lambda item: (helper(item[0]), item[1]))
+        
+        return [num for (num, _) in arr]
+        
+        
