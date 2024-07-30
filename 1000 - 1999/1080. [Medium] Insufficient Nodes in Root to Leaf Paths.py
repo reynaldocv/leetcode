@@ -15,7 +15,12 @@ class Solution:
             value -= node.val
             
             if node.left == None and node.right == None: 
-                return None if value > 0 else node
+                if value > 0:
+                    return None
+            
+                else: 
+                    return node
+                
             else: 
                 node.left = helper(node.left, value)
                 node.right = helper(node.right, value)
@@ -26,4 +31,3 @@ class Solution:
                     return node
 
         return helper(root, limit)
-            
