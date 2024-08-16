@@ -3,41 +3,46 @@
 class AllOne:
 
     def __init__(self):
-        self.seen = defaultdict(lambda: 0)
-        self.minHeap = []
         self.maxHeap = []
+        self.minHeap = []
+        
+        self.counter = defaultdict(lambda: 0)
 
     def inc(self, key: str) -> None:
-        self.seen[key] += 1
-        heappush(self.minHeap, (self.seen[key], key))
-        heappush(self.maxHeap, (-self.seen[key], key))
-
-    def dec(self, key: str) -> None:
-        if key in self.seen: 
-            self.seen[key] -= 1
-            if self.seen[key] <= 0: 
-                del self.seen[key]
-            else: 
-                heappush(self.minHeap, (self.seen[key], key))
-                heappush(self.maxHeap, (-self.seen[key], key))
-
-    def getMaxKey(self) -> str:
-        if self.seen: 
-            while self.maxHeap and self.seen[self.maxHeap[0][1]] != -1*self.maxHeap[0][0]:
-                heappop(self.maxHeap)
-                
+        self.counter[key] += 1 
+        
+        heappush(self.maxHeap, (-self.counter[key], key))
+        heappush(self.minHeap, (self.counter[key], key))
+        
+    def dec(self, key: str) -> None:        
+        self.counter[key] -= 1 
+        
+    def getMaxKey(self) -> str:        
+        while self.maxHeap and self.counter[self.maxHeap[0][1]] != -self.maxHeap[0][0] :
+            heappop(self.maxHeap)
+        
+        if self.maxHeap: 
             return self.maxHeap[0][1]
+        
         else: 
             return ""
+        
     def getMinKey(self) -> str:
-        if self.seen: 
-            while self.minHeap and self.seen[self.minHeap[0][1]] != self.minHeap[0][0]:
-                heappop(self.minHeap)
-                
+        while self.minHeap and self.counter[self.minHeap[0][1]] != self.minHeap[0][0]:
+            heappop(self.minHeap)
+        
+        if self.minHeap: 
             return self.minHeap[0][1]
+        
         else: 
             return ""
-            
+
+# Your AllOne object will be instantiated and called as such:
+# obj = AllOne()
+# obj.inc(key)
+# obj.dec(key)
+# param_3 = obj.getMaxKey()
+# param_4 = obj.getMinKey()
         
 
 
