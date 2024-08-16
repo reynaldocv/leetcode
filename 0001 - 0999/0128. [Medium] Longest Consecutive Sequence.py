@@ -2,15 +2,27 @@
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        seen = defaultdict(lambda: 0)
-        
-        nums.sort()
-        
-        ans = 0 
+        dp = defaultdict(lambda: 0)
         
         for num in nums: 
-            seen[num] = 1 + seen[num - 1]
-            ans = max(ans, seen[num])
+            if dp[num] == 0: 
+                left = dp[num - 1]
+                right = dp[num + 1]
+                
+                total = left + right + 1
+                
+                dp[num - left] = total 
+                dp[num + right] = total 
+                
+                if dp[num] == 0: 
+                    dp[num] = 1
+                
+        ans = 0 
 
+        for key in dp:
+            ans = max(ans, dp[key])
+        
         return ans 
+        
+        
             
