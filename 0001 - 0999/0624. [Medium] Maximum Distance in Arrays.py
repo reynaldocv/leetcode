@@ -1,6 +1,32 @@
 # https://leetcode.com/problems/maximum-distance-in-arrays/
 
+# Time complexity : O(n)
+# Space complexity: O(1)
 class Solution:
+    def maxDistance(self, arrays: List[List[int]]) -> int:
+        arr = []
+        
+        maxElem = arrays[0][-1]
+        minElem = arrays[0][0]
+        
+        ans = -inf 
+
+        for array in arrays[1: ]:
+            
+            maxNum = array[-1]
+            minNum = array[0]
+            
+            ans = max(ans, abs(maxNum - minElem))
+            ans = max(ans, abs(maxElem - minNum))
+            
+            maxElem = max(maxElem, maxNum)
+            minElem = min(minElem, minNum)
+            
+        return and     
+        
+# Time complexity : O(n lg n)
+# Space complexity: O(n)
+class Solution2:
     def maxDistance(self, arrays: List[List[int]]) -> int:
         arr = []
         
