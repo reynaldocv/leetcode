@@ -2,22 +2,18 @@
 
 class Solution:
     def minSteps(self, n: int) -> int:
-        exp = {}
+        ans = 0 
         
-        while n % 2 == 0: 
-            exp[2] = exp.get(2, 0) + 1
-            n = n//2
+        div = 2 
         
-        b = 3
         while n > 1: 
-            while n % b == 0: 
-                exp[b] = exp.get(b, 0) + 1
-                n = n // b
-            b += 2
-        
-        ans = 0
-        for key in exp: 
-            ans  += key*exp[key]
-        
+            while n % div == 0: 
+                ans += div 
+                
+                n /= div 
+                
+            div += 1 
+            
         return ans
+        
             
