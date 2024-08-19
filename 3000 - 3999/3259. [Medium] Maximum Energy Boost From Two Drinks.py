@@ -2,11 +2,9 @@
 
 class Solution:
     def maxEnergyBoost(self, energyDrinkA: List[int], energyDrinkB: List[int]) -> int:
-        arr = [energyDrinkA, energyDrinkB]
-        
         n = len(energyDrinkA)
         
-        ans = 0 
+        arr = [energyDrinkA, energyDrinkB]
         
         arr[0][1] += arr[0][0]
         arr[1][1] += arr[1][0]
