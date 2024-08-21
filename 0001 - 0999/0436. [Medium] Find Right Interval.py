@@ -15,7 +15,7 @@ class Solution:
             
         ans = []
         
-        for (start, end) in intervals: 
+        for (_, end) in intervals: 
             idx = bisect_left(starts, end)
             
             if idx == n: 
