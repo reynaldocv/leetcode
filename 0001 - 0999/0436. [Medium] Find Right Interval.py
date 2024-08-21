@@ -4,22 +4,25 @@ class Solution:
     def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
         n = len(intervals)
         
-        if n == 1: 
-            return [-1]
+        starts = []
+        indexs = []        
         
-        arr = []
-        for (i, (a, b)) in enumerate(intervals):
-            insort(arr, (a, i))
+        for (ith, (start, _)) in enumerate(intervals):
+            idx = bisect_left(starts, start)
+            
+            starts.insert(idx, start)
+            indexs.insert(idx, ith)
             
         ans = []
-        for (a, b) in intervals: 
-            idx = bisect_left(arr, (b, 0))
+        
+        for (start, end) in intervals: 
+            idx = bisect_left(starts, end)
+            
             if idx == n: 
                 ans.append(-1)
+                
             else: 
-                ans.append(arr[idx][1])
+                ans.append(indexs[idx])
             
         return ans
-        
-        
         
