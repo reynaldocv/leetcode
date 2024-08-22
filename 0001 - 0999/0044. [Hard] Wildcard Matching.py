@@ -4,37 +4,33 @@ class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         @cache
         def helper(i, j):
-            if i == n and j == m: 
-                return True
-            elif j == m: 
-                if s[i] == "*" and helper(i + 1, j):
-                    return True
+            if i == m and j == n: 
+                return True 
+            
+            elif i == m or j == n: 
+                if j != n and p[j] == "*":
+                    if helper(i, j + 1):
+                        return True 
+                    
+                return False 
+            
+            else: 
+                if p[j] == "?":
+                    if helper(i + 1, j + 1):
+                        return True 
+                    
+                elif p[j] == "*":
+                    if helper(i, j + 1) or helper(i + 1, j + 1) or helper(i + 1, j):
+                        return True 
+                    
+                elif s[i] == p[j]:
+                    return helper(i + 1, j + 1)
                 
-                return False
-            elif i == n: 
-                if p[j] == "*" and helper(i, j + 1):
-                    return True
-            
-            elif s[i] == "*": 
-                for jj in range(j, m + 1):
-                    if helper(i + 1, jj):
-                        return True
-            elif p[j] == "*":
-                for ii in range(i, n + 1):
-                    if helper(ii, j + 1):
-                        return True
-            
-            elif s[i] == "?" or p[j] == "?":
-                if helper(i + 1, j + 1):
-                    return True
-            
-            elif s[i] == p[j]:
-                return helper(i + 1, j + 1)
-            
-            return False
-        
-        n, m = len(s), len(p)
-        
+                else:                     
+                    return False 
+                
+        m, n = len(s), len(p)
+                
         return helper(0, 0)
-                
-                
+                    
+        
