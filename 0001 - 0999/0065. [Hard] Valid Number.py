@@ -2,8 +2,28 @@
 
 class Solution:
     def isNumber(self, s: str) -> bool:
+        letters = set() 
+        
+        for char in s: 
+            if char.isalpha() and char.lower() != "e": 
+                letters.add(char.lower)
+                
+        if len(letters) > 0: 
+            return False 
+        
+        try: 
+            s = float(s)
+            
+            return True
+    
+        except:
+            return False
+
+class Solution:
+    def isNumber(self, s: str) -> bool:
         def inGrammar(pattern, word):
             aux = re.search(pattern, word)
+            
             return aux.span()[1] - aux.span()[0] == len(word) if aux else False
         
         s = s.replace("E", "e")
@@ -13,14 +33,15 @@ class Solution:
         
         if "e" not in s: 
             return inGrammar(pattern1, s)
+        
         else: 
             words = s.split("e")
+            
             if len(words) == 1: 
                 return inGrammar(pattern2, words[0])
+            
             elif len(words) == 2:     
                 return inGrammar(pattern1, words[0]) and inGrammar(pattern2, words[1])
+            
             else: 
                 return False
-        
-        
-        
