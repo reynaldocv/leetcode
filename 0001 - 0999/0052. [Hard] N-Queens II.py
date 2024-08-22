@@ -2,23 +2,37 @@
 
 class Solution:
     def totalNQueens(self, n: int) -> int:
-        def countWays(n, i):
-            ans = 0 
-            for j in range(n):
-                if j not in set1 and j - i not in set2 and j + i not in set3: 
-                    if n - 1 == i: 
-                        return 1
-                    set1.add(j)
-                    set2.add(j - i)
-                    set3.add(j + i)                    
-                    ans += countWays(n, i + 1)
-                    set1.discard(j)
-                    set2.discard(j - i)
-                    set3.discard(j + i)  
+        def helper(row):
+            nonlocal ans  
             
-            return ans
+            if row == n:
+                ans += 1 
                 
-        set1, set2, set3 = set(), set(), set()
-        return countWays(n, 0)
-                
+            else: 
+                for col in range(0, n):
+                    d1 = (row + col)
+                    d2 = (row - col)
+                    
+                    if col not in visitedCols:                        
+                        if d2 not in secondDiagonal: 
+                            if d1 not in firstDiagonal: 
+                                visitedCols.add(col)
+                                firstDiagonal.add(d1)
+                                secondDiagonal.add(d2)
+
+                                helper(row + 1)
+
+                                firstDiagonal.remove(d1)
+                                secondDiagonal.remove(d2)                                
+                                visitedCols.remove(col)
+
+        ans = 0 
+        
+        visitedCols = set() 
+        firstDiagonal = set() 
+        secondDiagonal = set() 
+        
+        helper(0)
+        
+        return ans 
                         
