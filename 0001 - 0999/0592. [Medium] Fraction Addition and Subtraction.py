@@ -2,34 +2,32 @@
 
 class Solution:
     def fractionAddition(self, expression: str) -> str:
-        expression = expression.replace("+-", "-")  
+        (prevNum, prevDen) = (0, 1)
+        (num, den) = (0, 1)
         
-        prev = (0, 1) 
-        sign = 1 
-        num, den = 0, 0
-        isNum = True
+        prev = ""
         
         for char in expression + "+":
-            if char.isdigit():
-                if isNum: 
-                    num = num*10 + int(char)
-                else: 
-                    den = den*10 + int(char)
-            elif char in "+-":
-                if prev != (0, 0):
-                    prev = (prev[0] * den + sign * prev[1] * num, prev[1] * den)
-                else: 
-                    prev = (sign*num, den)
-                    
-                num, den = 0, 0
-                sign = 1 if char == "+" else -1
-                isNum = True                
-            elif char == "/":
-                isNum = False
+            if char in "+-":
+                den = 1 if prev == "" else int(prev)
                 
-        m = gcd(abs(prev[0]), prev[1])
-        
-        if m == 0: 
-            return "0/1"
-        
-        return str(prev[0]//m) + "/"+ str(prev[1]//m)
+                prevNum = prevNum*den + num*prevDen
+                prevDen = prevDen*den
+                
+                common = gcd(prevNum, prevDen)
+                
+                prevNum //= common
+                prevDen //= common 
+                
+                prev = char
+                
+            elif char == "/":
+                num = int(prev)
+                
+                prev = ""
+                
+            else: 
+                prev += char 
+                
+        return str(prevNum) + "/" + str(prevDen)
+    
