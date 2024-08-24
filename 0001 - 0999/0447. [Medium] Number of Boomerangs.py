@@ -2,18 +2,30 @@
 
 class Solution:
     def numberOfBoomerangs(self, points: List[List[int]]) -> int:
-        ans = 0
-        for (i, (x0, y0)) in enumerate(points):
-            seen = defaultdict(lambda: 0)
-            for (j, (x1, y1)) in enumerate(points):
-                if i != j:
-                    dist = (y1 - y0)**2 + (x1 - x0)**2
-                    seen[dist] += 1
-            
-            for key in seen: 
-                ans += (seen[key] - 1)*(seen[key])
+        n = len(points)
+        
+        ans = 0 
+        
+        for i in range(n):
+            counter = defaultdict(lambda: 0)
+        
+            for j in range(n):
+                (x0, y0) = points[i]
+                (x1, y1) = points[j]
                 
-        return ans
+                distance = (x1 - x0)**2 + (y1 - y0)**2 
+                
+                counter[distance] += 1 
+            
+            for key in counter: 
+                items = counter[key]
+                
+                ans += items*(items - 1)
+
+        return ans 
+                
+                
+        
                 
                     
         
