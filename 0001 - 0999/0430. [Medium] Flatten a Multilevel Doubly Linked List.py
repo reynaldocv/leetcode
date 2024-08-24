@@ -11,31 +11,31 @@ class Node:
 """
 
 class Solution:
-    def flatten(self, head: 'Node') -> 'Node':
-        def helper(head):
-            if head: 
-                stack.append(head)
-                helper(head.child)
-                helper(head.next)
+    def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        def helper(node):
+            if node: 
+                arr.append(node)
                 
-        if not head: 
-            return head
-        else: 
-            stack = []
-            helper(head)
-
-            n = len(stack)
-
-            for i in range(n - 1):
-                stack[i].next = stack[i + 1]
-                stack[i].child = None
-
-            stack[-1].next = stack[-1].child = None
-
-            for i in range(1, n):
-                stack[i].prev = stack[i - 1]
-
-            stack[0].prev = None
-
-
-            return stack[0]
+                helper(node.child)
+                helper(node.next)
+                
+        arr = []
+        
+        helper(head)
+        
+        n = len(arr)
+        
+        if n == 0: 
+            return None 
+        
+        for i in range(n):
+            if i > 0: 
+                arr[i].prev = arr[i - 1]
+                
+            if i < n - 1: 
+                arr[i].next = arr[i + 1]
+                
+            arr[i].child = None 
+        
+        return arr[0]
+        
