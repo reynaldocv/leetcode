@@ -19,8 +19,7 @@ class Solution:
             seen.add(u)
                 
             if u == end_node:
-                return -probability 
-                
+                return -probability                 
                 
             for (v, prob) in graph[u]:
                 if v not in seen: 
