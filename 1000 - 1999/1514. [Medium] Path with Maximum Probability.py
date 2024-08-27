@@ -1,27 +1,29 @@
 # https://leetcode.com/problems/path-with-maximum-probability/
 
 class Solution:
-    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
-        graph = defaultdict(lambda: {}) 
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start_node: int, end_node: int) -> float:
+        graph = defaultdict(lambda: [])
         
-        for (i, (u, v)) in enumerate(edges): 
-            graph[u][v] = succProb[i]
-            graph[v][u] = succProb[i]
+        for (ith, (u, v)) in enumerate(edges):
+            probability = succProb[ith]
             
-        maxProbability = [0 for _ in range(n)]
+            graph[u].append((v, probability))
+            graph[v].append((u, probability))            
+            
+        heap = [(-1, start_node)]
+        seen = {start_node}
         
-        heap = [(-1, start)]
-        
-        while heap:
+        while heap: 
             (probability, u) = heappop(heap)
             
-            if u == end: 
-                return -probability
-            
-            for v in graph[u]:
-                if -probability*graph[u][v] > maxProbability[v]:
-                    maxProbability[v] = -probability*graph[u][v]
+            seen.add(u)
+                
+            if u == end_node:
+                return -probability 
+                
+                
+            for (v, prob) in graph[u]:
+                if v not in seen: 
+                    heappush(heap, (probability*prob, v))
                     
-                    heappush(heap, (-maxProbability[v], v))
-            
-        return 0 
+        return 0
