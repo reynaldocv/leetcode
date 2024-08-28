@@ -2,14 +2,20 @@
 
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        counts = [0] * n
-        tail = [nums[n - 1]]
+        n = len(nums) 
         
-        for i in range(n - 2, -1, -1):
-            idx = bisect_left(tail, nums[i])
-            counts[i] = idx
-            tail.insert(idx, nums[i])
+        arr = []
         
-        return counts
+        ans = [0 for _ in range(n)]
+        
+        for i in range(n - 1, -1, -1):
+            num = nums[i]
+            
+            idx = bisect_left(arr, num)
+            
+            ans[i] = idx
+            
+            arr.insert(idx, num)
+            
+        return ans 
         
