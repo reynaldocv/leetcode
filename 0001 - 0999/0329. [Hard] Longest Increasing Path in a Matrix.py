@@ -2,23 +2,36 @@
 
 class Solution:
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
-        @cache
-        def helper(x, y):
-            ans = 1
-            for (i, j) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                r, s = x + i, y + j
-                if 0 <= r < n and 0 <= s < m: 
-                    if matrix[x][y] < matrix[r][s]:
-                        ans = max(ans, 1 + helper(r, s))
-            return ans
+        m, n = len(matrix), len(matrix[0]) 
         
-        n, m = len(matrix), len(matrix[0])    
+        heap = []
+        
+        for i in range(m):
+            for j in range(n):
+                heappush(heap, (matrix[i][j], i, j))
+                
+        dp = [[0 for _ in range(n)] for _ in range(m)]
+        
         ans = 0 
-        for i in range(n):
-            for j in range(m):
-                ans = max(ans, helper(i, j))
         
-        return ans
+        while heap: 
+            (value, x, y) = heappop(heap)
+            
+            tmp = 0 
+            
+            for (r, s) in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+                p, q = x + r, y + s
+                
+                if 0 <= p < m and 0 <= q < n: 
+                    if matrix[p][q] < value: 
+                        tmp = max(tmp, dp[p][q])
+                        
+            dp[x][y] = tmp + 1
+            
+            ans = max(ans, dp[x][y])
+            
+        return ans 
+            
         
     
         
