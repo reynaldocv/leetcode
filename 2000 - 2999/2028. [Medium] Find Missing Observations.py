@@ -2,19 +2,23 @@
 
 class Solution:
     def missingRolls(self, rolls: List[int], mean: int, n: int) -> List[int]:
-        total = n + len(rolls)
-        aSum = total*mean - sum(rolls)
+        m = len(rolls) 
         
-        quo = aSum // n
+        aSum = sum(rolls)
         
-        res = aSum % n
+        remain = mean*(n + m) - aSum 
         
-        ans = []
-        if aSum % n == 0: 
-            if 1 <= quo <= 6: 
-                ans = [quo]*n
-        else: 
-            if 1 <= quo <= 5: 
-                ans = [quo + 1]*res + [quo]*(n - res)
+        if not(n <= remain <= n*6):         
+            return []
         
-        return ans            
+        
+        value = remain//n 
+
+        k = remain % n
+
+        ans = [value for _ in range(n)]
+
+        for i in range(k):
+            ans[i] += 1 
+
+        return ans 
