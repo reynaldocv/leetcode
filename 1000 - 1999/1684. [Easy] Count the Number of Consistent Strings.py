@@ -10,16 +10,10 @@ class Solution:
         ans = 0 
         
         for word in words:
-            go = True 
-            
-            for char in word: 
-                if char not in seen: 
-                    go = False 
-                    break
-                    
-            if go: 
+            if all([char in seen for char in word]):
                 ans += 1 
                 
         return ans 
+        
         
         
