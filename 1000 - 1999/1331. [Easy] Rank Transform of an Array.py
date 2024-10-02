@@ -2,25 +2,17 @@
 
 class Solution:
     def arrayRankTransform(self, arr: List[int]) -> List[int]:
-        tmp = [num for num in arr]
+        index = {}
         
-        tmp.sort()
+        idx = 1
         
-        index = defaultdict(lambda: 0)
-        
-        i = 1 
-        
-        for num in tmp: 
-            if index[num] == 0: 
-                index[num] = i 
+        for num in sorted(arr):
+            if num not in index:
+                index[num] = idx
                 
-                i += 1 
+                idx += 1
                 
-        ans = []
+        return [index[num] for num in arr]
         
-        for num in arr: 
-            ans.append(index[num])
-            
-        return ans 
         
         
