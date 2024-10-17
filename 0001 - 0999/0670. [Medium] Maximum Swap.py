@@ -17,9 +17,7 @@ class Solution:
         for (ith, char) in enumerate(str(num)):
             (oldChar, jth) = maxElems[ith]
             
-            if char != oldChar:
-                jth = abs(jth)
-                
+            if char != oldChar:                
                 chars[jth] = char
                 chars[ith] = oldChar
                 
