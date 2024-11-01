@@ -2,23 +2,27 @@
 
 class Solution:
     def makeFancyString(self, s: str) -> str:
-        last = ["$", "0"]
-        
+        prev = "$"
         ans = ""
         
+        cnt = 1 
+        
         for char in s: 
-            if char == last[0]:
-                if last[1] < 2: 
-                    last[1] += 1 
-                    
-                    ans += char
+            if prev == char:
+                cnt += 1 
                 
             else: 
-                last = [char, 1]
+                cnt = 1 
                 
-                ans += char
+            if cnt < 3:
+                    ans += char 
                 
+            prev = char 
+            
         return ans 
+        
+        
+        
             
                     
                     
