@@ -16,7 +16,7 @@ class Solution:
                 
             return ans 
         
-        n = len(nums)
+        n = len(nums)    
         
         prev = 0 
         start = 0 
